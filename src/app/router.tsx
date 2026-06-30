@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router'
 import App from './App'
-import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { GameCatalogPage } from '../features/games/pages/GameCatalogPage'
 import { GameDetailPage } from '../features/games/pages/GameDetailPage'
