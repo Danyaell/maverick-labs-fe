@@ -1,15 +1,15 @@
 import './App.css'
-import { NavLink, Outlet } from 'react-router'
+import { /* NavLink, */ Outlet } from 'react-router'
 
 export default function App() {
   return (
     <div>
       <header>
-        <nav>
+{/*         <nav>
           <NavLink to="/">Home</NavLink>
           {' | '}
           <NavLink to="/games">Games</NavLink>
-        </nav>
+        </nav> */}
       </header>
 
       <main>
