@@ -1,12 +1,20 @@
 import './App.css'
+import { /* NavLink, */ Outlet } from 'react-router'
 
-function App() {
-
+export default function App() {
   return (
-    <>
-      Hello Vite + React!
-    </>
+    <div>
+      <header>
+{/*         <nav>
+          <NavLink to="/">Home</NavLink>
+          {' | '}
+          <NavLink to="/games">Games</NavLink>
+        </nav> */}
+      </header>
+
+      <main>
+        <Outlet />
+      </main>
+    </div>
   )
 }
-
-export default App

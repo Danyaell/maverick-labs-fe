@@ -1,75 +1,94 @@
-# React + TypeScript + Vite
+# Maverick Labs FE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+`maverick-labs` web application frontend.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+React + TypeScript application built with Vite. It provides a catalog of games and details for each game, consuming an external API from the frontend.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- TypeScript 6
+- Vite 8
+- React Router 8
+- ESLint
+- Vitest
 
-## Expanding the ESLint configuration
+## Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- `src/main.tsx` - application entry point.
+- `src/app/App.tsx` - root component.
+- `src/app/router.tsx` - routes definer.
+- `src/app/pages/` - main pages of the app.
+- `src/features/games/` - game selection feature.
+  - `api/` - HTTP calls service.
+  - `components/` - shared components.
+  - `pages/` - selection and detail screens.
+  - `types/` - types definitions.
+- `src/shared/` - utilities and shared components.
+  - `api/httpClient.ts` - common HTTP client.
+  - `components/` - load and error states.
+  - `types/` - shared global types.
+- `src/test/setup.ts` - tests global config.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Scripts
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
+npm run lint
+npm run test
+npm run test:run
+npm run test:coverage
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Execute on dev
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start Vite server:
+   ```bash
+   npm run dev
+   ```
+3. Open url on browser.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Production build
 
+```bash
+npm run build
 ```
+
+## Linter
+
+```bash
+npm run lint
+```
+
+## Tests
+
+```bash
+npm run test
+npm run test:run
+npm run test:coverage
+```
+
+## Conventions
+
+- Use functional React components.
+- Prefer `import type` for TypeScript types.
+- Avoid `any` unless clearly justified.
+- Do not include `console.log` in production code.
+- Keep routes centralized in `src/app/router.tsx`.
+- Place API logic in services, not presentational components.
+- Keep feature code within `src/features/<feature-name>/`.
+
+## Additional notes
+
+- The project is private and does not publish a package.
+- The frontend consumes a separate backend API.
+- The test configuration is in `vite.config.ts` with the `jsdom` environment and the setup file is in `src/test/setup.ts`.
