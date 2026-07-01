@@ -1,5 +1,6 @@
 import type { GameSummary } from '../types/game.types'
 import { fetchJson } from '../../../shared/api/httpClient'
+import { API_BASE_URL } from '../../../shared/config/env'
 
 function isGameSummary(value: unknown): value is GameSummary {
   return (
@@ -25,11 +26,8 @@ function validateGameSummaries(value: unknown): GameSummary[] {
   })
 }
 
-const DEFAULT_API_BASE_URL = 'http://localhost:8080'
-
 export async function fetchGames(init?: RequestInit): Promise<GameSummary[]> {
-  const baseUrl = String(import.meta.env.VITE_API_BASE_URL ?? DEFAULT_API_BASE_URL).replace(/\/$/, '')
-  const url = `${baseUrl}/api/v1/games`
+  const url = `${API_BASE_URL}/api/v1/games`
 
   const response = await fetchJson<unknown>(url, init)
   return validateGameSummaries(response)
