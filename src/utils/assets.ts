@@ -14,5 +14,5 @@ export function getGameAssetUrl(assetKey: string): string {
 
   const assetUrl = assetModules[path];
 
-  return assetUrl ?? null;
+  return assetUrl ?? "";
 }

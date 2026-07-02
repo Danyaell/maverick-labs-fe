@@ -1,14 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router";
 import { fetchGameDetail } from "../api/gameApi";
-import type { GameDetail } from "../types/game.types";
+import { BossSummary } from "../components/BossSummary";
+import { CollectibleList } from "../components/CollectibleList";
 import { StageCard } from "../components/StageCard";
+import { WeaponReward } from "../components/WeaponReward";
+import type { GameDetail, Stage } from "../types/game.types";
 import { LoadingState } from "../../../shared/components/LoadingState";
 import { ErrorState } from "../../../shared/components/ErrorState";
 
 export function GameDetailPage() {
   const { gameCode } = useParams<{ gameCode: string }>();
   const [gameDetail, setGameDetail] = useState<GameDetail | null>(null);
+  const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,8 +21,11 @@ export function GameDetailPage() {
     setError(null);
     setIsLoading(true);
 
-    fetchGameDetail(gameCode ?? "")
-      .then((data) => setGameDetail(data))
+    fetchGameDetail(gameCode ?? "", { signal: controller.signal })
+      .then((data) => {
+        setGameDetail(data);
+        setSelectedStage(data.stages[0] ?? null);
+      })
       .catch((fetchError) => {
         if (controller.signal.aborted) {
           return;
@@ -35,7 +42,7 @@ export function GameDetailPage() {
         }
       });
     return () => controller.abort();
-  }, []);
+  }, [gameCode]);
 
   const sortedStages = useMemo(
     () =>
@@ -58,15 +65,31 @@ export function GameDetailPage() {
       <Link to="/games">Back to catalog</Link>
 
       <h1>Game Detail</h1>
-      <p>{gameDetail?.title}</p>
+      <h2>{gameDetail?.title}</h2>
 
-      <ul>
-        {sortedStages.map((stage) => (
-          <li key={stage.slug}>
-            <StageCard stage={stage} />
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h3>Stages</h3>
+        <ul>
+          {sortedStages.map((stage) => (
+            <li key={stage.slug}>
+              <StageCard
+                stage={stage}
+                isSelected={selectedStage?.slug === stage.slug}
+                onSelect={setSelectedStage}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {selectedStage ? (
+        <div>
+          <h3>{selectedStage.name}</h3>
+          <BossSummary boss={selectedStage.boss} />
+          <WeaponReward weaponReward={selectedStage.weaponReward} />
+          <CollectibleList collectibles={selectedStage.collectibles} />
+        </div>
+      ) : null}
     </section>
   );
 }
