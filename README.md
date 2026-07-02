@@ -1,10 +1,16 @@
 # Maverick Labs FE
 
-`maverick-labs` web application frontend.
+Frontend for the Maverick Labs application. It is a React + TypeScript app built with Vite that presents a game catalog and a detailed game view backed by a separate backend API.
 
-## Description
+## Overview
 
-React + TypeScript application built with Vite. It provides a catalog of games and details for each game, consuming an external API from the frontend.
+The current experience includes:
+
+- A game catalog page with game cards.
+- A game detail page that loads stage data from the backend.
+- Interactive stage selection so users can inspect a selected stage’s boss, weapon reward, and collectibles.
+- Shared loading and error states for asynchronous requests.
+- Asset loading from local game images via a helper in the frontend.
 
 ## Tech Stack
 
@@ -14,23 +20,34 @@ React + TypeScript application built with Vite. It provides a catalog of games a
 - React Router 8
 - ESLint
 - Vitest
+- Testing Library
 
-## Structure
+## Project Structure
 
-- `src/main.tsx` - application entry point.
-- `src/app/App.tsx` - root component.
-- `src/app/router.tsx` - routes definer.
-- `src/app/pages/` - main pages of the app.
-- `src/features/games/` - game selection feature.
-  - `api/` - HTTP calls service.
-  - `components/` - shared components.
-  - `pages/` - selection and detail screens.
-  - `types/` - types definitions.
-- `src/shared/` - utilities and shared components.
-  - `api/httpClient.ts` - common HTTP client.
-  - `components/` - load and error states.
-  - `types/` - shared global types.
-- `src/test/setup.ts` - tests global config.
+- `src/main.tsx` — application entry point.
+- `src/app/` — app shell, router, and page-level routing.
+  - `App.tsx` — root layout.
+  - `router.tsx` — route definitions.
+  - `pages/` — shared page components such as the not-found view.
+- `src/features/games/` — game feature implementation.
+  - `api/gameApi.ts` — API calls for game lists and detail payloads.
+  - `components/` — game cards, stage cards, and stage detail UI components.
+  - `pages/` — catalog and detail screens.
+  - `types/game.types.ts` — domain types for games, stages, bosses, weapons, and collectibles.
+- `src/shared/` — shared infrastructure.
+  - `api/httpClient.ts` — common fetch wrapper with error handling.
+  - `components/` — reusable loading and error state components.
+  - `config/env.ts` — environment configuration for the API base URL.
+- `src/utils/assets.ts` — helper that resolves frontend game asset paths from backend asset keys.
+- `src/test/setup.ts` — global test configuration.
+
+## Environment Variables
+
+The frontend expects the API base URL to be provided through the following variable:
+
+```bash
+VITE_API_BASE_URL=http://localhost:8080
+```
 
 ## Scripts
 
@@ -45,31 +62,32 @@ npm run test:run
 npm run test:coverage
 ```
 
-## Execute on dev
+## Development
 
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Start Vite server:
+2. Set the required API environment variable.
+3. Start the Vite dev server:
    ```bash
    npm run dev
    ```
-3. Open url on browser.
+4. Open the local URL shown by Vite in the browser.
 
-## Production build
+## Production Build
 
 ```bash
 npm run build
 ```
 
-## Linter
+## Linting
 
 ```bash
 npm run lint
 ```
 
-## Tests
+## Testing
 
 ```bash
 npm run test
@@ -80,15 +98,15 @@ npm run test:coverage
 ## Conventions
 
 - Use functional React components.
-- Prefer `import type` for TypeScript types.
+- Prefer `import type` for TypeScript-only imports.
 - Avoid `any` unless clearly justified.
 - Do not include `console.log` in production code.
-- Keep routes centralized in `src/app/router.tsx`.
-- Place API logic in services, not presentational components.
+- Keep route definitions centralized in `src/app/router.tsx`.
+- Place API logic in feature services rather than in presentational components.
 - Keep feature code within `src/features/<feature-name>/`.
 
-## Additional notes
+## Notes
 
-- The project is private and does not publish a package.
-- The frontend consumes a separate backend API.
-- The test configuration is in `vite.config.ts` with the `jsdom` environment and the setup file is in `src/test/setup.ts`.
+- The application is private and does not publish a package.
+- The frontend consumes a separate backend API and expects the base URL to be configured through `VITE_API_BASE_URL`.
+- The test environment is configured in `vite.config.ts` with the `jsdom` environment and the setup file in `src/test/setup.ts`.
