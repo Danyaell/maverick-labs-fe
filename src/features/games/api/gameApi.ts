@@ -1,4 +1,4 @@
-import type { GameSummary } from '../types/game.types'
+import type { GameDetail, GameSummary } from '../types/game.types'
 import { fetchJson } from '../../../shared/api/httpClient'
 import { API_BASE_URL } from '../../../shared/config/env'
 
@@ -31,4 +31,11 @@ export async function fetchGames(init?: RequestInit): Promise<GameSummary[]> {
 
   const response = await fetchJson<unknown>(url, init)
   return validateGameSummaries(response)
+}
+
+export async function fetchGameDetail(code: string, init?: RequestInit): Promise<GameDetail> {
+  const url = `${API_BASE_URL}/api/v1/games/${code}`
+
+  const response = await fetchJson<GameDetail>(url, init)
+  return response
 }
