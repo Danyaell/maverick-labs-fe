@@ -1,3 +1,4 @@
+import styles from './StageCard.module.css'
 import { getGameAssetUrl } from '../../../utils/assets'
 import type { Stage } from '../types/game.types'
 
@@ -11,9 +12,8 @@ export function StageCard({ stage, isSelected = false, onSelect }: StageCardProp
   const stageImageUrl = getGameAssetUrl(stage.imageAssetKey)
 
   return (
-    <button type="button" onClick={() => onSelect(stage)} aria-pressed={isSelected}>
-      <h3>{stage.name}</h3>
-      <img src={stageImageUrl || undefined} alt={stage.name} />
+    <button className={isSelected ? styles.selected : styles.card} type="button" onClick={() => onSelect(stage)} aria-pressed={isSelected}>
+      <img className={styles.stageImage} src={stageImageUrl || undefined} alt={stage.name} />
     </button>
   )
 }

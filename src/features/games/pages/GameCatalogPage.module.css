@@ -1,0 +1,22 @@
+.gameList {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  grid-template-rows: repeat(auto-fill, auto);
+  gap: 2rem;
+  list-style-type: none;
+  padding: 0;
+  margin: 50px;
+}
+
+@media (width < 768px) {
+  .gameList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.gameItem {
+  width: 100%;
+  height: auto;
+  display: grid;
+  justify-items: center;
+}

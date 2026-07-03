@@ -1,3 +1,4 @@
+import styles from './BossSummary.module.css'
 import { getGameAssetUrl } from '../../../utils/assets'
 import type { Boss } from '../types/game.types'
 
@@ -9,9 +10,9 @@ export function BossSummary({ boss }: BossSummaryProps) {
   const bossImageUrl = getGameAssetUrl(boss.imageAssetKey ?? '')
 
   return (
-    <section>
+    <section className={styles.bossSummaryContainer}>
       <h3>Boss</h3>
-      <img src={bossImageUrl || undefined} alt={boss.name} />
+      <img className={styles.bossImage} src={bossImageUrl || undefined} alt={boss.name} />
       <p>{boss.name}</p>
     </section>
   )

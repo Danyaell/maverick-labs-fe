@@ -1,3 +1,4 @@
+import styles from "./GameDetailPage.module.css";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router";
 import { fetchGameDetail } from "../api/gameApi";
@@ -8,6 +9,7 @@ import { WeaponReward } from "../components/WeaponReward";
 import type { GameDetail, Stage } from "../types/game.types";
 import { LoadingState } from "../../../shared/components/LoadingState";
 import { ErrorState } from "../../../shared/components/ErrorState";
+import { getGameAssetUrl } from "../../../utils/assets";
 
 export function GameDetailPage() {
   const { gameCode } = useParams<{ gameCode: string }>();
@@ -44,6 +46,10 @@ export function GameDetailPage() {
     return () => controller.abort();
   }, [gameCode]);
 
+  const stageImageUrl = getGameAssetUrl(
+    `${gameCode?.toLowerCase()}.title.logo`,
+  );
+
   const sortedStages = useMemo(
     () =>
       (gameDetail?.stages ?? [])
@@ -62,16 +68,21 @@ export function GameDetailPage() {
 
   return (
     <section>
-      <Link to="/games">Back to catalog</Link>
+      <Link className={styles.backLink} to="/games">
+        Return
+      </Link>
 
-      <h1>Game Detail</h1>
-      <h2>{gameDetail?.title}</h2>
+      <img
+        className={styles.gameImage}
+        src={stageImageUrl || undefined}
+        alt={gameDetail?.title}
+      />
 
       <div>
         <h3>Stages</h3>
-        <ul>
+        <ul className={styles.stageList}>
           {sortedStages.map((stage) => (
-            <li key={stage.slug}>
+            <li key={stage.slug} className={styles.stageItem}>
               <StageCard
                 stage={stage}
                 isSelected={selectedStage?.slug === stage.slug}
@@ -83,11 +94,19 @@ export function GameDetailPage() {
       </div>
 
       {selectedStage ? (
-        <div>
+        <div className={styles.detailContainer}>
           <h3>{selectedStage.name}</h3>
-          <BossSummary boss={selectedStage.boss} />
-          <WeaponReward weaponReward={selectedStage.weaponReward} />
-          <CollectibleList collectibles={selectedStage.collectibles} />
+          <div className={styles.detailContent}>
+            <div className={styles.detailItem}>
+              <BossSummary boss={selectedStage.boss} />
+            </div>
+            <div className={styles.detailItem}>
+              <WeaponReward weaponReward={selectedStage.weaponReward} />
+            </div>
+            <div className={styles.detailItem}>
+              <CollectibleList collectibles={selectedStage.collectibles} />
+            </div>
+          </div>
         </div>
       ) : null}
     </section>

@@ -1,0 +1,46 @@
+.card {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background-color: var(--color-bg-card);
+  border: 6px solid #5c5c5c;
+  border-radius: 8px;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  filter: grayscale(80%) brightness(70%);
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  filter: grayscale(80%) brightness(100%);
+}
+
+.selected {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background-color: var(--color-bg-card);
+  border: 6px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  filter: none;
+  transition:
+    transform 0.2s ease-in-out,
+	filter 0.1s ease-in-out,
+	border 0.1s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+.stageImage {
+  width: 150px;
+  height: auto;
+  object-fit: cover;
+  image-rendering: pixelated;
+  border-radius: var(--radius-md);
+}
