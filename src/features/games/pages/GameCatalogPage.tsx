@@ -61,7 +61,7 @@ export function GameCatalogPage() {
       <h1>Game Catalog</h1>
       <ul className={styles.gameList}>
         {sortedGames.map((game) => (
-          <li key={game.code}>
+          <li className={styles.gameItem} key={game.code}>
             <GameCard game={game} />
           </li>
         ))}

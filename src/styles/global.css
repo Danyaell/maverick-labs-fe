@@ -1,15 +1,17 @@
 :root {
   min-width: 320px;
   max-width: 100%;
-  min-height: 100svh;
+  min-height: 100vh;
   margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background:
-    radial-gradient(circle at top, #152447 0, transparent 35%),
-    var(--color-bg);
+  background-color: var(--color-bg);
+  background-image: url('../../public/images/bg-pattern.png');
+  background-repeat: repeat;
+  background-size: 768px 768px;
+  image-rendering: pixelated;
   color: var(--color-text);
   font-family: var(--font-body);
   font-synthesis: none;
