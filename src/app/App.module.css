@@ -1,0 +1,32 @@
+.app {
+  min-height: 100vh;
+}
+
+.header {
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  background: rgb(8 13 28 / 80%);
+  backdrop-filter: blur(12px);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4rem;
+}
+
+.logo {
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.main {
+  padding-block: var(--space-8);
+}

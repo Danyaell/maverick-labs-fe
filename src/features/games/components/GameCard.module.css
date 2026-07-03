@@ -1,0 +1,26 @@
+.gameCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--color-bg-card);
+  border: 6px solid #5c5c5c;
+  border-radius: 8px;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+.gameCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 6px solid var(--color-primary);
+  border-radius: var(--radius-md);
+}
+
+.gameImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  image-rendering: pixelated;
+}

@@ -1,3 +1,4 @@
+import styles from './WeaponReward.module.css'
 import { getGameAssetUrl } from '../../../utils/assets'
 import type { Weapon } from '../types/game.types'
 
@@ -13,11 +14,10 @@ export function WeaponReward({ weaponReward }: WeaponRewardProps) {
   const weaponImageUrl = getGameAssetUrl(weaponReward.imageAssetKey ?? '')
 
   return (
-    <section>
+    <section className={styles.weaponRewardContainer}>
       <h3>Weapon Reward</h3>
-      <img src={weaponImageUrl || undefined} alt={weaponReward.name} />
+      <img className={styles.weaponImage} src={weaponImageUrl || undefined} alt={weaponReward.name} />
       <p>{weaponReward.name}</p>
-      {weaponReward.description ? <p>{weaponReward.description}</p> : null}
     </section>
   )
 }

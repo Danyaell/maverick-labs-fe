@@ -1,0 +1,19 @@
+.collectibleBadge {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--color-info);
+}
+
+.collectibleImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  image-rendering: pixelated;
+  border-radius: var(--radius-md);
+}

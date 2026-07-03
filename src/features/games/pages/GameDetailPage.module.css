@@ -1,0 +1,69 @@
+.backLink {
+  display: flex;
+  margin: 1rem;
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.gameImage {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.stageList {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (width < 768px) {
+  .stageList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.stageItem {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+.detailContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem 5rem;
+
+  background-color: var(--color-bg-dialog);
+  border: 5px solid var(--color-info);
+  box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.596);
+  border-radius: var(--radius-md);
+}
+
+.detailContent {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (width < 768px) {
+  .detailContent {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detailItem {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}

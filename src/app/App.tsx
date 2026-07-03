@@ -1,20 +1,25 @@
-import './App.css'
-import { /* NavLink, */ Outlet } from 'react-router'
+import styles from "./App.module.css";
+import { NavLink, Outlet } from "react-router";
 
 export default function App() {
   return (
-    <div>
-      <header>
-{/*         <nav>
-          <NavLink to="/">Home</NavLink>
-          {' | '}
-          <NavLink to="/games">Games</NavLink>
-        </nav> */}
+    <div className={styles.app}>
+      <header className={styles.header}>
+        <div className="page-container">
+          <nav className={styles.nav}>
+            <NavLink to="/" className={styles.logo}>
+              Maverick Labs
+            </NavLink>
+            <div className={styles.links}>
+              <NavLink to="/games">Games</NavLink>
+            </div>
+          </nav>
+        </div>
       </header>
 
-      <main>
+      <main className={styles.main}>
         <Outlet />
       </main>
     </div>
-  )
+  );
 }

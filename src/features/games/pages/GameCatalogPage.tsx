@@ -1,3 +1,4 @@
+import styles from './GameCatalogPage.module.css'
 import { useEffect, useMemo, useState } from 'react'
 import { GameCard } from '../components/GameCard'
 import { fetchGames } from '../api/gameApi'
@@ -58,8 +59,7 @@ export function GameCatalogPage() {
   return (
     <section>
       <h1>Game Catalog</h1>
-
-      <ul>
+      <ul className={styles.gameList}>
         {sortedGames.map((game) => (
           <li key={game.code}>
             <GameCard game={game} />

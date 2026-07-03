@@ -1,0 +1,20 @@
+.bossSummaryContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+
+  padding: 1rem;
+  border: 1px solid var(--color-disabled);
+  border-radius: var(--radius-md);
+  background-color: var(--color-info);
+}
+
+.bossImage {
+  width: 150px;
+  height: auto;
+  object-fit: cover;
+  image-rendering: pixelated;
+  border-radius: var(--radius-md);
+}
