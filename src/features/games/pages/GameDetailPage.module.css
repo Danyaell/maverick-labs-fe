@@ -1,9 +1,28 @@
 .backLink {
   display: flex;
-  margin: 1rem;
+  margin: 1rem 0;
   color: var(--color-text);
   text-decoration: none;
   font-weight: bold;
+}
+
+.pageActions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 1rem;
+}
+
+.buildRouteLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 700;
+  border: 2px solid var(--color-info);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+  background-color: var(--color-bg-dialog);
 }
 
 .gameImage {
