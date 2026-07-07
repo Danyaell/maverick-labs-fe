@@ -1,0 +1,24 @@
+.panel {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-surface);
+  text-align: left;
+}
+
+.panel h3 {
+  margin-top: 0;
+}
+
+.panel p {
+  margin: var(--space-2) 0;
+}
+
+.section {
+  margin-top: var(--space-4);
+}
+
+.section h4 {
+  margin: 0 0 var(--space-2);
+}
