@@ -68,9 +68,15 @@ export function GameDetailPage() {
 
   return (
     <section>
-      <Link className={styles.backLink} to="/games">
-        Return
-      </Link>
+      <div className={styles.pageActions}>
+        <Link className={styles.backLink} to="/games">
+          Return
+        </Link>
+
+        <Link className={styles.buildRouteLink} to={`/games/${gameCode}/route-builder`}>
+          Build Route
+        </Link>
+      </div>
 
       <img
         className={styles.gameImage}

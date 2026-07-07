@@ -1,0 +1,14 @@
+.actionsContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.resetButton {
+  border: 2px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.9rem;
+  background: color-mix(in srgb, var(--color-bg-dialog) 82%, black 18%);
+  color: var(--color-text);
+  font-weight: 700;
+  cursor: pointer;
+}

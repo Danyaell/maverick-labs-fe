@@ -94,7 +94,7 @@ describe('GameDetailPage', () => {
       </MemoryRouter>,
     )
 
-    expect(await screen.findByText('Mega Man X')).toBeInTheDocument()
+    expect(await screen.findByAltText('Mega Man X')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /storm eagle stage/i }))
 

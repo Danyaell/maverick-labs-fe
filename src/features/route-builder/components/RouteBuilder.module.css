@@ -1,0 +1,29 @@
+.builderContainer {
+  display: grid;
+  gap: 1rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.stageList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stageItem {
+  width: 100%;
+}
+
+@media (width < 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
