@@ -1,8 +1,8 @@
 export type RouteGoal = 'HUNDRED_PERCENT'
 
-export type DifficultyLabel = 'VERY_EASY' | 'EASY' | 'NORMAL' | 'HARD' | 'VERY_HARD'
+export type DifficultyLabel = 'VERY_EASY' | 'EASY' | 'MEDIUM' | 'HARD' | 'VERY_HARD'
 
-export type RouteWarningType = 'MISSING_REQUIREMENT' | 'BACKTRACKING' | 'TIME_RISK' | 'DIFFICULTY_SPIKE'
+export type RouteWarningType = 'MISSING_REQUIREMENT' | 'BACKTRACKING' | 'TIME_RISK' | 'DIFFICULTY_SPIKE' | 'BOSS_WITHOUT_WEAKNESS'
 
 export interface AnalyzeRouteRequest {
   gameCode: string
@@ -19,7 +19,7 @@ export interface RouteWarning {
 export interface RouteBreakdown {
   bossDifficulty: number
   weaknessOptimization: number
-  backtrackingPenalty: number
+  baseDifficulty: number
   timePenalty: number
 }
 

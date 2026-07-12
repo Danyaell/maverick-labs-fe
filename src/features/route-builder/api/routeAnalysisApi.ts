@@ -9,8 +9,8 @@ import type {
   RouteWarningType,
 } from '../types/routeAnalysis.types'
 
-const DIFFICULTY_LABELS = new Set<DifficultyLabel>(['VERY_EASY', 'EASY', 'NORMAL', 'HARD', 'VERY_HARD'])
-const WARNING_TYPES = new Set<RouteWarningType>(['MISSING_REQUIREMENT', 'BACKTRACKING', 'TIME_RISK', 'DIFFICULTY_SPIKE'])
+const DIFFICULTY_LABELS = new Set<DifficultyLabel>(['VERY_EASY', 'EASY', 'MEDIUM', 'HARD', 'VERY_HARD'])
+const WARNING_TYPES = new Set<RouteWarningType>(['MISSING_REQUIREMENT', 'BACKTRACKING', 'TIME_RISK', 'DIFFICULTY_SPIKE', 'BOSS_WITHOUT_WEAKNESS'])
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
@@ -30,12 +30,12 @@ function isRouteBreakdown(value: unknown): value is RouteBreakdown {
     isObject(value) &&
     typeof value.bossDifficulty === 'number' &&
     typeof value.weaknessOptimization === 'number' &&
-    typeof value.backtrackingPenalty === 'number' &&
+    typeof value.baseDifficulty === 'number' && //backtrackingPenalty
     typeof value.timePenalty === 'number'
   )
 }
 
-function isRouteAnalysisResponse(value: unknown): value is RouteAnalysisResponse {
+function isRouteAnalysisResponse(value: RouteAnalysisResponse): value is RouteAnalysisResponse {
   return (
     isObject(value) &&
     typeof value.gameCode === 'string' &&
@@ -49,7 +49,7 @@ function isRouteAnalysisResponse(value: unknown): value is RouteAnalysisResponse
   )
 }
 
-function validateRouteAnalysisResponse(value: unknown): RouteAnalysisResponse {
+function validateRouteAnalysisResponse(value: RouteAnalysisResponse): RouteAnalysisResponse {
   if (!isRouteAnalysisResponse(value)) {
     throw new Error('Invalid route analysis response payload.')
   }
@@ -68,5 +68,5 @@ export async function analyzeRoute(request: AnalyzeRouteRequest, init?: RequestI
     body: JSON.stringify(request),
   })
 
-  return validateRouteAnalysisResponse(response)
+  return validateRouteAnalysisResponse(response as RouteAnalysisResponse)
 }

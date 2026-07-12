@@ -22,8 +22,8 @@ export function RouteBreakdown({ breakdown }: RouteBreakdownProps) {
       <dt>Weakness optimization</dt>
       <dd>{formatSignedValue(breakdown.weaknessOptimization)}</dd>
 
-      <dt>Backtracking penalty</dt>
-      <dd>{formatSignedValue(breakdown.backtrackingPenalty)}</dd>
+      <dt>Base difficulty</dt>
+      <dd>{formatSignedValue(breakdown.baseDifficulty)}</dd>
 
       <dt>Time penalty</dt>
       <dd>{formatSignedValue(breakdown.timePenalty)}</dd>
