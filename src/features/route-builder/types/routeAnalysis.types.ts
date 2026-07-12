@@ -1,8 +1,14 @@
 export type RouteGoal = 'HUNDRED_PERCENT'
 
 export type DifficultyLabel = 'VERY_EASY' | 'EASY' | 'MEDIUM' | 'HARD' | 'VERY_HARD'
-
-export type RouteWarningType = 'MISSING_REQUIREMENT' | 'BACKTRACKING' | 'TIME_RISK' | 'DIFFICULTY_SPIKE' | 'BOSS_WITHOUT_WEAKNESS'
+export type RouteWarningType =
+  | 'MISSING_REQUIREMENT'
+  | 'BACKTRACKING'
+  | 'TIME_RISK'
+  | 'DIFFICULTY_SPIKE'
+  | 'BOSS_WITHOUT_WEAKNESS'
+export type RecommendationType = 'BOSS_ORDER' | 'BACKTRACKING' | 'ROUTE_EFFICIENCY'
+export type RecommendationSeverity = 'INFO' | 'WARNING' | 'SUCCESS'
 
 export interface AnalyzeRouteRequest {
   gameCode: string
@@ -23,6 +29,13 @@ export interface RouteBreakdown {
   timePenalty: number
 }
 
+export interface RouteRecommendation {
+  type: RecommendationType
+  severity: RecommendationSeverity
+  message: string
+  relatedStages?: string[] | null
+}
+
 export interface RouteAnalysisResponse {
   gameCode: string
   difficultyScore: number
@@ -30,5 +43,6 @@ export interface RouteAnalysisResponse {
   backtrackingScore: number
   estimatedMinutes: number
   warnings: RouteWarning[]
+  recommendations: RouteRecommendation[]
   breakdown: RouteBreakdown
 }
