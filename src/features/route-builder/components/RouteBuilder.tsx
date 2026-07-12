@@ -29,13 +29,8 @@ export function RouteBuilder({ game }: RouteBuilderProps) {
   }, [game])
 
   async function handleAnalyzeRoute() {
-    if (!game) {
-      return;
-    }
-
     setRouteAnalysisError(null);
     setIsAnalyzingRoute(true);
-
     try {
       const analysis = await analyzeRoute({
         gameCode: game.code,

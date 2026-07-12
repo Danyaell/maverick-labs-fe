@@ -16,7 +16,7 @@ describe('analyzeRoute', () => {
     const mockResponse: RouteAnalysisResponse = {
       gameCode: 'MMX',
       difficultyScore: 74,
-      difficultyLabel: 'NORMAL',
+      difficultyLabel: 'MEDIUM',
       backtrackingScore: 62,
       estimatedMinutes: 87,
       warnings: [
@@ -29,7 +29,7 @@ describe('analyzeRoute', () => {
       breakdown: {
         bossDifficulty: 40,
         weaknessOptimization: 26,
-        backtrackingPenalty: -8,
+        baseDifficulty: -8,
         timePenalty: -6,
       },
     }
