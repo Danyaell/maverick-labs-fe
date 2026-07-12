@@ -86,6 +86,7 @@ export function GameDetailPage() {
 
       <div>
         <h3>Stages</h3>
+
         <ul className={styles.stageList}>
           {sortedStages.map((stage) => (
             <li key={stage.slug} className={styles.stageItem}>

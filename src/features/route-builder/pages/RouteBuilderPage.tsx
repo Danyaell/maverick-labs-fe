@@ -1,70 +1,76 @@
-import styles from './RouteBuilderPage.module.css'
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router'
-import { NotFoundPage } from '../../../app/pages/NotFoundPage'
-import { ErrorState } from '../../../shared/components/ErrorState'
-import { LoadingState } from '../../../shared/components/LoadingState'
-import { fetchGameDetail } from '../../games/api/gameApi'
-import type { GameDetail } from '../../games/types/game.types'
-import { RouteBuilder } from '../components/RouteBuilder'
+import styles from "./RouteBuilderPage.module.css";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router";
+import { NotFoundPage } from "../../../app/pages/NotFoundPage";
+import { ErrorState } from "../../../shared/components/ErrorState";
+import { LoadingState } from "../../../shared/components/LoadingState";
+import { fetchGameDetail } from "../../games/api/gameApi";
+import type { GameDetail } from "../../games/types/game.types";
+import { RouteBuilder } from "../components/RouteBuilder";
 
 export function RouteBuilderPage() {
-  const { gameCode } = useParams<{ gameCode: string }>()
-  const [gameDetail, setGameDetail] = useState<GameDetail | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const { gameCode } = useParams<{ gameCode: string }>();
+  const [gameDetail, setGameDetail] = useState<GameDetail | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!gameCode) {
-      return
+      return;
     }
 
-    const controller = new AbortController()
+    const controller = new AbortController();
     const loadGameDetail = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
 
       try {
-        const game = await fetchGameDetail(gameCode, { signal: controller.signal })
+        const game = await fetchGameDetail(gameCode, {
+          signal: controller.signal,
+        });
 
         if (controller.signal.aborted) {
-          return
+          return;
         }
 
-        setGameDetail(game)
-        setError(null)
+        setGameDetail(game);
+        setError(null);
       } catch (fetchError) {
         if (controller.signal.aborted) {
-          return
+          return;
         }
 
-        setError(fetchError instanceof Error ? fetchError.message : 'Unable to load game data.')
-        setGameDetail(null)
+        setError(
+          fetchError instanceof Error
+            ? fetchError.message
+            : "Unable to load game data.",
+        );
+        setGameDetail(null);
       } finally {
         if (!controller.signal.aborted) {
-          setIsLoading(false)
+          setIsLoading(false);
         }
       }
-    }
+    };
 
-    void loadGameDetail()
+    void loadGameDetail();
 
-    return () => controller.abort()
-  }, [gameCode])
+    return () => controller.abort();
+  }, [gameCode]);
 
   if (!gameCode) {
-    return <NotFoundPage />
+    return <NotFoundPage />;
   }
 
   if (isLoading) {
-    return <LoadingState message="Loading route builder..." />
+    return <LoadingState message="Loading route builder..." />;
   }
 
   if (error) {
-    return <ErrorState message={error} />
+    return <ErrorState message={error} />;
   }
 
   if (!gameDetail) {
-    return <NotFoundPage />
+    return <NotFoundPage />;
   }
 
   return (
@@ -79,5 +85,5 @@ export function RouteBuilderPage() {
 
       <RouteBuilder key={gameDetail.code} game={gameDetail} />
     </section>
-  )
+  );
 }
