@@ -151,7 +151,7 @@ describe('GameDetailPage', () => {
     mockAnalyzeRoute.mockResolvedValue({
       gameCode: 'MMX',
       difficultyScore: 71,
-      difficultyLabel: 'NORMAL',
+      difficultyLabel: 'MEDIUM',
       backtrackingScore: 64,
       estimatedMinutes: 89,
       warnings: [
@@ -161,10 +161,18 @@ describe('GameDetailPage', () => {
           stageSlug: 'storm-eagle',
         },
       ],
+      recommendations: [
+        {
+          type: 'BOSS_ORDER',
+          severity: 'INFO',
+          message: 'This route order is stable for first attempts.',
+          relatedStages: ['chill-penguin'],
+        },
+      ],
       breakdown: {
         bossDifficulty: 36,
         weaknessOptimization: 28,
-        backtrackingPenalty: -9,
+        baseDifficulty: -9,
         timePenalty: -7,
       },
     })
@@ -195,10 +203,12 @@ describe('GameDetailPage', () => {
     expect(await screen.findByText(/difficulty: 71 \/ 100/i)).toBeInTheDocument()
     expect(screen.getByText(/backtracking: 64 \/ 100/i)).toBeInTheDocument()
     expect(screen.getByText(/estimated time: 89 min/i)).toBeInTheDocument()
+    expect(screen.getByText(/Recommendations/i)).toBeInTheDocument()
+    expect(screen.getByText(/This route order is stable for first attempts/i)).toBeInTheDocument()
     expect(screen.getByText(/MISSING_REQUIREMENT/)).toBeInTheDocument()
     expect(screen.getByText(/Boss difficulty/)).toBeInTheDocument()
     expect(screen.getByText(/Weakness optimization/)).toBeInTheDocument()
-    expect(screen.getByText(/Backtracking penalty/)).toBeInTheDocument()
+    expect(screen.getByText(/Base difficulty/)).toBeInTheDocument()
     expect(screen.getByText(/Time penalty/)).toBeInTheDocument()
   })
 
@@ -257,10 +267,11 @@ describe('GameDetailPage', () => {
       backtrackingScore: 50,
       estimatedMinutes: 95,
       warnings: [],
+      recommendations: [],
       breakdown: {
         bossDifficulty: 50,
         weaknessOptimization: 20,
-        backtrackingPenalty: -10,
+        baseDifficulty: -10,
         timePenalty: -10,
       },
     })

@@ -26,6 +26,14 @@ describe('analyzeRoute', () => {
           stageSlug: 'spark-mandrill',
         },
       ],
+      recommendations: [
+        {
+          type: 'BOSS_ORDER',
+          severity: 'WARNING',
+          message: 'Consider moving Spark Mandrill after Chill Penguin for safer progression.',
+          relatedStages: ['chill-penguin', 'spark-mandrill'],
+        },
+      ],
       breakdown: {
         bossDifficulty: 40,
         weaknessOptimization: 26,

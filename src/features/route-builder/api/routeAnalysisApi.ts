@@ -3,14 +3,19 @@ import { API_BASE_URL } from '../../../shared/config/env'
 import type {
   AnalyzeRouteRequest,
   DifficultyLabel,
+  RecommendationSeverity,
+  RecommendationType,
   RouteAnalysisResponse,
   RouteBreakdown,
+  RouteRecommendation,
   RouteWarning,
   RouteWarningType,
 } from '../types/routeAnalysis.types'
 
 const DIFFICULTY_LABELS = new Set<DifficultyLabel>(['VERY_EASY', 'EASY', 'MEDIUM', 'HARD', 'VERY_HARD'])
 const WARNING_TYPES = new Set<RouteWarningType>(['MISSING_REQUIREMENT', 'BACKTRACKING', 'TIME_RISK', 'DIFFICULTY_SPIKE', 'BOSS_WITHOUT_WEAKNESS'])
+const RECOMMENDATION_TYPES = new Set<RecommendationType>(['BOSS_ORDER', 'BACKTRACKING', 'ROUTE_EFFICIENCY'])
+const RECOMMENDATION_SEVERITIES = new Set<RecommendationSeverity>(['INFO', 'WARNING', 'SUCCESS'])
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
@@ -30,12 +35,24 @@ function isRouteBreakdown(value: unknown): value is RouteBreakdown {
     isObject(value) &&
     typeof value.bossDifficulty === 'number' &&
     typeof value.weaknessOptimization === 'number' &&
-    typeof value.baseDifficulty === 'number' && //backtrackingPenalty
+    typeof value.baseDifficulty === 'number' &&
     typeof value.timePenalty === 'number'
   )
 }
 
-function isRouteAnalysisResponse(value: RouteAnalysisResponse): value is RouteAnalysisResponse {
+function isRouteRecommendation(value: unknown): value is RouteRecommendation {
+  return (
+    isObject(value) &&
+    RECOMMENDATION_TYPES.has(value.type as RecommendationType) &&
+    RECOMMENDATION_SEVERITIES.has(value.severity as RecommendationSeverity) &&
+    typeof value.message === 'string' &&
+    (value.relatedStages === undefined ||
+      value.relatedStages === null ||
+      (Array.isArray(value.relatedStages) && value.relatedStages.every((stage) => typeof stage === 'string')))
+  )
+}
+
+function isRouteAnalysisResponse(value: unknown): value is RouteAnalysisResponse {
   return (
     isObject(value) &&
     typeof value.gameCode === 'string' &&
@@ -45,11 +62,13 @@ function isRouteAnalysisResponse(value: RouteAnalysisResponse): value is RouteAn
     typeof value.estimatedMinutes === 'number' &&
     Array.isArray(value.warnings) &&
     value.warnings.every((warning) => isRouteWarning(warning)) &&
+    Array.isArray(value.recommendations) &&
+    value.recommendations.every((recommendation) => isRouteRecommendation(recommendation)) &&
     isRouteBreakdown(value.breakdown)
   )
 }
 
-function validateRouteAnalysisResponse(value: RouteAnalysisResponse): RouteAnalysisResponse {
+function validateRouteAnalysisResponse(value: unknown): RouteAnalysisResponse {
   if (!isRouteAnalysisResponse(value)) {
     throw new Error('Invalid route analysis response payload.')
   }
@@ -68,5 +87,5 @@ export async function analyzeRoute(request: AnalyzeRouteRequest, init?: RequestI
     body: JSON.stringify(request),
   })
 
-  return validateRouteAnalysisResponse(response as RouteAnalysisResponse)
+  return validateRouteAnalysisResponse(response)
 }
