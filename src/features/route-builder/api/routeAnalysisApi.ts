@@ -33,10 +33,11 @@ function isRouteWarning(value: unknown): value is RouteWarning {
 function isRouteBreakdown(value: unknown): value is RouteBreakdown {
   return (
     isObject(value) &&
-    typeof value.bossDifficulty === 'number' &&
-    typeof value.weaknessOptimization === 'number' &&
-    typeof value.baseDifficulty === 'number' &&
-    typeof value.timePenalty === 'number'
+    typeof value.baseDifficultyAverage === 'number' &&
+    typeof value.combatDifficulty === 'number' &&
+    typeof value.routeEfficiencyScore === 'number' &&
+    typeof value.timePenaltyMinutes === 'number' &&
+    typeof value.weaknessReduction === 'number'
   )
 }
 

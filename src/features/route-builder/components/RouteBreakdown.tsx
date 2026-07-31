@@ -16,17 +16,20 @@ function formatSignedValue(value: number): string {
 export function RouteBreakdown({ breakdown }: RouteBreakdownProps) {
   return (
     <dl className={styles.grid}>
-      <dt>Boss difficulty</dt>
-      <dd>{formatSignedValue(breakdown.bossDifficulty)}</dd>
+      <dt>Base Difficulty</dt>
+      <dd>{formatSignedValue(breakdown.baseDifficultyAverage)}</dd>
 
-      <dt>Weakness optimization</dt>
-      <dd>{formatSignedValue(breakdown.weaknessOptimization)}</dd>
+      <dt>Combat Difficulty</dt>
+      <dd>{formatSignedValue(breakdown.combatDifficulty)}</dd>
 
-      <dt>Base difficulty</dt>
-      <dd>{formatSignedValue(breakdown.baseDifficulty)}</dd>
+      <dt>Weakness Reduction</dt>
+      <dd>{formatSignedValue(breakdown.weaknessReduction)}</dd>
 
-      <dt>Time penalty</dt>
-      <dd>{formatSignedValue(breakdown.timePenalty)}</dd>
+      <dt>Time Penalty</dt>
+      <dd>{formatSignedValue(breakdown.timePenaltyMinutes)}</dd>
+
+      <dt>Route Efficiency</dt>
+      <dd>{formatSignedValue(breakdown.routeEfficiencyScore)}</dd>
     </dl>
   )
 }

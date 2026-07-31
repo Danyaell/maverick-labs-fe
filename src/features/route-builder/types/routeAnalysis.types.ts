@@ -23,10 +23,11 @@ export interface RouteWarning {
 }
 
 export interface RouteBreakdown {
-  bossDifficulty: number
-  weaknessOptimization: number
-  baseDifficulty: number
-  timePenalty: number
+  baseDifficultyAverage: number
+  combatDifficulty: number
+  routeEfficiencyScore: number
+  timePenaltyMinutes: number
+  weaknessReduction: number
 }
 
 export interface RouteRecommendation {
