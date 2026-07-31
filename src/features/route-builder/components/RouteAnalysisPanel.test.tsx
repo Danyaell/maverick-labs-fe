@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
 import { RouteAnalysisPanel } from './RouteAnalysisPanel'
@@ -29,10 +28,11 @@ describe('RouteAnalysisPanel', () => {
             },
           ],
           breakdown: {
-            bossDifficulty: 40,
-            weaknessOptimization: 26,
-            baseDifficulty: -8,
-            timePenalty: -6,
+            baseDifficultyAverage: 40,
+            weaknessReduction: 26,
+            combatDifficulty: -8,
+            timePenaltyMinutes: -6,
+            routeEfficiencyScore: 0,
           },
         }}
       />,
@@ -131,10 +131,11 @@ describe('RouteAnalysisPanel', () => {
             },
           ],
           breakdown: {
-            bossDifficulty: 35,
-            weaknessOptimization: 30,
-            baseDifficulty: -5,
-            timePenalty: -10,
+            combatDifficulty: 35,
+            weaknessReduction: 30,
+            baseDifficultyAverage: -5,
+            timePenaltyMinutes: -10,
+            routeEfficiencyScore: 0,
           },
         }}
       />,
