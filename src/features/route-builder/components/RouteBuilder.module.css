@@ -3,6 +3,21 @@
   gap: 1rem;
 }
 
+.analyzeButton {
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.analyzeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);

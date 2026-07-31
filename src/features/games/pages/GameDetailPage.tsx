@@ -1,54 +1,23 @@
 import styles from "./GameDetailPage.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router";
-import { fetchGameDetail } from "../api/gameApi";
 import { BossSummary } from "../components/BossSummary";
 import { CollectibleList } from "../components/CollectibleList";
 import { StageCard } from "../components/StageCard";
 import { WeaponReward } from "../components/WeaponReward";
-import type { GameDetail, Stage } from "../types/game.types";
 import { LoadingState } from "../../../shared/components/LoadingState";
 import { ErrorState } from "../../../shared/components/ErrorState";
+import { NotFoundPage } from "../../../app/pages/NotFoundPage";
 import { getGameAssetUrl } from "../../../utils/assets";
+import { useGameDetailQuery } from "../hooks/gameQueries";
 
 export function GameDetailPage() {
   const { gameCode } = useParams<{ gameCode: string }>();
-  const [gameDetail, setGameDetail] = useState<GameDetail | null>(null);
-  const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    setError(null);
-    setIsLoading(true);
-
-    fetchGameDetail(gameCode ?? "", { signal: controller.signal })
-      .then((data) => {
-        setGameDetail(data);
-        setSelectedStage(data.stages[0] ?? null);
-      })
-      .catch((fetchError) => {
-        if (controller.signal.aborted) {
-          return;
-        }
-        setError(
-          fetchError instanceof Error
-            ? fetchError.message
-            : "Unable to load game data.",
-        );
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setIsLoading(false);
-        }
-      });
-    return () => controller.abort();
-  }, [gameCode]);
-
-  const stageImageUrl = getGameAssetUrl(
-    `${gameCode?.toLowerCase()}.title.logo`,
+  const [selectedStageSlug, setSelectedStageSlug] = useState<string | null>(
+    null,
   );
+
+  const { data: gameDetail, error, isLoading } = useGameDetailQuery(gameCode);
 
   const sortedStages = useMemo(
     () =>
@@ -58,13 +27,31 @@ export function GameDetailPage() {
     [gameDetail],
   );
 
+  const selectedStage = useMemo(
+    () =>
+      sortedStages.find((stage) => stage.slug === selectedStageSlug) ??
+      sortedStages[0] ??
+      null,
+    [selectedStageSlug, sortedStages],
+  );
+
+  if (!gameCode) {
+    return <NotFoundPage />;
+  }
+
   if (isLoading) {
-    return <LoadingState message="Loading games..." />;
+    return <LoadingState message="Loading game..." />;
   }
 
   if (error) {
     return <ErrorState message={error} />;
   }
+
+  if (!gameDetail) {
+    return <NotFoundPage />;
+  }
+
+  const gameImageUrl = getGameAssetUrl(`${gameCode.toLowerCase()}.title.logo`);
 
   return (
     <section>
@@ -73,15 +60,18 @@ export function GameDetailPage() {
           Return
         </Link>
 
-        <Link className={styles.buildRouteLink} to={`/games/${gameCode}/route-builder`}>
+        <Link
+          className={styles.buildRouteLink}
+          to={`/games/${gameCode}/route-builder`}
+        >
           Build Route
         </Link>
       </div>
 
       <img
         className={styles.gameImage}
-        src={stageImageUrl || undefined}
-        alt={gameDetail?.title}
+        src={gameImageUrl || undefined}
+        alt={gameDetail.title}
       />
 
       <div>
@@ -93,29 +83,32 @@ export function GameDetailPage() {
               <StageCard
                 stage={stage}
                 isSelected={selectedStage?.slug === stage.slug}
-                onSelect={setSelectedStage}
+                onSelect={(selected) => setSelectedStageSlug(selected.slug)}
               />
             </li>
           ))}
         </ul>
       </div>
 
-      {selectedStage ? (
+      {selectedStage && (
         <div className={styles.detailContainer}>
           <h3>{selectedStage.name}</h3>
+
           <div className={styles.detailContent}>
             <div className={styles.detailItem}>
               <BossSummary boss={selectedStage.boss} />
             </div>
+
             <div className={styles.detailItem}>
               <WeaponReward weaponReward={selectedStage.weaponReward} />
             </div>
+
             <div className={styles.detailItem}>
               <CollectibleList collectibles={selectedStage.collectibles} />
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </section>
   );
 }

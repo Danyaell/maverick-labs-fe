@@ -1,61 +1,15 @@
 import styles from "./RouteBuilderPage.module.css";
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { NotFoundPage } from "../../../app/pages/NotFoundPage";
 import { ErrorState } from "../../../shared/components/ErrorState";
 import { LoadingState } from "../../../shared/components/LoadingState";
-import { fetchGameDetail } from "../../games/api/gameApi";
-import type { GameDetail } from "../../games/types/game.types";
+import { useGameDetailQuery } from "../../games/hooks/gameQueries";
 import { RouteBuilder } from "../components/RouteBuilder";
 
 export function RouteBuilderPage() {
   const { gameCode } = useParams<{ gameCode: string }>();
-  const [gameDetail, setGameDetail] = useState<GameDetail | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (!gameCode) {
-      return;
-    }
-
-    const controller = new AbortController();
-    const loadGameDetail = async () => {
-      setIsLoading(true);
-
-      try {
-        const game = await fetchGameDetail(gameCode, {
-          signal: controller.signal,
-        });
-
-        if (controller.signal.aborted) {
-          return;
-        }
-
-        setGameDetail(game);
-        setError(null);
-      } catch (fetchError) {
-        if (controller.signal.aborted) {
-          return;
-        }
-
-        setError(
-          fetchError instanceof Error
-            ? fetchError.message
-            : "Unable to load game data.",
-        );
-        setGameDetail(null);
-      } finally {
-        if (!controller.signal.aborted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void loadGameDetail();
-
-    return () => controller.abort();
-  }, [gameCode]);
+  const { data: gameDetail, error, isLoading } = useGameDetailQuery(gameCode);
 
   if (!gameCode) {
     return <NotFoundPage />;

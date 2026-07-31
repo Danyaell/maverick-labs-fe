@@ -1,32 +1,34 @@
-import styles from './RouteBuilder.module.css'
-import type { GameDetail } from '../../games/types/game.types'
-import { useRouteBuilder } from '../hooks/useRouteBuilder'
-import { DraggableStageCard } from './DraggableStageCard'
-import { RouteBuilderActions } from './RouteBuilderActions'
-import { RouteOrderPreview } from './RouteOrderPreview'
+import styles from "./RouteBuilder.module.css";
+import type { GameDetail } from "../../games/types/game.types";
+import { useRouteBuilder } from "../hooks/useRouteBuilder";
+import { DraggableStageCard } from "./DraggableStageCard";
+import { RouteBuilderActions } from "./RouteBuilderActions";
+import { RouteOrderPreview } from "./RouteOrderPreview";
 import { analyzeRoute } from "../api/routeAnalysisApi";
 import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
 import type { RouteAnalysisResponse } from "../types/routeAnalysis.types";
-import { useEffect, useState } from 'react'
+import { useState } from "react";
 
 interface RouteBuilderProps {
-  game: GameDetail
+  game: GameDetail;
 }
 
 export function RouteBuilder({ game }: RouteBuilderProps) {
-  const { orderedStages, draggingIndex, onDragStart, onDragOver, onDrop, onDragEnd, onReset } =
-    useRouteBuilder(game)
+  const {
+    orderedStages,
+    draggingIndex,
+    onDragStart,
+    onDragOver,
+    onDrop,
+    onDragEnd,
+    onReset,
+  } = useRouteBuilder(game);
   const [routeAnalysis, setRouteAnalysis] =
     useState<RouteAnalysisResponse | null>(null);
   const [routeAnalysisError, setRouteAnalysisError] = useState<string | null>(
     null,
   );
   const [isAnalyzingRoute, setIsAnalyzingRoute] = useState(false);
-
-  useEffect(() => {
-    setRouteAnalysis(null);
-    setRouteAnalysisError(null);
-  }, [game])
 
   async function handleAnalyzeRoute() {
     setRouteAnalysisError(null);
@@ -57,7 +59,7 @@ export function RouteBuilder({ game }: RouteBuilderProps) {
       <button
         type="button"
         className={styles.analyzeButton}
-        onClick={handleAnalyzeRoute}
+        onClick={() => void handleAnalyzeRoute()}
         disabled={isAnalyzingRoute || orderedStages.length === 0}
       >
         {isAnalyzingRoute ? "Analyzing route..." : "Analyze Route"}
@@ -90,5 +92,5 @@ export function RouteBuilder({ game }: RouteBuilderProps) {
         <RouteOrderPreview orderedStages={orderedStages} />
       </div>
     </section>
-  )
+  );
 }

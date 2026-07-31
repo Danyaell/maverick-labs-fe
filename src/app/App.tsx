@@ -6,7 +6,7 @@ export default function App() {
     eager: true,
     import: "default",
     query: "?url",
-  }) as Record<string, string>;
+  });
 
   return (
     <div className={styles.app}>

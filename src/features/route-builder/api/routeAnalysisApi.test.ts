@@ -13,7 +13,7 @@ describe('analyzeRoute', () => {
   test('posts to /api/v1/routes/analyze with gameCode, stageOrder, and goal', async () => {
     const { analyzeRoute } = await import('./routeAnalysisApi')
 
-    const mockResponse: RouteAnalysisResponse = {
+    const mockResponse: RouteAnalysisResponse ={
       gameCode: 'MMX',
       difficultyScore: 74,
       difficultyLabel: 'MEDIUM',
@@ -35,30 +35,31 @@ describe('analyzeRoute', () => {
         },
       ],
       breakdown: {
-        bossDifficulty: 40,
-        weaknessOptimization: 26,
-        baseDifficulty: -8,
-        timePenalty: -6,
+        baseDifficultyAverage: 64,
+        combatDifficulty: 45,
+        routeEfficiencyScore: 67,
+        timePenaltyMinutes: 20,
+        weaknessReduction: 19,
       },
     }
 
     const mockFetch = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => mockResponse,
+      json: async () => await Promise.resolve(mockResponse),
     })
 
     vi.stubGlobal('fetch', mockFetch)
 
     const payload = {
       gameCode: 'MMX',
-      stageOrder: ['chill-penguin', 'spark-mandrill'],
+      stageOrder: ['chill-penguin', 'storm-eagle', 'flame-mammoth', 'spark-mandrill', 'armored-armadillo', 'launch-octopus', 'boomer-kwang', 'sting-chameleon'],
       goal: 'HUNDRED_PERCENT' as const,
     }
 
     await analyzeRoute(payload)
 
     expect(mockFetch).toHaveBeenCalledTimes(1)
-    const [url, init] = mockFetch.mock.calls[0]
+    const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit]
     expect(url).toBe('http://localhost:8080/api/v1/routes/analyze')
     expect(init.method).toBe('POST')
     expect(init.body).toBe(JSON.stringify(payload))

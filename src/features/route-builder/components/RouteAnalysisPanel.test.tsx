@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
 import { RouteAnalysisPanel } from './RouteAnalysisPanel'
@@ -29,10 +28,11 @@ describe('RouteAnalysisPanel', () => {
             },
           ],
           breakdown: {
-            bossDifficulty: 40,
-            weaknessOptimization: 26,
-            baseDifficulty: -8,
-            timePenalty: -6,
+            baseDifficultyAverage: 40,
+            weaknessReduction: 26,
+            combatDifficulty: -8,
+            timePenaltyMinutes: -6,
+            routeEfficiencyScore: 0,
           },
         }}
       />,
@@ -45,10 +45,11 @@ describe('RouteAnalysisPanel', () => {
     expect(screen.getByText('Move Spark Mandrill later for safer progression.')).toBeInTheDocument()
     expect(screen.getByText('Warnings')).toBeInTheDocument()
     expect(screen.getByText('Breakdown')).toBeInTheDocument()
-    expect(screen.getByText('Boss difficulty')).toBeInTheDocument()
-    expect(screen.getByText('Weakness optimization')).toBeInTheDocument()
-    expect(screen.getByText('Base difficulty')).toBeInTheDocument()
-    expect(screen.getByText('Time penalty')).toBeInTheDocument()
+    expect(screen.getByText('Base Difficulty')).toBeInTheDocument()
+    expect(screen.getByText('Combat Difficulty')).toBeInTheDocument()
+    expect(screen.getByText('Weakness Reduction')).toBeInTheDocument()
+    expect(screen.getByText('Time Penalty')).toBeInTheDocument()
+    expect(screen.getByText('Route Efficiency')).toBeInTheDocument()
   })
 
   test('deduplicates warning-equivalent recommendations and limits rendered recommendations to 5', () => {
@@ -110,12 +111,31 @@ describe('RouteAnalysisPanel', () => {
               message: 'Recommendation 6',
               relatedStages: null,
             },
+            {
+              type: 'BOSS_ORDER',
+              severity: 'INFO',
+              message: 'Recommendation 7',
+              relatedStages: null,
+            },
+            {
+              type: 'BOSS_ORDER',
+              severity: 'INFO',
+              message: 'Recommendation 8',
+              relatedStages: null,
+            },
+            {
+              type: 'BOSS_ORDER',
+              severity: 'INFO',
+              message: 'Recommendation 9',
+              relatedStages: null,
+            },
           ],
           breakdown: {
-            bossDifficulty: 35,
-            weaknessOptimization: 30,
-            baseDifficulty: -5,
-            timePenalty: -10,
+            combatDifficulty: 35,
+            weaknessReduction: 30,
+            baseDifficultyAverage: -5,
+            timePenaltyMinutes: -10,
+            routeEfficiencyScore: 0,
           },
         }}
       />,
@@ -124,6 +144,6 @@ describe('RouteAnalysisPanel', () => {
     expect(screen.queryByText('You should avoid this heavy backtracking path.')).not.toBeInTheDocument()
     expect(screen.getByText('Recommendation 1')).toBeInTheDocument()
     expect(screen.getByText('Recommendation 5')).toBeInTheDocument()
-    expect(screen.queryByText('Recommendation 6')).not.toBeInTheDocument()
+    expect(screen.queryByText('Recommendation 9')).not.toBeInTheDocument()
   })
 })
