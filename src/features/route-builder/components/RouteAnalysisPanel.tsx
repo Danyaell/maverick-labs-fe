@@ -26,7 +26,7 @@ function getVisibleRecommendations(analysis: RouteAnalysisResponse) {
     (recommendation) => !warningMessages.has(normalizeMessage(recommendation.message)),
   )
 
-  return uniqueRecommendations.slice(0, 20)
+  return uniqueRecommendations.slice(0, 8)
 }
 
 export function RouteAnalysisPanel({ analysis }: RouteAnalysisPanelProps) {

@@ -35,10 +35,11 @@ describe('analyzeRoute', () => {
         },
       ],
       breakdown: {
-        bossDifficulty: 40,
-        weaknessOptimization: 26,
-        baseDifficulty: -8,
-        timePenalty: -6,
+        baseDifficultyAverage: 64,
+        combatDifficulty: 45,
+        routeEfficiencyScore: 67,
+        timePenaltyMinutes: 20,
+        weaknessReduction: 19,
       },
     }
 
@@ -51,7 +52,7 @@ describe('analyzeRoute', () => {
 
     const payload = {
       gameCode: 'MMX',
-      stageOrder: ['chill-penguin', 'spark-mandrill'],
+      stageOrder: ['chill-penguin', 'storm-eagle', 'flame-mammoth', 'spark-mandrill', 'armored-armadillo', 'launch-octopus', 'boomer-kwang', 'sting-chameleon'],
       goal: 'HUNDRED_PERCENT' as const,
     }
 
