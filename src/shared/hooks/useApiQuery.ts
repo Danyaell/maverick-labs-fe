@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 
 interface QueryState<T> {
-  queryKey: string;
+  queryKey: string | null;
   data: T | null;
   error: string | null;
-  isLoading: boolean;
 }
 
 interface UseApiQueryOptions<T> {
@@ -26,33 +25,18 @@ export function useApiQuery<T>({
   enabled = true,
   fallbackErrorMessage = "Unable to load data.",
 }: UseApiQueryOptions<T>): QueryResult<T> {
-  const [state, setState] = useState<QueryState<T>>(() => ({
-    queryKey,
+  const [state, setState] = useState<QueryState<T>>({
+    queryKey: null,
     data: null,
     error: null,
-    isLoading: enabled,
-  }));
+  });
 
   useEffect(() => {
     if (!enabled) {
-      setState({
-        queryKey,
-        data: null,
-        error: null,
-        isLoading: false,
-      });
-
       return;
     }
 
     const controller = new AbortController();
-
-    setState({
-      queryKey,
-      data: null,
-      error: null,
-      isLoading: true,
-    });
 
     void queryFn(controller.signal)
       .then((data) => {
@@ -64,7 +48,6 @@ export function useApiQuery<T>({
           queryKey,
           data,
           error: null,
-          isLoading: false,
         });
       })
       .catch((queryError: unknown) => {
@@ -79,7 +62,6 @@ export function useApiQuery<T>({
             queryError instanceof Error
               ? queryError.message
               : fallbackErrorMessage,
-          isLoading: false,
         });
       });
 
@@ -94,17 +76,11 @@ export function useApiQuery<T>({
     };
   }
 
-  if (state.queryKey !== queryKey) {
-    return {
-      data: null,
-      error: null,
-      isLoading: true,
-    };
-  }
+  const isCurrentQuery = state.queryKey === queryKey;
 
   return {
-    data: state.data,
-    error: state.error,
-    isLoading: state.isLoading,
+    data: isCurrentQuery ? state.data : null,
+    error: isCurrentQuery ? state.error : null,
+    isLoading: !isCurrentQuery,
   };
 }
