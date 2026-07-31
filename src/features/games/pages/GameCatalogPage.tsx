@@ -13,8 +13,6 @@ export function GameCatalogPage() {
 
   useEffect(() => {
     const controller = new AbortController()
-    setError(null)
-    setIsLoading(true)
 
     fetchGames({ signal: controller.signal })
       .then((data) => setGames(data))

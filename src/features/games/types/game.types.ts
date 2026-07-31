@@ -1,17 +1,17 @@
-export type GameSummary = {
+export interface GameSummary {
   code: string;
   title: string;
   releaseOrder: number;
-};
+}
 
-export type GameDetail = {
+export interface GameDetail {
   code: string;
   title: string;
   releaseOrder: number;
   stages: Stage[];
-};
+}
 
-export type Stage = {
+export interface Stage {
   slug: string;
   name: string;
   stageOrder: number;
@@ -19,29 +19,29 @@ export type Stage = {
   boss: Boss;
   weaponReward: Weapon | null;
   collectibles: Collectible[];
-};
+}
 
-export type Boss = {
+export interface Boss {
   slug: string;
   name: string;
   imageAssetKey?: string | null;
-};
+}
 
-export type Weapon = {
+export interface Weapon {
   slug: string;
   name: string;
   description?: string | null;
   imageAssetKey?: string | null;
-};
+}
 
-export type Collectible = {
+export interface Collectible {
   slug: string;
   name: string;
   type: CollectibleType;
   description?: string | null;
   imageAssetKey?: string | null;
   sortOrder: number;
-};
+}
 
 export type CollectibleType =
   | "HEART_TANK"

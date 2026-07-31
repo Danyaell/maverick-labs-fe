@@ -13,7 +13,7 @@ describe('analyzeRoute', () => {
   test('posts to /api/v1/routes/analyze with gameCode, stageOrder, and goal', async () => {
     const { analyzeRoute } = await import('./routeAnalysisApi')
 
-    const mockResponse: RouteAnalysisResponse = {
+    const mockResponse: RouteAnalysisResponse ={
       gameCode: 'MMX',
       difficultyScore: 74,
       difficultyLabel: 'MEDIUM',
@@ -45,7 +45,7 @@ describe('analyzeRoute', () => {
 
     const mockFetch = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => mockResponse,
+      json: async () => await Promise.resolve(mockResponse),
     })
 
     vi.stubGlobal('fetch', mockFetch)
@@ -59,7 +59,7 @@ describe('analyzeRoute', () => {
     await analyzeRoute(payload)
 
     expect(mockFetch).toHaveBeenCalledTimes(1)
-    const [url, init] = mockFetch.mock.calls[0]
+    const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit]
     expect(url).toBe('http://localhost:8080/api/v1/routes/analyze')
     expect(init.method).toBe('POST')
     expect(init.body).toBe(JSON.stringify(payload))

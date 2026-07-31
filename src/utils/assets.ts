@@ -1,11 +1,11 @@
-const assetModules = import.meta.glob(
+const assetModules = import.meta.glob<string>(
   "/src/assets/games/**/*.png",
   {
     eager: true,
     import: "default",
     query: "?url",
   }
-) as Record<string, string>;
+);
 
 export function getGameAssetUrl(assetKey: string): string {
   const [game, category, assetName] = assetKey.split(".");

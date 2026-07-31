@@ -20,8 +20,6 @@ export function GameDetailPage() {
 
   useEffect(() => {
     const controller = new AbortController();
-    setError(null);
-    setIsLoading(true);
 
     fetchGameDetail(gameCode ?? "", { signal: controller.signal })
       .then((data) => {
