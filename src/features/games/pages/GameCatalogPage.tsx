@@ -1,48 +1,27 @@
-import styles from './GameCatalogPage.module.css'
-import { useEffect, useMemo, useState } from 'react'
-import { GameCard } from '../components/GameCard'
-import { fetchGames } from '../api/gameApi'
-import { ErrorState } from '../../../shared/components/ErrorState'
-import { LoadingState } from '../../../shared/components/LoadingState'
-import type { GameSummary } from '../types/game.types'
+import styles from "./GameCatalogPage.module.css";
+import { useMemo } from "react";
+import { GameCard } from "../components/GameCard";
+import { ErrorState } from "../../../shared/components/ErrorState";
+import { LoadingState } from "../../../shared/components/LoadingState";
+import { useGamesQuery } from "../hooks/gameQueries";
 
 export function GameCatalogPage() {
-  const [games, setGames] = useState<GameSummary[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    const controller = new AbortController()
-
-    fetchGames({ signal: controller.signal })
-      .then((data) => setGames(data))
-      .catch((fetchError) => {
-        if (controller.signal.aborted) {
-          return
-        }
-
-        setError(fetchError instanceof Error ? fetchError.message : 'Unable to load games.')
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setIsLoading(false)
-        }
-      })
-
-    return () => controller.abort()
-  }, [])
+  const { data: games, error, isLoading } = useGamesQuery();
 
   const sortedGames = useMemo(
-    () => (games ?? []).slice().sort((first, second) => first.releaseOrder - second.releaseOrder),
+    () =>
+      (games ?? [])
+        .slice()
+        .sort((first, second) => first.releaseOrder - second.releaseOrder),
     [games],
-  )
+  );
 
   if (isLoading) {
-    return <LoadingState message="Loading games..." />
+    return <LoadingState message="Loading games..." />;
   }
 
   if (error) {
-    return <ErrorState message={error} />
+    return <ErrorState message={error} />;
   }
 
   if (!games?.length) {
@@ -51,7 +30,7 @@ export function GameCatalogPage() {
         <h1>Game Catalog</h1>
         <p>No games are available right now. Please try again later.</p>
       </section>
-    )
+    );
   }
 
   return (
@@ -65,5 +44,5 @@ export function GameCatalogPage() {
         ))}
       </ul>
     </section>
-  )
+  );
 }
