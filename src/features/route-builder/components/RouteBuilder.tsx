@@ -3,7 +3,6 @@ import type { GameDetail } from "../../games/types/game.types";
 import { useRouteBuilder } from "../hooks/useRouteBuilder";
 import { DraggableStageCard } from "./DraggableStageCard";
 import { RouteBuilderActions } from "./RouteBuilderActions";
-import { RouteOrderPreview } from "./RouteOrderPreview";
 import { analyzeRoute } from "../api/routeAnalysisApi";
 import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
 import type { RouteAnalysisResponse } from "../types/routeAnalysis.types";
@@ -70,8 +69,6 @@ export function RouteBuilder({ game }: RouteBuilderProps) {
         </p>
       ) : null}
 
-      {routeAnalysis ? <RouteAnalysisPanel analysis={routeAnalysis} /> : null}
-
       <div className={styles.layout}>
         <ul className={styles.stageList}>
           {orderedStages.map((stage, index) => (
@@ -89,7 +86,8 @@ export function RouteBuilder({ game }: RouteBuilderProps) {
           ))}
         </ul>
 
-        <RouteOrderPreview orderedStages={orderedStages} />
+        {routeAnalysis ? <RouteAnalysisPanel analysis={routeAnalysis} /> : null}
+
       </div>
     </section>
   );

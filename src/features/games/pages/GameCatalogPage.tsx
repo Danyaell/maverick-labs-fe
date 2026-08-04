@@ -34,8 +34,9 @@ export function GameCatalogPage() {
   }
 
   return (
-    <section>
-      <h1>Game Catalog</h1>
+    <section className={styles.gameCatalogBody}>
+      <h1>Choose a Mega Man X game</h1>
+      <p>Explore stages, inspect rewards, and build a route around weaknesses and collectibles.</p>
       <ul className={styles.gameList}>
         {sortedGames.map((game) => (
           <li className={styles.gameItem} key={game.code}>

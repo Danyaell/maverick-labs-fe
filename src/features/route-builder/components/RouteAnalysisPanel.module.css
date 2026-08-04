@@ -1,8 +1,10 @@
 .panel {
-  margin-top: var(--space-6);
-  padding: var(--space-4);
+  align-items: flex-start;
+  position: sticky;
+  top: var(--space-8);
+  padding: var(--space-8) var(--space-16);
   border-radius: var(--radius-md);
-  border: 2px solid var(--color-primary);
+  border: 1px solid var(--button-secondary-border);
   background-color: var(--color-surface);
   text-align: left;
 }
@@ -13,6 +15,53 @@
 
 .panel p {
   margin: var(--space-2) 0;
+}
+
+.routeAnalysisNavButton {
+  margin-right: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: var(--radius-md);
+  background-color: var(--button-secondary-bg-hover);
+  color: var(--color-text);
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.routeAnalysisNavButton:hover {
+  background-color: var(--button-secondary-bg-active);
+}
+
+.routeAnalysisNavButton:focus {
+  background-color: var(--button-secondary-bg-active);
+}
+
+.analysisSummary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.analysisCard {
+  padding: var(--space-4) var(--space-8);
+  min-width: 25%;
+  border-radius: 2rem;
+  border: 1px solid var(--color-border-subtle);
+  background-color: var(--color-surface);
+  text-align: left;
+}
+
+.priorRecommendationContainer {
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--space-8);
+  text-align: left;
+}
+
+.priorRecommendationMessage {
+  margin-top: var(--space-2);
+  color: var(--color-info-text);
 }
 
 .section {

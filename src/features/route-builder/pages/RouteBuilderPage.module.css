@@ -1,11 +1,17 @@
 .pageContainer {
   display: grid;
   gap: 1rem;
+  margin: 0 50px;
+  text-align: left;
 }
 
 .header {
   display: grid;
   gap: 0.5rem;
+}
+
+h3 {
+  margin: 2rem 0 0;
 }
 
 .backLink {

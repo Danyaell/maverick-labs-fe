@@ -54,61 +54,77 @@ export function GameDetailPage() {
   const gameImageUrl = getGameAssetUrl(`${gameCode.toLowerCase()}.title.logo`);
 
   return (
-    <section>
+    <section className={styles.gameDetailBody}>
       <div className={styles.pageActions}>
-        <Link className={styles.backLink} to="/games">
-          Return
-        </Link>
+        <div>
+          <img
+            className={styles.gameImage}
+            src={gameImageUrl || undefined}
+            alt={gameDetail.title}
+          />
+          <p className="helperText">
+            Compare stages and prepare the order you want to analyze.
+          </p>
 
+          <h2 className="title">Select a stage</h2>
+          <p className="helperText">
+            The selected stage updates the details below.
+          </p>
+        </div>
         <Link
-          className={styles.buildRouteLink}
+          className="button--primary"
           to={`/games/${gameCode}/route-builder`}
         >
           Build Route
         </Link>
       </div>
 
-      <img
-        className={styles.gameImage}
-        src={gameImageUrl || undefined}
-        alt={gameDetail.title}
-      />
+      <div className={styles.contentContainer}>
+        <div className={styles.stageSelect}>
+          <img
+            className={styles.stageSelectImage}
+            src={"/src/assets/games/mmx/stage/stage-select.png"}
+          />
 
-      <div>
-        <h3>Stages</h3>
-
-        <ul className={styles.stageList}>
-          {sortedStages.map((stage) => (
-            <li key={stage.slug} className={styles.stageItem}>
-              <StageCard
-                stage={stage}
-                isSelected={selectedStage?.slug === stage.slug}
-                onSelect={(selected) => setSelectedStageSlug(selected.slug)}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {selectedStage && (
-        <div className={styles.detailContainer}>
-          <h3>{selectedStage.name}</h3>
-
-          <div className={styles.detailContent}>
-            <div className={styles.detailItem}>
-              <BossSummary boss={selectedStage.boss} />
-            </div>
-
-            <div className={styles.detailItem}>
-              <WeaponReward weaponReward={selectedStage.weaponReward} />
-            </div>
-
-            <div className={styles.detailItem}>
-              <CollectibleList collectibles={selectedStage.collectibles} />
-            </div>
-          </div>
+          <ul className={styles.stageList}>
+            {sortedStages.map((stage) => (
+              <li key={stage.slug} className={styles.stageItem}>
+                <StageCard
+                  stage={stage}
+                  isSelected={selectedStage?.slug === stage.slug}
+                  onSelect={(selected) => setSelectedStageSlug(selected.slug)}
+                />
+              </li>
+            ))}
+            {/* <li className={styles.stageCenter} aria-hidden="true">
+              Select a stage to view details
+            </li> */}
+          </ul>
         </div>
-      )}
+
+        <div className={styles.detailContainer}>
+          <p className="helperText">STAGE CONTENT</p>
+          {selectedStage && (
+            <>
+              <div className={styles.detailContent}>
+                <h2 className={styles.detailTitle}>{selectedStage.name}</h2>
+                <div className={styles.detailItem}>
+                  <BossSummary boss={selectedStage.boss} />
+                </div>
+
+                <div className={styles.detailItem}>
+                  <WeaponReward weaponReward={selectedStage.weaponReward} />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className={styles.collectibleListContainer}>
+          <p className="helperText">EXTRA INFORMATION</p>
+          <CollectibleList collectibles={selectedStage.collectibles} />
+        </div>
+      </div>
     </section>
   );
 }

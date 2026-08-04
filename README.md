@@ -1,6 +1,10 @@
 # Maverick Labs FE
 
-Frontend for the Maverick Labs application. It is a React + TypeScript app built with Vite that presents a game catalog and a detailed game view backed by a separate backend API.
+> Frontend for the Maverick Labs application. It is a React + TypeScript app built with Vite that presents a game catalog and a detailed game view backed by a separate backend API.
+
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-19-darkblue?logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-8-purple?logo=vite)
 
 ## Overview
 
@@ -110,3 +114,20 @@ npm run test:coverage
 - The application is private and does not publish a package.
 - The frontend consumes a separate backend API and expects the base URL to be configured through `VITE_API_BASE_URL`.
 - The test environment is configured in `vite.config.ts` with the `jsdom` environment and the setup file in `src/test/setup.ts`.
+
+## Contributing
+
+Contributions and review suggestions are welcome.
+
+1. Create a focused branch.
+2. Keep structure thin and place components clean.
+3. Add or update tests for behavioral changes.
+4. Run the complete test suite before opening a pull request.
+
+## License and disclaimer
+Maverick Labs is a fan-made educational and portfolio project. Mega Man, Mega Man X, character names, and related properties belong to their respective trademark and copyright owners. This project is not affiliated with or endorsed by Capcom.
+
+
+## Author
+
+Created by [Danyaell Martínez Ortiz](https://github.com/Danyaell).

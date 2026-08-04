@@ -1,6 +1,7 @@
 .card {
-  border: 1px solid var(--color-primary);
-  border-radius: var(--radius-md);
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: var(--color-border-subtle);
   padding: var(--space-3);
   background-color: var(--color-surface-elevated);
 }
@@ -17,14 +18,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
   padding: var(--space-1) var(--space-2);
   font-size: 0.75rem;
   font-weight: 700;
 }
 
 .severityInfo {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-info);
   color: var(--color-bg);
 }
 
