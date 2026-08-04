@@ -3,6 +3,7 @@
   flex-direction: row;
   text-align: left;
   align-items: center;
+  justify-content: center;
   width: 100%;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
