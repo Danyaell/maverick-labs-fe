@@ -20,3 +20,15 @@
 h4, p {
   margin: 0;
 }
+
+@media (width < 410px) {
+  .collectibleBadge {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .collectibleImage {
+    margin: 0 0 var(--space-4);
+  }
+}

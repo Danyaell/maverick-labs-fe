@@ -55,7 +55,7 @@ describe('RouteAnalysisPanel', () => {
     expect(screen.getByText('Route Efficiency')).toBeInTheDocument()
   })
 
-  test('deduplicates warning-equivalent recommendations and limits rendered recommendations to 5', () => {
+  test('deduplicates warning-equivalent recommendations and limits rendered recommendations to 8', () => {
     render(
       <RouteAnalysisPanel
         analysis={{

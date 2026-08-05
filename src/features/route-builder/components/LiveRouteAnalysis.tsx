@@ -59,7 +59,6 @@ export function LiveRouteAnalysis({
             {statusMessage}
           </p>
         </div>
-        <RouteBuilderActions onReset={onReset} />
       </div>
 
       {isPending ? <RouteAnalysisSkeleton /> : null}
