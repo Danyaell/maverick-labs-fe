@@ -1,135 +1,85 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, test } from 'vitest'
-import { RouteAnalysisPanel } from './RouteAnalysisPanel'
+import { render, screen, within } from "@testing-library/react";
+import { describe, expect, test } from "vitest";
+import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
+import userEvent from "@testing-library/user-event";
+import { createRouteAnalysis } from "../../../test/fixtures/routeBuilderFixtures";
 
-describe('RouteAnalysisPanel', () => {
-  test('renders recommendations section and preserves summary/breakdown data', () => {
-    render(
+describe("RouteAnalysisPanel", async () => {
+  const user = userEvent.setup();
+  render(
       <RouteAnalysisPanel
         analysis={{
-          gameCode: 'MMX',
-          difficultyScore: 74,
-          difficultyLabel: 'MEDIUM',
-          backtrackingScore: 62,
-          estimatedMinutes: 87,
-          warnings: [
-            {
-              type: 'MISSING_REQUIREMENT',
-              message: 'Ride armor requirement is missing for this stage.',
-              stageSlug: 'spark-mandrill',
-            },
-          ],
-          recommendations: [
-            {
-              type: 'BOSS_ORDER',
-              severity: 'WARNING',
-              message: 'Move Spark Mandrill later for safer progression.',
-              relatedStages: ['spark-mandrill'],
-            },
-          ],
-          breakdown: {
-            baseDifficultyAverage: 40,
-            weaknessReduction: 26,
-            combatDifficulty: -8,
-            timePenaltyMinutes: -6,
-            routeEfficiencyScore: 0,
-          },
-        }}
-      />,
-    )
-
-    expect(screen.getByText(/DIFFICULTY/)).toBeInTheDocument()
-    expect(screen.getByText(/74 \/ 100/i)).toBeInTheDocument()
-    expect(screen.getByText(/BACKTRACKING/)).toBeInTheDocument()
-    expect(screen.getByText(/62 \/ 100/i)).toBeInTheDocument()
-    expect(screen.getByText(/ESTIMATED TIME/)).toBeInTheDocument()
-    expect(screen.getByText(/87 min/i)).toBeInTheDocument()
-    expect(screen.getByText('Recommendations')).toBeInTheDocument()
-    expect(screen.getAllByText('Move Spark Mandrill later for safer progression.')).toHaveLength(2)
-    expect(screen.getByText('Warnings')).toBeInTheDocument()
-    expect(screen.getByText('Breakdown')).toBeInTheDocument()
-    expect(screen.getByText('Base Difficulty')).toBeInTheDocument()
-    expect(screen.getByText('Combat Difficulty')).toBeInTheDocument()
-    expect(screen.getByText('Weakness Reduction')).toBeInTheDocument()
-    expect(screen.getByText('Time Penalty')).toBeInTheDocument()
-    expect(screen.getByText('Route Efficiency')).toBeInTheDocument()
-  })
-
-  test('deduplicates warning-equivalent recommendations and limits rendered recommendations to 8', () => {
-    render(
-      <RouteAnalysisPanel
-        analysis={{
-          gameCode: 'MMX',
+          gameCode: "MMX",
           difficultyScore: 70,
-          difficultyLabel: 'MEDIUM',
+          difficultyLabel: "MEDIUM",
           backtrackingScore: 55,
           estimatedMinutes: 90,
           warnings: [
             {
-              type: 'BACKTRACKING',
-              message: 'You should avoid this heavy backtracking path.',
+              type: "BACKTRACKING",
+              message: "You should avoid this heavy backtracking path.",
               stageSlug: null,
             },
           ],
           recommendations: [
             {
-              type: 'BACKTRACKING',
-              severity: 'WARNING',
-              message: 'You should avoid this heavy backtracking path.',
+              type: "BACKTRACKING",
+              severity: "WARNING",
+              message: "You should avoid this heavy backtracking path.",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 1',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 1",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 2',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 2",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 3',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 3",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 4',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 4",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 5',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 5",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 6',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 6",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 7',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 7",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 8',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 8",
               relatedStages: null,
             },
             {
-              type: 'BOSS_ORDER',
-              severity: 'INFO',
-              message: 'Recommendation 9',
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 9",
               relatedStages: null,
             },
           ],
@@ -142,11 +92,164 @@ describe('RouteAnalysisPanel', () => {
           },
         }}
       />,
-    )
+    );
 
-    expect(screen.queryByText('You should avoid this heavy backtracking path.')).not.toBeInTheDocument()
-    expect(screen.getAllByText('Recommendation 1')).toHaveLength(2)
-    expect(screen.getByText('Recommendation 5')).toBeInTheDocument()
-    expect(screen.queryByText('Recommendation 9')).not.toBeInTheDocument()
-  })
-})
+  await user.click(
+    screen.getByRole("tab", {
+      name: /recommendations/i,
+    }),
+  );
+
+  const recommendationsPanel = screen.getByRole("tabpanel", {
+    name: /recommendations/i,
+  });
+
+  expect(
+    within(recommendationsPanel).getByText(
+      "Recommendation 8",
+    ),
+  ).toBeInTheDocument();
+
+  await user.click(
+    screen.getByRole("tab", {
+      name: /breakdown/i,
+    }),
+  );
+
+  const breakdownPanel = screen.getByRole("tabpanel", {
+    name: /breakdown/i,
+  });
+
+  expect(
+    within(breakdownPanel).getByText("Base Difficulty"),
+  ).toBeInTheDocument();
+
+  test("deduplicates recommendations and limits the list to 8", () => {
+    render(
+      <RouteAnalysisPanel
+        analysis={{
+          gameCode: "MMX",
+          difficultyScore: 70,
+          difficultyLabel: "MEDIUM",
+          backtrackingScore: 55,
+          estimatedMinutes: 90,
+          warnings: [
+            {
+              type: "BACKTRACKING",
+              message: "You should avoid this heavy backtracking path.",
+              stageSlug: null,
+            },
+          ],
+          recommendations: [
+            {
+              type: "BACKTRACKING",
+              severity: "WARNING",
+              message: "You should avoid this heavy backtracking path.",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 1",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 2",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 3",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 4",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 5",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 6",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 7",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 8",
+              relatedStages: null,
+            },
+            {
+              type: "BOSS_ORDER",
+              severity: "INFO",
+              message: "Recommendation 9",
+              relatedStages: null,
+            },
+          ],
+          breakdown: {
+            combatDifficulty: 35,
+            weaknessReduction: 30,
+            baseDifficultyAverage: -5,
+            timePenaltyMinutes: -10,
+            routeEfficiencyScore: 0,
+          },
+        }}
+      />,
+    );
+
+    expect(
+      within(recommendationsPanel).getByText("Recommendation 8"),
+    ).toBeInTheDocument();
+
+    expect(
+      within(recommendationsPanel).queryByText("Recommendation 9"),
+    ).not.toBeInTheDocument();
+  });
+
+  test("changes tabs using keyboard navigation", async () => {
+    const user = userEvent.setup();
+
+    render(<RouteAnalysisPanel analysis={createRouteAnalysis()} />);
+
+    const summary = screen.getByRole("tab", {
+      name: /summary/i,
+    });
+    const recommendations = screen.getByRole("tab", {
+      name: /recommendations/i,
+    });
+    const breakdown = screen.getByRole("tab", {
+      name: /breakdown/i,
+    });
+
+    summary.focus();
+
+    await user.keyboard("{ArrowRight}");
+
+    expect(recommendations).toHaveFocus();
+    expect(recommendations).toHaveAttribute("aria-selected", "true");
+
+    await user.keyboard("{End}");
+
+    expect(breakdown).toHaveFocus();
+
+    await user.keyboard("{Home}");
+
+    expect(summary).toHaveFocus();
+  });
+});

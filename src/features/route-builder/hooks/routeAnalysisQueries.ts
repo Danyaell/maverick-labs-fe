@@ -57,6 +57,5 @@ export function useRouteAnalysisQuery(
 
     staleTime: Infinity,
     gcTime: 15 * 60_000,
-    retry: 1,
   });
 }

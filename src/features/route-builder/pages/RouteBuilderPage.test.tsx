@@ -3,10 +3,9 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { RouteBuilderPage } from "./RouteBuilderPage";
-import type { GameDetail } from "../../games/types/game.types";
-import { RouteBuilder } from "../components/RouteBuilder";
 import { renderWithQueryClient } from "../../../test/renderWithQueryClient";
 import type { RouteAnalysisResponse } from "../types/routeAnalysis.types";
+import { createGameDetail, DEFAULT_STAGE_ORDER } from "../../../test/fixtures/routeBuilderFixtures";
 
 const { mockFetchGameDetail } = vi.hoisted(() => ({
   mockFetchGameDetail: vi.fn(),
@@ -23,40 +22,6 @@ vi.mock("../../games/api/gameApi", () => ({
 vi.mock("../../route-builder/api/routeAnalysisApi", () => ({
   analyzeRoute: mockAnalyzeRoute,
 }));
-
-function createGameDetail(): GameDetail {
-  return {
-    code: "MMX",
-    title: "Mega Man X",
-    releaseOrder: 1,
-    stages: [
-      {
-        slug: "chill-penguin",
-        name: "Chill Penguin Stage",
-        stageOrder: 1,
-        imageAssetKey: "mmx.stage.chill-penguin",
-        boss: {
-          slug: "chill-penguin",
-          name: "Chill Penguin",
-          imageAssetKey: "mmx.boss.chill-penguin",
-        },
-        weaponReward: {
-          slug: "shotgun-ice",
-          name: "Shotgun Ice",
-          description: "Fires ice projectiles.",
-          imageAssetKey: "mmx.weapon.shotgun-ice",
-        },
-        collectibles: [],
-      },
-    ],
-  };
-}
-
-function getRenderedStageNames(): string[] {
-  return screen.getAllByRole("listitem").map((item) => {
-    return within(item).getByRole("heading").textContent ?? "";
-  });
-}
 
 function createRouteAnalysis(): RouteAnalysisResponse {
   return {
@@ -77,10 +42,50 @@ function createRouteAnalysis(): RouteAnalysisResponse {
   };
 }
 
+function renderRouteBuilderPage() {
+  return renderWithQueryClient(
+    <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
+      <Routes>
+        <Route
+          path="/games/:gameCode/route-builder"
+          element={<RouteBuilderPage />}
+        />
+      </Routes>
+    </MemoryRouter>,
+  );
+}
+
+function createDeferred<T>() {
+  let resolve!: (value: T) => void;
+
+  const promise = new Promise<T>((resolver) => {
+    resolve = resolver;
+  });
+
+  return { promise, resolve };
+}
+
 describe("RouteBuilderPage", () => {
   beforeEach(() => {
     mockFetchGameDetail.mockReset();
     mockAnalyzeRoute.mockReset();
+    mockAnalyzeRoute.mockResolvedValue(createRouteAnalysis());
+  });
+
+  test("automatically analyzes the initial stage order", async () => {
+    mockFetchGameDetail.mockResolvedValue(createGameDetail());
+
+    renderRouteBuilderPage();
+
+    expect(await screen.findByText(/71 \/ 100/i)).toBeInTheDocument();
+
+    expect(mockAnalyzeRoute).toHaveBeenCalledTimes(1);
+
+    expect(mockAnalyzeRoute.mock.calls[0][0]).toEqual({
+      gameCode: "MMX",
+      stageOrder: DEFAULT_STAGE_ORDER,
+      goal: "HUNDRED_PERCENT",
+    });
   });
 
   test("should render loading state while fetching game detail", () => {
@@ -153,22 +158,12 @@ describe("RouteBuilderPage", () => {
     expect(await screen.findByText(/71 \/ 100/i)).toBeInTheDocument();
   });
 
-  test("updates live analysis after changing stage order", async () => {
+  test("requests a new analysis after changing stage order", async () => {
     const user = userEvent.setup();
 
     mockFetchGameDetail.mockResolvedValue(createGameDetail());
-    mockAnalyzeRoute.mockResolvedValue(createRouteAnalysis());
 
-    renderWithQueryClient(
-      <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
-        <Routes>
-          <Route
-            path="/games/:gameCode/route-builder"
-            element={<RouteBuilderPage />}
-          />
-        </Routes>
-      </MemoryRouter>,
-    );
+    renderRouteBuilderPage();
 
     await waitFor(() => {
       expect(mockAnalyzeRoute).toHaveBeenCalledTimes(1);
@@ -179,36 +174,29 @@ describe("RouteBuilderPage", () => {
         name: /move chill penguin stage down/i,
       }),
     );
+
+    await waitFor(() => {
+      expect(mockAnalyzeRoute).toHaveBeenCalledTimes(2);
+    });
+
+    expect(mockAnalyzeRoute.mock.calls[1][0]).toEqual({
+      gameCode: "MMX",
+      stageOrder: ["storm-eagle", "chill-penguin", "flame-mammoth"],
+      goal: "HUNDRED_PERCENT",
+    });
   });
 
   test("keeps previous analysis visible while updating", async () => {
     const user = userEvent.setup();
-
-    let resolveSecondAnalysis:
-      | ((value: RouteAnalysisResponse) => void)
-      | undefined;
+    const secondAnalysis = createDeferred<RouteAnalysisResponse>();
 
     mockFetchGameDetail.mockResolvedValue(createGameDetail());
 
     mockAnalyzeRoute
       .mockResolvedValueOnce(createRouteAnalysis())
-      .mockImplementationOnce(
-        () =>
-          new Promise<RouteAnalysisResponse>((resolve) => {
-            resolveSecondAnalysis = resolve;
-          }),
-      );
+      .mockImplementationOnce(() => secondAnalysis.promise);
 
-    renderWithQueryClient(
-      <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
-        <Routes>
-          <Route
-            path="/games/:gameCode/route-builder"
-            element={<RouteBuilderPage />}
-          />
-        </Routes>
-      </MemoryRouter>,
-    );
+    renderRouteBuilderPage();
 
     expect(await screen.findByText(/71 \/ 100/i)).toBeInTheDocument();
 
@@ -218,160 +206,52 @@ describe("RouteBuilderPage", () => {
       }),
     );
 
-    expect(screen.getByText(/71 \/ 100/i)).toBeInTheDocument();
+    expect(await screen.findByText("Updating analysis...")).toBeInTheDocument();
 
-    resolveSecondAnalysis?.({
-      ...createRouteAnalysis(),
-      difficultyScore: 65,
-    });
+    expect(screen.getByText(/71 \/ 100/i)).toBeInTheDocument();
   });
 
-  test("shows analysis error and allows retry", () => {
+  test("shows analysis error and recovers after retry", async () => {
+    const user = userEvent.setup();
+
     mockFetchGameDetail.mockResolvedValue(createGameDetail());
 
     mockAnalyzeRoute
       .mockRejectedValueOnce(new Error("Analyzer unavailable"))
       .mockResolvedValueOnce(createRouteAnalysis());
 
-    renderWithQueryClient(
-      <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
-        <Routes>
-          <Route
-            path="/games/:gameCode/route-builder"
-            element={<RouteBuilderPage />}
-          />
-        </Routes>
-      </MemoryRouter>,
-    );
-  });
+    renderRouteBuilderPage();
 
-  test("shows loading and error states for route analysis", async () => {
-    const gameDetail: GameDetail = {
-      code: "MMX",
-      title: "Mega Man X",
-      releaseOrder: 1,
-      stages: [
-        {
-          slug: "chill-penguin",
-          name: "Chill Penguin Stage",
-          stageOrder: 1,
-          imageAssetKey: "mmx.stage.chill-penguin",
-          boss: {
-            slug: "chill-penguin",
-            name: "Chill Penguin",
-            imageAssetKey: "mmx.boss.chill-penguin",
-          },
-          weaponReward: null,
-          collectibles: [],
-        },
-        {
-          slug: "storm-eagle",
-          name: "Storm Eagle Stage",
-          stageOrder: 2,
-          imageAssetKey: "mmx.stage.storm-eagle",
-          boss: {
-            slug: "storm-eagle",
-            name: "Storm Eagle",
-            imageAssetKey: "mmx.boss.storm-eagle",
-          },
-          weaponReward: null,
-          collectibles: [],
-        },
-        {
-          slug: "flame-mammoth",
-          name: "Flame Mammoth Stage",
-          stageOrder: 3,
-          imageAssetKey: "mmx.stage.flame-mammoth",
-          boss: {
-            slug: "flame-mammoth",
-            name: "Flame Mammoth",
-            imageAssetKey: "mmx.boss.flame-mammoth",
-          },
-          weaponReward: null,
-          collectibles: [],
-        },
-      ],
-    };
+    const alert = await screen.findByRole("alert");
 
-    mockFetchGameDetail.mockResolvedValue(gameDetail);
-
-    let resolveRequest: (value: unknown) => void = () => {
-      throw new Error("Resolve handler not initialized");
-    };
-    mockAnalyzeRoute.mockReturnValue(
-      new Promise((resolve) => {
-        resolveRequest = resolve;
-      }),
-    );
-
-    renderWithQueryClient(
-      <MemoryRouter initialEntries={["/games/MMX"]}>
-        <Routes>
-          <Route path="/games/:gameCode" element={<RouteBuilderPage />} />
-        </Routes>
-      </MemoryRouter>,
-    );
-
-    resolveRequest({
-      gameCode: "MMX",
-      difficultyScore: 80,
-      difficultyLabel: "HARD",
-      backtrackingScore: 50,
-      estimatedMinutes: 95,
-      warnings: [],
-      recommendations: [],
-      breakdown: {
-        bossDifficulty: 50,
-        weaknessOptimization: 20,
-        baseDifficulty: -10,
-        timePenalty: -10,
-      },
-    });
-
-    await screen.findByText(/DIFFICULTY/);
-    await screen.findByText(/80 \/ 100/i);
-  });
-
-  test("moves a stage down using accessible controls", async () => {
-    const user = userEvent.setup();
-
-    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
+    expect(alert).toHaveTextContent("Unable to analyze route");
+    expect(alert).toHaveTextContent("Analyzer unavailable");
 
     await user.click(
-      screen.getByRole("button", {
-        name: /move chill penguin stage down/i,
+      within(alert).getByRole("button", {
+        name: /retry analysis/i,
       }),
     );
 
-    expect(getRenderedStageNames()).toEqual(["Chill Penguin"]);
+    expect(await screen.findByText(/71 \/ 100/i)).toBeInTheDocument();
+
+    expect(mockAnalyzeRoute).toHaveBeenCalledTimes(2);
   });
 
-  test("disables movement controls at list boundaries", () => {
-    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
+  test("shows loading state while analysis is pending", async () => {
+    const deferred = createDeferred<RouteAnalysisResponse>();
+
+    mockFetchGameDetail.mockResolvedValue(createGameDetail());
+    mockAnalyzeRoute.mockReturnValue(deferred.promise);
+
+    renderRouteBuilderPage();
 
     expect(
-      screen.getByRole("button", {
-        name: /Move Chill Penguin Stage up/i,
-      }),
-    ).toBeDisabled();
+      await screen.findByLabelText("Loading route analysis"),
+    ).toBeInTheDocument();
 
-    expect(
-      screen.getByRole("button", {
-        name: /Move Chill Penguin Stage down/i,
-      }),
-    ).toBeDisabled();
-  });
+    deferred.resolve(createRouteAnalysis());
 
-  test("resets route to default order", async () => {
-    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
-    const user = userEvent.setup();
-
-    await user.click(
-      screen.getByRole("button", {
-        name: /Reset to default order/i,
-      }),
-    );
-
-    expect(getRenderedStageNames()).toEqual(["Chill Penguin"]);
+    expect(await screen.findByText(/71 \/ 100/i)).toBeInTheDocument();
   });
 });

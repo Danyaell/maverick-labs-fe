@@ -1,73 +1,9 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import { RouteBuilder } from "./RouteBuilder";
-import type { GameDetail } from "../../games/types/game.types";
 import { renderWithQueryClient } from "../../../test/renderWithQueryClient";
-
-function createGameDetail(): GameDetail {
-  return {
-    code: "MMX",
-    title: "Mega Man X",
-    releaseOrder: 1,
-    stages: [
-      {
-        slug: "chill-penguin",
-        name: "Chill Penguin Stage",
-        stageOrder: 1,
-        imageAssetKey: "mmx.stage.chill-penguin",
-        boss: {
-          slug: "chill-penguin",
-          name: "Chill Penguin",
-          imageAssetKey: "mmx.boss.chill-penguin",
-        },
-        weaponReward: {
-          slug: "shotgun-ice",
-          name: "Shotgun Ice",
-          description: "Fires ice projectiles.",
-          imageAssetKey: "mmx.weapon.shotgun-ice",
-        },
-        collectibles: [],
-      },
-      {
-        slug: "storm-eagle",
-        name: "Storm Eagle Stage",
-        stageOrder: 2,
-        imageAssetKey: "mmx.stage.storm-eagle",
-        boss: {
-          slug: "storm-eagle",
-          name: "Storm Eagle",
-          imageAssetKey: "mmx.boss.storm-eagle",
-        },
-        weaponReward: {
-          slug: "storm-tornado",
-          name: "Storm Tornado",
-          description: "Creates a tornado attack.",
-          imageAssetKey: "mmx.weapon.storm-tornado",
-        },
-        collectibles: [],
-      },
-      {
-        slug: "flame-mammoth",
-        name: "Flame Mammoth Stage",
-        stageOrder: 3,
-        imageAssetKey: "mmx.stage.flame-mammoth",
-        boss: {
-          slug: "flame-mammoth",
-          name: "Flame Mammoth",
-          imageAssetKey: "mmx.boss.flame-mammoth",
-        },
-        weaponReward: {
-          slug: "fire-wave",
-          name: "Fire Wave",
-          description: "Launches flames.",
-          imageAssetKey: "mmx.weapon.fire-wave",
-        },
-        collectibles: [],
-      },
-    ],
-  };
-}
+import { createGameDetail, DEFAULT_STAGE_ORDER } from "../../../test/fixtures/routeBuilderFixtures";
 
 function getRenderedStageOrder(): string[] {
   const stageList = screen.getByRole("list", {
@@ -102,34 +38,6 @@ describe("RouteBuilder", () => {
     expect(screen.getByText("Fire Wave")).toBeInTheDocument();
   });
 
-  test("should update order after drag/drop interaction", () => {
-    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
-
-    const sourceCard = screen.getByTestId("stage-card-chill-penguin");
-    const targetCard = screen.getByTestId("stage-card-flame-mammoth");
-
-    fireEvent.dragStart(sourceCard, { dataTransfer: {} });
-    fireEvent.dragOver(targetCard, { dataTransfer: {} });
-    fireEvent.drop(targetCard, { dataTransfer: {} });
-  });
-
-  test("should reset route to default order", async () => {
-    const user = userEvent.setup();
-
-    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
-
-    const sourceCard = screen.getByTestId("stage-card-chill-penguin");
-    const targetCard = screen.getByTestId("stage-card-flame-mammoth");
-
-    fireEvent.dragStart(sourceCard, { dataTransfer: {} });
-    fireEvent.dragOver(targetCard, { dataTransfer: {} });
-    fireEvent.drop(targetCard, { dataTransfer: {} });
-
-    await user.click(
-      screen.getByRole("button", { name: "Reset to default order" }),
-    );
-  });
-
   test("keeps visual order synchronized after moving stages", async () => {
     const user = userEvent.setup();
 
@@ -158,5 +66,77 @@ describe("RouteBuilder", () => {
       "flame-mammoth",
       "chill-penguin",
     ]);
+  });
+
+  test("moves a stage down using accessible controls", async () => {
+    const user = userEvent.setup();
+
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /move chill penguin stage down/i,
+      }),
+    );
+
+    expect(getRenderedStageOrder()).toEqual([
+      "storm-eagle",
+      "chill-penguin",
+      "flame-mammoth",
+    ]);
+  });
+
+  test("disables movement controls at list boundaries", () => {
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
+
+    expect(
+      screen.getByRole("button", {
+        name: /move chill penguin stage up/i,
+      }),
+    ).toBeDisabled();
+
+    expect(
+      screen.getByRole("button", {
+        name: /move chill penguin stage down/i,
+      }),
+    ).toBeEnabled();
+
+    expect(
+      screen.getByRole("button", {
+        name: /move flame mammoth stage up/i,
+      }),
+    ).toBeEnabled();
+
+    expect(
+      screen.getByRole("button", {
+        name: /move flame mammoth stage down/i,
+      }),
+    ).toBeDisabled();
+  });
+
+  test("resets route after changing its order", async () => {
+    const user = userEvent.setup();
+
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /move chill penguin stage down/i,
+      }),
+    );
+
+    expect(getRenderedStageOrder()).toEqual([
+      "storm-eagle",
+      "chill-penguin",
+      "flame-mammoth",
+    ]);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /reset to default order/i,
+      }),
+    );
+
+    expect(getRenderedStageOrder()).toEqual(DEFAULT_STAGE_ORDER);
   });
 });

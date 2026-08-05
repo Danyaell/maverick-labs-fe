@@ -1,10 +1,15 @@
 import '@testing-library/jest-dom/vitest'
 
 // Place for global mocks, polyfills, or test helpers
-class ResizeObserverMock {
-  observe(): void {}
+class ResizeObserverMock implements ResizeObserver {
+  constructor(_callback: ResizeObserverCallback) {}
 
-  unobserve(): void {}
+  observe(
+    _target: Element,
+    _options?: ResizeObserverOptions,
+  ): void {}
+
+  unobserve(_target: Element): void {}
 
   disconnect(): void {}
 }
