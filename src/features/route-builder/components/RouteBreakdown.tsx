@@ -1,21 +1,24 @@
-import type { RouteBreakdown as RouteBreakdownType } from '../types/routeAnalysis.types'
-import styles from './RouteBreakdown.module.css'
+import type { RouteBreakdown as RouteBreakdownType } from "../types/routeAnalysis.types";
+import styles from "./RouteBreakdown.module.css";
 
 interface RouteBreakdownProps {
-  breakdown: RouteBreakdownType
+  breakdown: RouteBreakdownType;
 }
 
 function formatSignedValue(value: number): string {
   if (value > 0) {
-    return `+${value}`
+    return `+${value}`;
   }
 
-  return `${value}`
+  return `${value}`;
 }
 
 export function RouteBreakdown({ breakdown }: RouteBreakdownProps) {
   return (
     <dl className={styles.grid}>
+      <dt className={styles.gridHeader}>Metric</dt>
+      <dd className={styles.gridHeader}>Impact</dd>
+
       <dt>Base Difficulty</dt>
       <dd>{formatSignedValue(breakdown.baseDifficultyAverage)}</dd>
 
@@ -31,5 +34,5 @@ export function RouteBreakdown({ breakdown }: RouteBreakdownProps) {
       <dt>Route Efficiency</dt>
       <dd>{formatSignedValue(breakdown.routeEfficiencyScore)}</dd>
     </dl>
-  )
+  );
 }

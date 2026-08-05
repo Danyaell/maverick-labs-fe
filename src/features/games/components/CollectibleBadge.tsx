@@ -13,7 +13,10 @@ export function CollectibleBadge({ collectible, className }: CollectibleBadgePro
   return (
     <li className={className ? `${className} ${styles.collectibleBadge}` : styles.collectibleBadge}>
       <img className={styles.collectibleImage} src={collectibleImageUrl || undefined} alt={collectible.name} />
-      <h4>{collectible.name}</h4>
+      <div>
+        <h4>{collectible.name}</h4>
+        <p className="helperText">{collectible.description}</p>
+      </div>
     </li>
   )
 }

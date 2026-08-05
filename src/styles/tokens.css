@@ -1,32 +1,207 @@
+@import url(
+  "https://fonts.googleapis.com/css2?family=Oxanium:wght@500;600;700&family=Sora:wght@400;500;600;700&display=swap"
+);
+
 :root {
-  --color-bg: #0b1020;
-  --color-bg-card: #1b2a4b;
-  --color-bg-dialog: #002679;
-  --color-surface: #121a2f;
-  --color-surface-elevated: #18223d;
+  color-scheme: dark;
 
-  --color-text: #f5f7fb;
-  --color-text-muted: #aab3c5;
+  /* BACKGROUNDS & SURFACES */
+  --color-bg-app: #07111f;
+  --color-bg-header: #0b1728;
+  --color-bg-footer: #0b1728;
 
-  --color-primary: #ffe347;
-  --color-primary-hover: #7ae8ff;
-  --color-secondary: #ff7ae8;
-  --color-danger: #ff4d6d;
-  --color-success: #4dff88;
-  --color-warning: #ffb347;
-  --color-info: #002061;
-  --color-accent: #ff7a00;
-  --color-disabled: #5555553d;
+  --color-surface: #10243b;
+  --color-surface-raised: #142b45;
+  --color-surface-hover: #1d3853;
+  --color-surface-active: #17314b;
+  --color-surface-selected: #123a5c;
+  --color-surface-disabled: #172230;
 
-  --font-body:
-    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* TEXT & LINKS */
+  --color-text-primary: #f4f8fc;
+  --color-text-secondary: #b8c7d9;
+  --color-text-muted: #8ea1b5;
+  --color-text-disabled: #7e90a3;
+  --color-text-inverse: #07111f;
 
+  --color-link: #73c7ff;
+  --color-link-hover: #a7deff;
+
+  /* BORDERS & DIVIDERS */
+
+  --color-border-subtle: #2a455f;
+  --color-border-control: #547694;
+  --color-border-hover: #6d8eab;
+  --color-divider: #172635;
+
+  /* BRAND & ACCENTS */
+
+  --color-brand-blue: #0b63ce;
+  --color-brand-cyan: #52d7ff;
+  --color-brand-gold: #ffc857;
+
+  --color-on-blue: #ffffff;
+  --color-on-cyan: #07111f;
+  --color-on-gold: #151a21;
+
+  /* PRIMARY BUTTON */
+
+  --button-primary-bg: #0b63ce;
+  --button-primary-bg-hover: #0a5aba;
+  --button-primary-bg-active: #084a99;
+  --button-primary-bg-focus: #ffc857;
+  --button-primary-text: #ffffff;
+  --button-primary-border: transparent;
+
+  /* SECONDARY BUTTON */
+
+  --button-secondary-bg: #1a2d42;
+  --button-secondary-bg-hover: #223b55;
+  --button-secondary-bg-active: #15273a;
+  --button-secondary-bg-focus: #0e427c;
+  --button-secondary-text: #e7eff7;
+  --button-secondary-border: #547694;
+
+  /* GHOST / TEXT BUTTON */
+
+  --button-ghost-bg: transparent;
+  --button-ghost-bg-hover: #142b45;
+  --button-ghost-bg-active: #1a2d42;
+  --button-ghost-text: #b8c7d9;
+
+  /* DISABLED BUTTONS & CONTROLS */
+
+  --button-disabled-bg: #172230;
+  --button-disabled-text: #7e90a3;
+  --button-disabled-border: #2a394a;
+
+  /* DESTRUCTIVE BUTTON */
+
+  --button-danger-bg: #b93843;
+  --button-danger-bg-hover: #a22e38;
+  --button-danger-bg-active: #86242c;
+  --button-danger-text: #ffffff;
+
+  /* FORM CONTROLS */
+
+  --input-bg: #0b1b2e;
+  --input-text: #f4f8fc;
+  --input-placeholder: #7e90a3;
+
+  --input-border: #547694;
+  --input-border-hover: #6d8eab;
+  --input-border-focus: #52d7ff;
+
+  /* FOCUS */
+
+  --color-focus-ring: #52d7ff;
+  --color-focus-ring-offset: #07111f;
+
+  /* SUCCESS */
+
+  --color-success: #2fcb8a;
+  --color-success-bg: #0f2d23;
+  --color-success-border: #267a5a;
+  --color-success-text: #6be0ae;
+
+  /* WARNING */
+
+  --color-warning: #f5a524;
+  --color-warning-bg: #33260d;
+  --color-warning-border: #a87913;
+  --color-warning-text: #ffd166;
+
+  /* ERROR / DANGER */
+
+  --color-danger: #ff6670;
+  --color-danger-bg: #351417;
+  --color-danger-border: #a73a43;
+  --color-danger-text: #ff8c95;
+
+  /* INFORMATION */
+
+  --color-info: #4da3ff;
+  --color-info-bg: #0d2744;
+  --color-info-border: #256bb1;
+  --color-info-text: #75bfff;
+
+  /* GAME & STAGE SELECTION */
+
+  --color-stage-overlay: rgba(3, 12, 24, 0.62);
+  --color-stage-selected-bg: rgba(255, 200, 87, 0.1);
+  --color-stage-selected-border: #ffc857;
+  --color-stage-selected-glow: rgba(255, 200, 87, 0.32);
+
+  --color-stage-hover-bg: rgba(82, 215, 255, 0.1);
+  --color-stage-hover-border: #52d7ff;
+
+  /* LOADING & OVERLAYS */
+
+  --color-skeleton-base: #18324b;
+  --color-skeleton-highlight: #244866;
+
+  --color-backdrop: rgba(1, 7, 15, 0.76);
+  --color-shadow: rgba(0, 0, 0, 0.35);
+
+  /* GAME COLORS */
+
+  --game-accent: #52d7ff;
+  --game-accent-secondary: #ffc857;
+  --game-accent-soft: rgba(82, 215, 255, 0.12);
+
+  /* Font families */
+  --font-family-base:
+    "Sora",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --font-family-display:
+    "Oxanium",
+    "Sora",
+    system-ui,
+    sans-serif;
+
+  /* Font sizes */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 2rem;      /* 32px */
+  --font-size-3xl: 2.5rem;    /* 40px */
+
+  /* Font weights */
+  --font-weight-light: 100;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line heights */
+  --line-height-tight: 1.15;
+  --line-height-heading: 1.25;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.65;
+
+  /* Letter spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.06em;
+  --letter-spacing-wider: 0.1em;
+
+  /* Spacing scale */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
 
   --radius-sm: 0.375rem;
   --radius-md: 0.75rem;

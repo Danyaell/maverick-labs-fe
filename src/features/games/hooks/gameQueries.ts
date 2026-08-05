@@ -1,33 +1,40 @@
-import { useCallback } from "react";
-import { useApiQuery } from "../../../shared/hooks/useApiQuery";
+import { useQuery } from "@tanstack/react-query";
 import { fetchGameDetail, fetchGames } from "../api/gameApi";
 
-const loadGames = (signal: AbortSignal) => {
-  return fetchGames({ signal });
+export const gameQueryKeys = {
+  all: ["games"] as const,
+
+  list: () => [...gameQueryKeys.all, "list"] as const,
+
+  detail: (gameCode: string) =>
+    [...gameQueryKeys.all, "detail", gameCode] as const,
 };
 
 export function useGamesQuery() {
-  return useApiQuery({
-    queryKey: "games",
-    queryFn: loadGames,
-    fallbackErrorMessage: "Unable to load games.",
+  return useQuery({
+    queryKey: gameQueryKeys.list(),
+
+    queryFn: ({ signal }) => {
+      return fetchGames({ signal });
+    },
+
+    staleTime: 5 * 60_000,
   });
 }
 
 export function useGameDetailQuery(gameCode?: string) {
   const normalizedGameCode = gameCode ?? "";
 
-  const loadGameDetail = useCallback(
-    (signal: AbortSignal) => {
-      return fetchGameDetail(normalizedGameCode, { signal });
-    },
-    [normalizedGameCode],
-  );
+  return useQuery({
+    queryKey: gameQueryKeys.detail(normalizedGameCode),
 
-  return useApiQuery({
-    queryKey: `game-detail:${normalizedGameCode}`,
-    queryFn: loadGameDetail,
+    queryFn: ({ signal }) => {
+      return fetchGameDetail(normalizedGameCode, {
+        signal,
+      });
+    },
+
     enabled: normalizedGameCode.length > 0,
-    fallbackErrorMessage: "Unable to load game data.",
+    staleTime: 5 * 60_000,
   });
 }

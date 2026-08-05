@@ -1,36 +1,75 @@
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter, Navigate } from 'react-router'
 import App from './App'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { GameCatalogPage } from '../features/games/pages/GameCatalogPage'
 import { GameDetailPage } from '../features/games/pages/GameDetailPage'
 import { RouteBuilderPage } from '../features/route-builder/pages/RouteBuilderPage'
 
+const GAME_NAMES: Record<string, string> = {
+  MMX: "Mega Man X",
+  MMX2: "Mega Man X2",
+  MMX3: "Mega Man X3",
+  MMX4: "Mega Man X4",
+  MMX5: "Mega Man X5",
+  MMX6: "Mega Man X6",
+  MMX7: "Mega Man X7",
+  MMX8: "Mega Man X8",
+};
+
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
-        element: <GameCatalogPage />,
+        element: <Navigate to="/games" replace />,
       },
       {
-        path: 'games',
-        element: <GameCatalogPage />,
+        path: "games",
+        handle: {
+          breadcrumb: () => ({
+            label: "Games",
+            to: "/games",
+          }),
+        },
+        children: [
+          {
+            index: true,
+            element: <GameCatalogPage />,
+          },
+          {
+            path: ":gameCode",
+            handle: {
+              breadcrumb: (gameCode?: string) => ({
+                label: GAME_NAMES[gameCode ?? ""] ?? gameCode ?? "Game",
+                to: `/games/${gameCode}`,
+              }),
+            },
+            children: [
+              {
+                index: true,
+                element: <GameDetailPage />,
+              },
+              {
+                path: "route-builder",
+                element: <RouteBuilderPage />,
+                handle: {
+                  breadcrumb: (gameCode?: string) => ({
+                    label: "Route Builder",
+                    to: `/games/${gameCode}/route-builder`,
+                  }),
+                },
+              },
+            ],
+          },
+        ],
       },
       {
-        path: 'games/:gameCode',
-        element: <GameDetailPage />,
-      },
-      {
-        path: 'games/:gameCode/route-builder',
-        element: <RouteBuilderPage />,
-      },
-      {
-        path: '*',
+        path: "*",
         element: <NotFoundPage />,
       },
     ],
   },
-])
+]);

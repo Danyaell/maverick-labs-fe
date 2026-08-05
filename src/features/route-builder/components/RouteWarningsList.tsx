@@ -14,7 +14,7 @@ export function RouteWarningsList({ warnings }: RouteWarningsListProps) {
     <ul className={styles.list}>
       {warnings.map((warning, index) => (
         <li key={`${warning.type}-${warning.stageSlug ?? 'global'}-${index}`} className={styles.item}>
-          <strong>{warning.type}</strong>: {warning.message}
+          <strong>{warning.type == 'MISSING_REQUIREMENT' ? 'Missing Requirement' : warning.type}</strong>: {warning.message}
         </li>
       ))}
     </ul>

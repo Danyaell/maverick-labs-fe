@@ -1,12 +1,15 @@
 .card {
-  width: fit-content;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0;
   background-color: var(--color-bg-card);
-  border: 6px solid #5c5c5c;
-  border-radius: 8px;
+  border: 0.2rem solid var(--color-divider);
   transition:
     transform 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
@@ -15,20 +18,21 @@
 
 .card:hover {
   cursor: pointer;
-  transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   filter: grayscale(80%) brightness(100%);
 }
 
 .selected {
-  width: fit-content;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0;
   background-color: var(--color-bg-card);
-  border: 6px solid var(--color-primary);
-  border-radius: var(--radius-md);
+  border: 0.2rem solid var(--color-brand-gold);
   filter: none;
   transition:
     transform 0.2s ease-in-out,
@@ -38,9 +42,8 @@
 }
 
 .stageImage {
-  width: 150px;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   image-rendering: pixelated;
-  border-radius: var(--radius-md);
 }

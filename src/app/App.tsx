@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "../shared/components/Breadcrumbs";
 import styles from "./App.module.css";
 import { NavLink, Outlet } from "react-router";
 
@@ -11,22 +12,62 @@ export default function App() {
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <div className="page-container">
+        <div>
           <nav className={styles.nav}>
             <NavLink to="/" className={styles.logo}>
-              <img className={styles.logoImage} src={logoAsset[Object.keys(logoAsset)[0]]} />
+              <img
+                className={styles.logoImage}
+                src={logoAsset[Object.keys(logoAsset)[0]]}
+              />
               <p className={styles.logoText}>MAVERICK LABS</p>
             </NavLink>
-            {/* <div className={styles.links}>
-              <NavLink to="/games">Games</NavLink>
-            </div> */}
           </nav>
+          <Breadcrumbs />
         </div>
       </header>
 
       <main className={styles.main}>
         <Outlet />
       </main>
+
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          <div className={styles.projectInfo}>
+            <div className={styles.footerLinks}>
+              <p className="helperText">MAVERICK LABS</p>
+              <div>
+                <NavLink to="/games" className="helperText">
+                  Game Catalog ·
+                </NavLink>
+                <NavLink to="/about" className="helperText">
+                  {" "}
+                  About
+                </NavLink>
+                <NavLink
+                  to="https://github.com/Danyaell/maverick-labs-fe"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="helperText"
+                >
+                  {" "}
+                  · GitHub
+                </NavLink>
+              </div>
+            </div>
+            <p className="helperText">Plan. Analyze. Conquer.</p>
+          </div>
+          <div>
+            <p className="helperText">
+              Built by Danyaell Martinez O &copy; {new Date().getFullYear()}{" "}
+              Maverick Labs
+            </p>
+            <p className="helperText">
+              Unofficial, non-commercial fan project. Mega Man and related
+              properties belong to Capcom.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

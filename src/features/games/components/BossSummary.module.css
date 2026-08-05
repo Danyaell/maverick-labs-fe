@@ -1,20 +1,38 @@
 .bossSummaryContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  text-align: left;
   align-items: center;
-  text-align: center;
-  margin-bottom: 1rem;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
 
-  padding: 1rem;
-  border: 1px solid var(--color-disabled);
-  border-radius: var(--radius-md);
-  background-color: var(--color-info);
+p, h2 {
+  margin: 0;
 }
 
 .bossImage {
-  width: 150px;
-  height: auto;
-  object-fit: cover;
+  display: block;
+  max-width: none;
+  margin-right: var(--space-4);
+  object-fit: contain;
   image-rendering: pixelated;
   border-radius: var(--radius-md);
+}
+
+@media (width < 550px) {
+  .bossSummaryContainer {
+    flex-direction: column;
+  }
+
+  .bossImage {
+    margin-bottom: var(--space-4);
+  }
+
+  .bossSummaryContainer p, .bossSummaryContainer h2 {
+    text-align: center;
+  }
 }

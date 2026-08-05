@@ -1,8 +1,8 @@
 .panel {
-  margin-top: var(--space-6);
-  padding: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-8) var(--space-16);
   border-radius: var(--radius-md);
-  border: 2px solid var(--color-primary);
+  border: 1px solid var(--button-secondary-border);
   background-color: var(--color-surface);
   text-align: left;
 }
@@ -15,10 +15,119 @@
   margin: var(--space-2) 0;
 }
 
+.tabList {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.routeAnalysisNavButton {
+  margin-right: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: var(--radius-md);
+  background-color: var(--button-secondary-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  margin-top: 1rem;
+  box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.322);
+}
+
+.routeAnalysisNavButton:hover {
+  transition: background-color 0.3s ease;
+  transform: translateY(-3px);
+  background-color: var(--button-secondary-bg-hover);
+  box-shadow: 0 5px 3px 3px rgba(0, 0, 0, 0.322);
+}
+
+.routeAnalysisNavButton:focus {
+  transform: translateY(3px);
+  background-color: var(--button-secondary-bg-focus);
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.322);
+}
+
+.activeTab {
+  transform: translateY(3px);
+  background-color: var(--button-secondary-bg-focus);
+  color: var(--color-primary);
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.322);
+  font-weight: bold;
+}
+
+.tabPanel {
+  padding-top: 1rem;
+}
+
+.analysisSummary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.analysisCard {
+  padding: var(--space-4) var(--space-8);
+  width: 25%;
+  border-radius: 2rem;
+  border: 1px solid var(--color-border-subtle);
+  background-color: var(--color-surface);
+  text-align: left;
+}
+
+.priorRecommendationContainer {
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--space-8);
+  text-align: left;
+}
+
+.priorRecommendationMessage {
+  margin-top: var(--space-2);
+  color: var(--color-info-text);
+}
+
 .section {
   margin-top: var(--space-4);
 }
 
 .section h4 {
   margin: 0 0 var(--space-2);
+}
+
+@media (width < 1270px) {
+  .analysisSummary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .analysisCard {
+    width: 60%;
+  }
+}
+
+@media (width < 1200px) {
+  .analysisSummary {
+    display: flex;
+  }
+}
+
+@media (width < 760px) {
+  .analysisSummary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width < 700px) {
+  .tabList {
+    flex-direction: column;
+  }
+}
+
+@media (width < 590px) {
+  .analysisSummary {
+    display: flex;
+    flex-direction: column;
+  }
 }

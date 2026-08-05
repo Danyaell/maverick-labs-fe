@@ -13,7 +13,7 @@ export function CollectibleList({ collectibles }: CollectibleListProps) {
 
   return (
     <div className={styles.collectibleListContainer}>
-      <h3>Items</h3>
+      <h2>Collectibles & Upgrades</h2>
       <ul className={styles.collectibleList}>
         {sortedCollectibles.map((collectible) => (
           <CollectibleBadge

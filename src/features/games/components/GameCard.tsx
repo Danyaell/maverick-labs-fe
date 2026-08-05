@@ -11,8 +11,10 @@ export function GameCard({ game }: GameCardProps) {
   const stageImageUrl = getGameAssetUrl(`${game.code.toLowerCase()}.title.logo`)
 
   return (
-    <Link to={`/games/${game.code}`}>
-      <article className={styles.gameCard}>
+    <Link to={game.code == 'MMX' ? `/games/${game.code}` : '#'} style={{ cursor: game.code !== 'MMX' ? 'not-allowed' : 'pointer' }}>
+      <article className={`${styles.gameCard} ${game.code !== 'MMX' ? styles.disabledGameCard : ''}`}>
+        {/* Temporally disable other games */}
+        {game.code !== 'MMX' && <h4 className={styles.gameCardText}>Coming soon...</h4>}
         <img className={styles.gameImage} src={stageImageUrl || undefined} alt={game.title} />
       </article>
     </Link>

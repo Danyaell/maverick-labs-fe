@@ -1,5 +1,5 @@
 import styles from "./RouteBuilderPage.module.css";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import { NotFoundPage } from "../../../app/pages/NotFoundPage";
 import { ErrorState } from "../../../shared/components/ErrorState";
 import { LoadingState } from "../../../shared/components/LoadingState";
@@ -9,18 +9,23 @@ import { RouteBuilder } from "../components/RouteBuilder";
 export function RouteBuilderPage() {
   const { gameCode } = useParams<{ gameCode: string }>();
 
-  const { data: gameDetail, error, isLoading } = useGameDetailQuery(gameCode);
+  const {
+    data: gameDetail,
+    error,
+    isPending,
+    isError,
+  } = useGameDetailQuery(gameCode);
 
   if (!gameCode) {
     return <NotFoundPage />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <LoadingState message="Loading route builder..." />;
   }
 
-  if (error) {
-    return <ErrorState message={error} />;
+  if (isError) {
+    return <ErrorState message={error.message} />;
   }
 
   if (!gameDetail) {
@@ -30,13 +35,21 @@ export function RouteBuilderPage() {
   return (
     <section className={styles.pageContainer}>
       <div className={styles.header}>
-        <Link className={styles.backLink} to={`/games/${gameCode}`}>
-          Return to game detail
-        </Link>
-
+        <h4>MEGA MAN X</h4>
         <h2>{gameDetail.title} Route Builder</h2>
+        <p>
+          Reorder the eight stages to see how each decision affects difficulty,
+          backtracking, and estimated time.
+        </p>
       </div>
 
+      <div>
+        <h3>Stage order</h3>
+        <p className="helperText">
+          Drag and drop the stages or use the arrow controls. Live Route
+          Analysis updates automatically after every completed move.
+        </p>
+      </div>
       <RouteBuilder key={gameDetail.code} game={gameDetail} />
     </section>
   );

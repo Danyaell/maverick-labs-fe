@@ -1,23 +1,63 @@
 :root {
   min-width: 320px;
-  max-width: 100%;
+  max-width: 1920px;
   min-height: 100vh;
   margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-app);
   background-image: url('../../public/images/bg-pattern.png');
   background-repeat: repeat;
   background-size: 768px 768px;
   image-rendering: pixelated;
-  color: var(--color-text);
-  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+}
+
+h1,
+h2,
+.game-title,
+.app-logo {
+  font-family: var(--font-family-display);
+  line-height: var(--line-height-heading);
+}
+
+h1 {
+  font-size: clamp(
+    var(--font-size-2xl),
+    3vw,
+    var(--font-size-3xl)
+  );
+
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+p {
+  line-height: var(--line-height-base);
 }
 
 a {
@@ -27,12 +67,101 @@ a {
 
 button,
 input,
-textarea,
-select {
+select,
+textarea {
   font: inherit;
+}
+
+button {
+  font-weight: var(--font-weight-semibold);
+}
+
+.title {
+  margin: var(--space-8) 0 var(--space-1) 0;
+}
+
+.eyebrow {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+}
+
+.metadata,
+.helperText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.metric-value {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
 }
 
 .page-container {
   width: min(100% - 2rem, var(--container-width));
   margin-inline: auto;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.card:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.button {
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button--primary {
+  padding: 0.4rem 0.8rem;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  color: var(--button-primary-text);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+}
+
+.button--primary:hover:not(:disabled) {
+  padding: 0.4rem 0.8rem;
+  background-color: var(--button-primary-bg-hover);
+}
+
+.button--primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-active);
+}
+
+.button--secondary {
+  background-color: var(--button-secondary-bg);
+  border-color: var(--button-secondary-border);
+  color: var(--button-secondary-text);
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-hover);
+}
+
+.button:disabled {
+  background-color: var(--button-disabled-bg);
+  border-color: var(--button-disabled-border);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+}
+
+.button:focus-visible,
+.input:focus-visible,
+.stage-option:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 3px;
 }

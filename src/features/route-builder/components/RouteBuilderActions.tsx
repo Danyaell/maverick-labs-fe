@@ -7,7 +7,7 @@ interface RouteBuilderActionsProps {
 export function RouteBuilderActions({ onReset }: RouteBuilderActionsProps) {
   return (
     <div className={styles.actionsContainer}>
-      <button className={styles.resetButton} type="button" onClick={onReset}>
+      <button className="button--primary" type="button" onClick={onReset}>
         Reset to default order
       </button>
     </div>
