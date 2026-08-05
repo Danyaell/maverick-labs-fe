@@ -1,18 +1,15 @@
 import styles from "./LiveRouteAnalysis.module.css";
 import { useRouteAnalysisQuery } from "../hooks/routeAnalysisQueries";
 import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
-import { RouteBuilderActions } from "./RouteBuilderActions";
 
 interface LiveRouteAnalysisProps {
   gameCode: string;
   stageOrder: string[];
-  onReset: () => void;
 }
 
 export function LiveRouteAnalysis({
   gameCode,
   stageOrder,
-  onReset,
 }: LiveRouteAnalysisProps) {
   const {
     data: analysis,

@@ -1,17 +1,12 @@
-import '@testing-library/jest-dom/vitest'
+import "@testing-library/jest-dom/vitest";
+import { vi } from "vitest";
 
-// Place for global mocks, polyfills, or test helpers
 class ResizeObserverMock implements ResizeObserver {
-  constructor(_callback: ResizeObserverCallback) {}
+  observe = vi.fn();
 
-  observe(
-    _target: Element,
-    _options?: ResizeObserverOptions,
-  ): void {}
+  unobserve = vi.fn();
 
-  unobserve(_target: Element): void {}
-
-  disconnect(): void {}
+  disconnect = vi.fn();
 }
 
 Object.defineProperty(globalThis, "ResizeObserver", {

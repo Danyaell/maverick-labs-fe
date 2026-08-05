@@ -4,7 +4,7 @@ import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
 import userEvent from "@testing-library/user-event";
 import { createRouteAnalysis } from "../../../test/fixtures/routeBuilderFixtures";
 
-describe("RouteAnalysisPanel", async () => {
+describe("RouteAnalysisPanel", () => {
   test("shows content for the selected tab", async () => {
     const user = userEvent.setup();
     render(

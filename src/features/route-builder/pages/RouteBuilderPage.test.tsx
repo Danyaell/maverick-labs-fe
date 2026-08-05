@@ -10,20 +10,28 @@ import {
   createRouteAnalysis,
   DEFAULT_STAGE_ORDER,
 } from "../../../test/fixtures/routeBuilderFixtures";
+import type { fetchGameDetail } from "../../games/api/gameApi";
+import type { analyzeRoute } from "../api/routeAnalysisApi";
 
 const { mockFetchGameDetail } = vi.hoisted(() => ({
-  mockFetchGameDetail: vi.fn(),
+  mockFetchGameDetail: vi.fn<
+    Parameters<typeof fetchGameDetail>,
+    ReturnType<typeof fetchGameDetail>
+  >(),
 }));
 
 const { mockAnalyzeRoute } = vi.hoisted(() => ({
-  mockAnalyzeRoute: vi.fn(),
+  mockAnalyzeRoute: vi.fn<
+    Parameters<typeof analyzeRoute>,
+    ReturnType<typeof analyzeRoute>
+  >(),
 }));
 
 vi.mock("../../games/api/gameApi", () => ({
   fetchGameDetail: mockFetchGameDetail,
 }));
 
-vi.mock("../../route-builder/api/routeAnalysisApi", () => ({
+vi.mock("../api/routeAnalysisApi", () => ({
   analyzeRoute: mockAnalyzeRoute,
 }));
 
@@ -66,11 +74,23 @@ describe("RouteBuilderPage", () => {
 
     expect(mockAnalyzeRoute).toHaveBeenCalledTimes(1);
 
-    expect(mockAnalyzeRoute.mock.calls[0][0]).toEqual({
+    const firstCall = mockAnalyzeRoute.mock.calls.at(0);
+
+    expect(firstCall).toBeDefined();
+
+    if (!firstCall) {
+      throw new Error("Expected analyzeRoute to have been called");
+    }
+
+    const [request, requestInit] = firstCall;
+
+    expect(request).toEqual({
       gameCode: "MMX",
       stageOrder: DEFAULT_STAGE_ORDER,
       goal: "HUNDRED_PERCENT",
     });
+
+    expect(requestInit?.signal).toBeInstanceOf(AbortSignal);
   });
 
   test("should render loading state while fetching game detail", () => {
@@ -147,11 +167,23 @@ describe("RouteBuilderPage", () => {
       expect(mockAnalyzeRoute).toHaveBeenCalledTimes(2);
     });
 
-    expect(mockAnalyzeRoute.mock.calls[1][0]).toEqual({
+    const firstCall = mockAnalyzeRoute.mock.calls.at(0);
+
+    expect(firstCall).toBeDefined();
+
+    if (!firstCall) {
+      throw new Error("Expected analyzeRoute to have been called");
+    }
+
+    const [request, requestInit] = firstCall;
+
+    expect(request).toEqual({
       gameCode: "MMX",
-      stageOrder: ["storm-eagle", "chill-penguin", "flame-mammoth"],
+      stageOrder: ["chill-penguin", "storm-eagle", "flame-mammoth"],
       goal: "HUNDRED_PERCENT",
     });
+
+    expect(requestInit?.signal).toBeInstanceOf(AbortSignal);
   });
 
   test("keeps previous analysis visible while updating", async () => {
@@ -177,7 +209,7 @@ describe("RouteBuilderPage", () => {
     expect(await screen.findByText("Updating analysis...")).toBeInTheDocument();
 
     expect(screen.getByText(/71 \/ 100/i)).toBeInTheDocument();
-    
+
     secondAnalysis.resolve(
       createRouteAnalysis({
         difficultyScore: 65,

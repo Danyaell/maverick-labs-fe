@@ -80,7 +80,6 @@ export function RouteBuilder({ game }: RouteBuilderProps) {
         <LiveRouteAnalysis
           gameCode={routeState.gameCode}
           stageOrder={routeState.stageOrder}
-          onReset={onReset}
         />
       </div>
     </section>
