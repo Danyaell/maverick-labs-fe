@@ -9,18 +9,23 @@ import { RouteBuilder } from "../components/RouteBuilder";
 export function RouteBuilderPage() {
   const { gameCode } = useParams<{ gameCode: string }>();
 
-  const { data: gameDetail, error, isLoading } = useGameDetailQuery(gameCode);
+  const {
+    data: gameDetail,
+    error,
+    isPending,
+    isError,
+  } = useGameDetailQuery(gameCode);
 
   if (!gameCode) {
     return <NotFoundPage />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <LoadingState message="Loading route builder..." />;
   }
 
-  if (error) {
-    return <ErrorState message={error} />;
+  if (isError) {
+    return <ErrorState message={error.message} />;
   }
 
   if (!gameDetail) {

@@ -17,7 +17,12 @@ export function GameDetailPage() {
     null,
   );
 
-  const { data: gameDetail, error, isLoading } = useGameDetailQuery(gameCode);
+  const {
+    data: gameDetail,
+    error,
+    isPending,
+    isError,
+  } = useGameDetailQuery(gameCode);
 
   const sortedStages = useMemo(
     () =>
@@ -39,12 +44,12 @@ export function GameDetailPage() {
     return <NotFoundPage />;
   }
 
-  if (isLoading) {
-    return <LoadingState message="Loading game..." />;
+  if (isPending) {
+    return <LoadingState message="Loading route builder..." />;
   }
 
-  if (error) {
-    return <ErrorState message={error} />;
+  if (isError) {
+    return <ErrorState message={error.message} />;
   }
 
   if (!gameDetail) {

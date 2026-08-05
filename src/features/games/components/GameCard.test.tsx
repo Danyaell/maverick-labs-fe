@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { GameCard } from './GameCard'
+import { renderWithQueryClient } from '../../../test/renderWithQueryClient'
 
 test('renders GameCard title and link', () => {
   const game = { code: 'MMX', title: 'Mega Man X', releaseOrder: 1 }
 
-  render(
+  renderWithQueryClient(
     <MemoryRouter>
       <GameCard game={game} />
     </MemoryRouter>

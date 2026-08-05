@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { RouteBuilderPage } from "./RouteBuilderPage";
 import type { GameDetail } from "../../games/types/game.types";
 import { RouteBuilder } from "../components/RouteBuilder";
+import { renderWithQueryClient } from "../../../test/renderWithQueryClient";
 
 const { mockFetchGameDetail } = vi.hoisted(() => ({
   mockFetchGameDetail: vi.fn(),
@@ -65,7 +66,7 @@ describe("RouteBuilderPage", () => {
   test("should render loading state while fetching game detail", () => {
     mockFetchGameDetail.mockReturnValue(new Promise<never>(() => undefined));
 
-    render(
+    renderWithQueryClient(
       <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
         <Routes>
           <Route
@@ -82,7 +83,7 @@ describe("RouteBuilderPage", () => {
   test("should render error state when API fails", async () => {
     mockFetchGameDetail.mockRejectedValue(new Error("Request failed"));
 
-    render(
+    renderWithQueryClient(
       <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
         <Routes>
           <Route
@@ -99,7 +100,7 @@ describe("RouteBuilderPage", () => {
   test("should render route builder when game detail loads", async () => {
     mockFetchGameDetail.mockResolvedValue(createGameDetail());
 
-    render(
+    renderWithQueryClient(
       <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
         <Routes>
           <Route
@@ -182,7 +183,7 @@ describe("RouteBuilderPage", () => {
 
     const user = userEvent.setup();
 
-    render(
+    renderWithQueryClient(
       <MemoryRouter initialEntries={["/games/MMX"]}>
         <Routes>
           <Route path="/games/:gameCode" element={<RouteBuilderPage />} />
@@ -282,7 +283,7 @@ describe("RouteBuilderPage", () => {
 
     const user = userEvent.setup();
 
-    render(
+    renderWithQueryClient(
       <MemoryRouter initialEntries={["/games/MMX"]}>
         <Routes>
           <Route path="/games/:gameCode" element={<RouteBuilderPage />} />

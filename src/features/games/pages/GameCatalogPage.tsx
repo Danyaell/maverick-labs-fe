@@ -21,7 +21,7 @@ export function GameCatalogPage() {
   }
 
   if (error) {
-    return <ErrorState message={error} />;
+    return <ErrorState message={error.message} />;
   }
 
   if (!games?.length) {

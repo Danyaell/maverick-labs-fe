@@ -1,9 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { GameDetailPage } from "./GameDetailPage";
 import type { GameDetail } from "../types/game.types";
+import { renderWithQueryClient } from "../../../test/renderWithQueryClient";
 
 const { mockFetchGameDetail } = vi.hoisted(() => ({
   mockFetchGameDetail: vi.fn(),
@@ -85,7 +86,7 @@ describe("GameDetailPage", () => {
 
     const user = userEvent.setup();
 
-    render(
+    renderWithQueryClient(
       <MemoryRouter initialEntries={["/games/MMX"]}>
         <Routes>
           <Route path="/games/:gameCode" element={<GameDetailPage />} />
