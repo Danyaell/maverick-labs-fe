@@ -16,15 +16,7 @@ function getRenderedStageOrder(): string[] {
 }
 
 vi.mock("./LiveRouteAnalysis", () => ({
-  LiveRouteAnalysis: ({
-    onReset,
-  }: {
-    onReset: () => void;
-  }) => (
-    <button type="button" onClick={onReset}>
-      Reset to default order
-    </button>
-  ),
+  LiveRouteAnalysis: () => null,
 }));
 
 describe("RouteBuilder", () => {

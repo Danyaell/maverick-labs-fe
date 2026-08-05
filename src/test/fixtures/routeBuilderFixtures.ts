@@ -90,5 +90,5 @@ export function createRouteAnalysis(
 export const DEFAULT_STAGE_ORDER = [
   "chill-penguin",
   "storm-eagle",
-  "flame-mammoth"
-]
+  "flame-mammoth",
+];

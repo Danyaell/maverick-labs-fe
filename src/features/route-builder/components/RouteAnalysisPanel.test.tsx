@@ -4,10 +4,9 @@ import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
 import userEvent from "@testing-library/user-event";
 import { createRouteAnalysis } from "../../../test/fixtures/routeBuilderFixtures";
 
-const user = userEvent.setup();
-
 describe("RouteAnalysisPanel", async () => {
   test("shows content for the selected tab", async () => {
+    const user = userEvent.setup();
     render(
       <RouteAnalysisPanel
         analysis={createRouteAnalysis({
@@ -68,6 +67,7 @@ describe("RouteAnalysisPanel", async () => {
   });
 
   test("deduplicates recommendations and limits the list to 8", async () => {
+    const user = userEvent.setup();
     render(
       <RouteAnalysisPanel
         analysis={{
@@ -173,6 +173,12 @@ describe("RouteAnalysisPanel", async () => {
     expect(
       within(recommendationsPanel).queryByText("Recommendation 9"),
     ).not.toBeInTheDocument();
+
+    expect(
+      within(recommendationsPanel).queryByText(
+        "You should avoid this heavy backtracking path.",
+      ),
+    ).not.toBeInTheDocument();
   });
 
   test("changes tabs using keyboard navigation", async () => {
@@ -200,9 +206,11 @@ describe("RouteAnalysisPanel", async () => {
     await user.keyboard("{End}");
 
     expect(breakdown).toHaveFocus();
+    expect(breakdown).toHaveAttribute("aria-selected", "true");
 
     await user.keyboard("{Home}");
 
     expect(summary).toHaveFocus();
+    expect(summary).toHaveAttribute("aria-selected", "true");
   });
 });
