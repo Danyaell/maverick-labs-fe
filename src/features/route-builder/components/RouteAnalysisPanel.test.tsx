@@ -38,11 +38,14 @@ describe('RouteAnalysisPanel', () => {
       />,
     )
 
-    expect(screen.getByText(/Difficulty: 74 \/ 100/i)).toBeInTheDocument()
-    expect(screen.getByText(/Backtracking: 62 \/ 100/i)).toBeInTheDocument()
-    expect(screen.getByText(/Estimated time: 87 min/i)).toBeInTheDocument()
+    expect(screen.getByText(/DIFFICULTY/)).toBeInTheDocument()
+    expect(screen.getByText(/74 \/ 100/i)).toBeInTheDocument()
+    expect(screen.getByText(/BACKTRACKING/)).toBeInTheDocument()
+    expect(screen.getByText(/62 \/ 100/i)).toBeInTheDocument()
+    expect(screen.getByText(/ESTIMATED TIME/)).toBeInTheDocument()
+    expect(screen.getByText(/87 min/i)).toBeInTheDocument()
     expect(screen.getByText('Recommendations')).toBeInTheDocument()
-    expect(screen.getByText('Move Spark Mandrill later for safer progression.')).toBeInTheDocument()
+    expect(screen.getAllByText('Move Spark Mandrill later for safer progression.')).toHaveLength(2)
     expect(screen.getByText('Warnings')).toBeInTheDocument()
     expect(screen.getByText('Breakdown')).toBeInTheDocument()
     expect(screen.getByText('Base Difficulty')).toBeInTheDocument()
@@ -142,7 +145,7 @@ describe('RouteAnalysisPanel', () => {
     )
 
     expect(screen.queryByText('You should avoid this heavy backtracking path.')).not.toBeInTheDocument()
-    expect(screen.getByText('Recommendation 1')).toBeInTheDocument()
+    expect(screen.getAllByText('Recommendation 1')).toHaveLength(2)
     expect(screen.getByText('Recommendation 5')).toBeInTheDocument()
     expect(screen.queryByText('Recommendation 9')).not.toBeInTheDocument()
   })

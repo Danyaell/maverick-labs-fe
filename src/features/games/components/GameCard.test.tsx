@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { GameCard } from './GameCard'
 
 test('renders GameCard title and link', () => {
-  const game = { code: 'mmx', title: 'Mega Man X', releaseOrder: 1 }
+  const game = { code: 'MMX', title: 'Mega Man X', releaseOrder: 1 }
 
   render(
     <MemoryRouter>

@@ -197,7 +197,7 @@ describe("RouteBuilderPage", () => {
     );
 
     expect(
-      await screen.findByText(/DIFFICULTY/i),
+      await screen.findByText(/DIFFICULTY/),
     ).toBeInTheDocument();
     expect(
       await screen.findByText(/71 \/ 100/i),
@@ -208,14 +208,14 @@ describe("RouteBuilderPage", () => {
     expect(screen.getByText(/89 MIN/i)).toBeInTheDocument();
     expect(screen.getByText(/Recommendations/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/This route order is stable for first attempts/i),
-    ).toBeInTheDocument();
-    /* expect(screen.getByText(/Missing Requirement/)).toBeInTheDocument();
+      screen.getAllByText(/This route order is stable for first attempts/i),
+    ).toHaveLength(2);
+    expect(screen.getByText(/Missing Requirement/)).toBeInTheDocument();
     expect(screen.getByText(/Base Difficulty/)).toBeInTheDocument();
     expect(screen.getByText(/Combat Difficulty/)).toBeInTheDocument();
     expect(screen.getByText(/Weakness Reduction/)).toBeInTheDocument();
     expect(screen.getByText(/Time Penalty/)).toBeInTheDocument();
-    expect(screen.getByText(/Route Efficiency/)).toBeInTheDocument(); */
+    expect(screen.getByText(/Route Efficiency/)).toBeInTheDocument();
   });
 
   test("shows loading and error states for route analysis", async () => {
@@ -284,7 +284,7 @@ describe("RouteBuilderPage", () => {
       },
     });
 
-    await screen.findByText(/DIFFICULTY/i);
+    await screen.findByText(/DIFFICULTY/);
     await screen.findByText(/80 \/ 100/i);
 
     mockAnalyzeRoute.mockRejectedValueOnce(new Error("Analyzer unavailable"));
