@@ -226,7 +226,7 @@ describe("RouteBuilderPage", () => {
     });
   });
 
-  test("shows analysis error and allows retry", async () => {
+  test("shows analysis error and allows retry", () => {
     mockFetchGameDetail.mockResolvedValue(createGameDetail());
 
     mockAnalyzeRoute
