@@ -1,9 +1,10 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { RouteBuilderPage } from "./RouteBuilderPage";
 import type { GameDetail } from "../../games/types/game.types";
+import { RouteBuilder } from "../components/RouteBuilder";
 
 const { mockFetchGameDetail } = vi.hoisted(() => ({
   mockFetchGameDetail: vi.fn(),
@@ -47,6 +48,12 @@ function createGameDetail(): GameDetail {
       },
     ],
   };
+}
+
+function getRenderedStageNames(): string[] {
+  return screen.getAllByRole("listitem").map((item) => {
+    return within(item).getByRole("heading").textContent ?? "";
+  });
 }
 
 describe("RouteBuilderPage", () => {
@@ -196,12 +203,8 @@ describe("RouteBuilderPage", () => {
       }),
     );
 
-    expect(
-      await screen.findByText(/DIFFICULTY/),
-    ).toBeInTheDocument();
-    expect(
-      await screen.findByText(/71 \/ 100/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/DIFFICULTY/)).toBeInTheDocument();
+    expect(await screen.findByText(/71 \/ 100/i)).toBeInTheDocument();
     expect(screen.getByText(/BACKTRACKING/i)).toBeInTheDocument();
     expect(screen.getByText(/64 \/ 100/i)).toBeInTheDocument();
     expect(screen.getByText(/ESTIMATED TIME/i)).toBeInTheDocument();
@@ -233,6 +236,32 @@ describe("RouteBuilderPage", () => {
             slug: "chill-penguin",
             name: "Chill Penguin",
             imageAssetKey: "mmx.boss.chill-penguin",
+          },
+          weaponReward: null,
+          collectibles: [],
+        },
+        {
+          slug: "storm-eagle",
+          name: "Storm Eagle Stage",
+          stageOrder: 2,
+          imageAssetKey: "mmx.stage.storm-eagle",
+          boss: {
+            slug: "storm-eagle",
+            name: "Storm Eagle",
+            imageAssetKey: "mmx.boss.storm-eagle",
+          },
+          weaponReward: null,
+          collectibles: [],
+        },
+        {
+          slug: "flame-mammoth",
+          name: "Flame Mammoth Stage",
+          stageOrder: 3,
+          imageAssetKey: "mmx.stage.flame-mammoth",
+          boss: {
+            slug: "flame-mammoth",
+            name: "Flame Mammoth",
+            imageAssetKey: "mmx.boss.flame-mammoth",
           },
           weaponReward: null,
           collectibles: [],
@@ -293,5 +322,50 @@ describe("RouteBuilderPage", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent(
       "Analyzer unavailable",
     );
+  });
+
+  test("moves a stage down using accessible controls", async () => {
+    const user = userEvent.setup();
+
+    render(<RouteBuilder game={createGameDetail()} />);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /move chill penguin stage down/i,
+      }),
+    );
+
+    expect(getRenderedStageNames()).toEqual(["Chill Penguin"]);
+  });
+
+  test("disables movement controls at list boundaries", () => {
+    render(<RouteBuilder game={createGameDetail()} />);
+
+    expect(
+      screen.getByRole("button", {
+        name: /Move Chill Penguin Stage up/i,
+      }),
+    ).toBeDisabled();
+
+    expect(
+      screen.getByRole("button", {
+        name: /Move Chill Penguin Stage down/i,
+      }),
+    ).toBeDisabled();
+  });
+
+  test("resets route to default order", async () => {
+    render(<RouteBuilder game={createGameDetail()} />);
+    const user = userEvent.setup();
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /Reset to default order/i,
+      }),
+    );
+
+    expect(getRenderedStageNames()).toEqual([
+      "Chill Penguin",
+    ]);
   });
 });

@@ -1,0 +1,135 @@
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto 8fr 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  height: 90px;
+  max-height: 90px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-control);
+  border-radius: var(--radius-md);
+  transition:
+    background-color 300ms ease-in,
+    border-color 300ms ease-in,
+    box-shadow 300ms ease-in,
+    opacity 300ms ease-in;
+}
+
+.position {
+  min-width: 2rem;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  text-align: center;
+}
+
+.stageImage {
+  height: 100%;
+  width: auto;
+  border-radius: var(--radius-sm);
+}
+
+.content {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.bossName {
+  margin: 0;
+}
+
+.iconImage {
+  width: auto;
+  height: 50%;
+}
+
+@media (width < 640px) {
+  .stageImage {
+    max-width: 100%;
+  }
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: var(--space-1);
+}
+
+.dragHandle {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 90px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text);
+  cursor: grab;
+  touch-action: none;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.dragHandle:focus-visible,
+.moveButton:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.moveButton {
+  min-width: 25px;
+  min-height: 44px;
+  background-color: var(--button-secondary-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+}
+
+.moveButton:hover {
+  background-color: var(--button-secondary-bg-hover);
+  cursor: pointer;
+}
+
+.moveButton:disabled {
+  opacity: 0.4;
+  background-color: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+}
+
+.dragging {
+  background-color: var(--button-secondary-bg-active);
+  opacity: 0.7;
+  border-color: var(--color-primary);
+  box-shadow: inset 4px 0 0 var(--color-primary);
+}
+
+.dropping {
+  background-color: var(--color-info-bg);
+  box-shadow: var(--shadow-md);
+
+}
+
+@media (width < 640px) {
+  .card {
+    grid-template-columns: auto 56px minmax(0, 1fr);
+    padding: var(--space-3);
+  }
+
+  .controls {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .dragHandle {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
