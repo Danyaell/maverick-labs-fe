@@ -167,19 +167,19 @@ describe("RouteBuilderPage", () => {
       expect(mockAnalyzeRoute).toHaveBeenCalledTimes(2);
     });
 
-    const firstCall = mockAnalyzeRoute.mock.calls.at(0);
+    const secondCall = mockAnalyzeRoute.mock.calls.at(1);
 
-    expect(firstCall).toBeDefined();
+    expect(secondCall).toBeDefined();
 
-    if (!firstCall) {
-      throw new Error("Expected analyzeRoute to have been called");
+    if (!secondCall) {
+      throw new Error("Expected analyzeRoute to have been called twice");
     }
 
-    const [request, requestInit] = firstCall;
+    const [request, requestInit] = secondCall;
 
     expect(request).toEqual({
       gameCode: "MMX",
-      stageOrder: ["chill-penguin", "storm-eagle", "flame-mammoth"],
+      stageOrder: ["storm-eagle", "chill-penguin", "flame-mammoth"],
       goal: "HUNDRED_PERCENT",
     });
 
