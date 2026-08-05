@@ -10,6 +10,7 @@ import { ErrorState } from "../../../shared/components/ErrorState";
 import { NotFoundPage } from "../../../app/pages/NotFoundPage";
 import { getGameAssetUrl } from "../../../utils/assets";
 import { useGameDetailQuery } from "../hooks/gameQueries";
+import stageSelectImage from "../../../assets/games/mmx/stage/stage-select.png";
 
 export function GameDetailPage() {
   const { gameCode } = useParams<{ gameCode: string }>();
@@ -88,7 +89,8 @@ export function GameDetailPage() {
         <div className={styles.stageSelect}>
           <img
             className={styles.stageSelectImage}
-            src={"/src/assets/games/mmx/stage/stage-select.png"}
+            src={stageSelectImage}
+            alt="Stage Select"
           />
 
           <ul className={styles.stageList}>
