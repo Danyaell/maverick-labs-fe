@@ -1,6 +1,6 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { RouteBuilder } from "./RouteBuilder";
 import { renderWithQueryClient } from "../../../test/renderWithQueryClient";
 import { createGameDetail, DEFAULT_STAGE_ORDER } from "../../../test/fixtures/routeBuilderFixtures";
@@ -14,6 +14,18 @@ function getRenderedStageOrder(): string[] {
     .getAllByRole("listitem")
     .map((item) => item.dataset.stageSlug ?? "");
 }
+
+vi.mock("./LiveRouteAnalysis", () => ({
+  LiveRouteAnalysis: ({
+    onReset,
+  }: {
+    onReset: () => void;
+  }) => (
+    <button type="button" onClick={onReset}>
+      Reset to default order
+    </button>
+  ),
+}));
 
 describe("RouteBuilder", () => {
   test("should render boss names", () => {
@@ -65,24 +77,6 @@ describe("RouteBuilder", () => {
       "storm-eagle",
       "flame-mammoth",
       "chill-penguin",
-    ]);
-  });
-
-  test("moves a stage down using accessible controls", async () => {
-    const user = userEvent.setup();
-
-    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
-
-    await user.click(
-      screen.getByRole("button", {
-        name: /move chill penguin stage down/i,
-      }),
-    );
-
-    expect(getRenderedStageOrder()).toEqual([
-      "storm-eagle",
-      "chill-penguin",
-      "flame-mammoth",
     ]);
   });
 

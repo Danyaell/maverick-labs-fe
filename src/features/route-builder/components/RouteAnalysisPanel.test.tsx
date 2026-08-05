@@ -4,127 +4,70 @@ import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
 import userEvent from "@testing-library/user-event";
 import { createRouteAnalysis } from "../../../test/fixtures/routeBuilderFixtures";
 
+const user = userEvent.setup();
+
 describe("RouteAnalysisPanel", async () => {
-  const user = userEvent.setup();
-  render(
+  test("shows content for the selected tab", async () => {
+    render(
       <RouteAnalysisPanel
-        analysis={{
-          gameCode: "MMX",
-          difficultyScore: 70,
-          difficultyLabel: "MEDIUM",
-          backtrackingScore: 55,
-          estimatedMinutes: 90,
+        analysis={createRouteAnalysis({
           warnings: [
             {
               type: "BACKTRACKING",
-              message: "You should avoid this heavy backtracking path.",
+              message: "Backtracking warning",
               stageSlug: null,
             },
           ],
           recommendations: [
-            {
-              type: "BACKTRACKING",
-              severity: "WARNING",
-              message: "You should avoid this heavy backtracking path.",
-              relatedStages: null,
-            },
             {
               type: "BOSS_ORDER",
               severity: "INFO",
               message: "Recommendation 1",
               relatedStages: null,
             },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 2",
-              relatedStages: null,
-            },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 3",
-              relatedStages: null,
-            },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 4",
-              relatedStages: null,
-            },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 5",
-              relatedStages: null,
-            },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 6",
-              relatedStages: null,
-            },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 7",
-              relatedStages: null,
-            },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 8",
-              relatedStages: null,
-            },
-            {
-              type: "BOSS_ORDER",
-              severity: "INFO",
-              message: "Recommendation 9",
-              relatedStages: null,
-            },
           ],
-          breakdown: {
-            combatDifficulty: 35,
-            weaknessReduction: 30,
-            baseDifficultyAverage: -5,
-            timePenaltyMinutes: -10,
-            routeEfficiencyScore: 0,
-          },
-        }}
+        })}
       />,
     );
 
-  await user.click(
-    screen.getByRole("tab", {
+    expect(
+      within(
+        screen.getByRole("tabpanel", {
+          name: /summary/i,
+        }),
+      ).getByText(/71 \/ 100/i),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("tab", {
+        name: /recommendations/i,
+      }),
+    );
+
+    const recommendationsPanel = screen.getByRole("tabpanel", {
       name: /recommendations/i,
-    }),
-  );
+    });
 
-  const recommendationsPanel = screen.getByRole("tabpanel", {
-    name: /recommendations/i,
+    expect(
+      within(recommendationsPanel).getByText("Recommendation 1"),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("tab", {
+        name: /breakdown/i,
+      }),
+    );
+
+    expect(
+      within(
+        screen.getByRole("tabpanel", {
+          name: /breakdown/i,
+        }),
+      ).getByText("Base Difficulty"),
+    ).toBeInTheDocument();
   });
 
-  expect(
-    within(recommendationsPanel).getByText(
-      "Recommendation 8",
-    ),
-  ).toBeInTheDocument();
-
-  await user.click(
-    screen.getByRole("tab", {
-      name: /breakdown/i,
-    }),
-  );
-
-  const breakdownPanel = screen.getByRole("tabpanel", {
-    name: /breakdown/i,
-  });
-
-  expect(
-    within(breakdownPanel).getByText("Base Difficulty"),
-  ).toBeInTheDocument();
-
-  test("deduplicates recommendations and limits the list to 8", () => {
+  test("deduplicates recommendations and limits the list to 8", async () => {
     render(
       <RouteAnalysisPanel
         analysis={{
@@ -212,6 +155,16 @@ describe("RouteAnalysisPanel", async () => {
         }}
       />,
     );
+
+    await user.click(
+      screen.getByRole("tab", {
+        name: /recommendations/i,
+      }),
+    );
+
+    const recommendationsPanel = screen.getByRole("tabpanel", {
+      name: /recommendations/i,
+    });
 
     expect(
       within(recommendationsPanel).getByText("Recommendation 8"),

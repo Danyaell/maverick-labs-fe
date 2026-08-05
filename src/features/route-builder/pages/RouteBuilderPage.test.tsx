@@ -5,7 +5,11 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { RouteBuilderPage } from "./RouteBuilderPage";
 import { renderWithQueryClient } from "../../../test/renderWithQueryClient";
 import type { RouteAnalysisResponse } from "../types/routeAnalysis.types";
-import { createGameDetail, DEFAULT_STAGE_ORDER } from "../../../test/fixtures/routeBuilderFixtures";
+import {
+  createGameDetail,
+  createRouteAnalysis,
+  DEFAULT_STAGE_ORDER,
+} from "../../../test/fixtures/routeBuilderFixtures";
 
 const { mockFetchGameDetail } = vi.hoisted(() => ({
   mockFetchGameDetail: vi.fn(),
@@ -22,25 +26,6 @@ vi.mock("../../games/api/gameApi", () => ({
 vi.mock("../../route-builder/api/routeAnalysisApi", () => ({
   analyzeRoute: mockAnalyzeRoute,
 }));
-
-function createRouteAnalysis(): RouteAnalysisResponse {
-  return {
-    gameCode: "MMX",
-    difficultyScore: 71,
-    difficultyLabel: "MEDIUM",
-    backtrackingScore: 64,
-    estimatedMinutes: 89,
-    warnings: [],
-    recommendations: [],
-    breakdown: {
-      baseDifficultyAverage: 50,
-      combatDifficulty: 60,
-      routeEfficiencyScore: 75,
-      timePenaltyMinutes: 10,
-      weaknessReduction: 20,
-    },
-  };
-}
 
 function renderRouteBuilderPage() {
   return renderWithQueryClient(
@@ -141,23 +126,6 @@ describe("RouteBuilderPage", () => {
     ).toBeInTheDocument();
   });
 
-  test("automatically analyzes the current visual stage order", async () => {
-    mockFetchGameDetail.mockResolvedValue(createGameDetail());
-    mockAnalyzeRoute.mockResolvedValue(createRouteAnalysis());
-
-    renderWithQueryClient(
-      <MemoryRouter initialEntries={["/games/MMX/route-builder"]}>
-        <Routes>
-          <Route
-            path="/games/:gameCode/route-builder"
-            element={<RouteBuilderPage />}
-          />
-        </Routes>
-      </MemoryRouter>,
-    );
-    expect(await screen.findByText(/71 \/ 100/i)).toBeInTheDocument();
-  });
-
   test("requests a new analysis after changing stage order", async () => {
     const user = userEvent.setup();
 
@@ -209,6 +177,18 @@ describe("RouteBuilderPage", () => {
     expect(await screen.findByText("Updating analysis...")).toBeInTheDocument();
 
     expect(screen.getByText(/71 \/ 100/i)).toBeInTheDocument();
+    
+    secondAnalysis.resolve(
+      createRouteAnalysis({
+        difficultyScore: 65,
+      }),
+    );
+
+    expect(await screen.findByText(/65 \/ 100/i)).toBeInTheDocument();
+
+    expect(
+      screen.getByText("Live analysis is up to date."),
+    ).toBeInTheDocument();
   });
 
   test("shows analysis error and recovers after retry", async () => {
