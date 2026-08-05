@@ -1,8 +1,9 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import { RouteBuilder } from "./RouteBuilder";
 import type { GameDetail } from "../../games/types/game.types";
+import { renderWithQueryClient } from "../../../test/renderWithQueryClient";
 
 function createGameDetail(): GameDetail {
   return {
@@ -80,7 +81,7 @@ function getRenderedStageOrder(): string[] {
 
 describe("RouteBuilder", () => {
   test("should render boss names", () => {
-    render(<RouteBuilder game={createGameDetail()} />);
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
 
     expect(screen.getByTestId("stage-card-chill-penguin")).toHaveTextContent(
       "Chill Penguin",
@@ -94,7 +95,7 @@ describe("RouteBuilder", () => {
   });
 
   test("should render weapon rewards", () => {
-    render(<RouteBuilder game={createGameDetail()} />);
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
 
     expect(screen.getByText("Shotgun Ice")).toBeInTheDocument();
     expect(screen.getByText("Storm Tornado")).toBeInTheDocument();
@@ -102,7 +103,7 @@ describe("RouteBuilder", () => {
   });
 
   test("should update order after drag/drop interaction", () => {
-    render(<RouteBuilder game={createGameDetail()} />);
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
 
     const sourceCard = screen.getByTestId("stage-card-chill-penguin");
     const targetCard = screen.getByTestId("stage-card-flame-mammoth");
@@ -115,7 +116,7 @@ describe("RouteBuilder", () => {
   test("should reset route to default order", async () => {
     const user = userEvent.setup();
 
-    render(<RouteBuilder game={createGameDetail()} />);
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
 
     const sourceCard = screen.getByTestId("stage-card-chill-penguin");
     const targetCard = screen.getByTestId("stage-card-flame-mammoth");
@@ -132,7 +133,7 @@ describe("RouteBuilder", () => {
   test("keeps visual order synchronized after moving stages", async () => {
     const user = userEvent.setup();
 
-    render(<RouteBuilder game={createGameDetail()} />);
+    renderWithQueryClient(<RouteBuilder game={createGameDetail()} />);
 
     await user.click(
       screen.getByRole("button", {

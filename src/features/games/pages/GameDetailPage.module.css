@@ -66,12 +66,6 @@
   align-items: start;
 }
 
-.analysisError {
-  margin-top: 0;
-  margin-bottom: var(--space-4);
-  color: var(--color-danger);
-}
-
 @media (width < 1280px) {
   .stageList {
     grid-template-columns:  repeat(4, minmax(0, 1fr));

@@ -2,67 +2,21 @@ import styles from "./RouteBuilder.module.css";
 import type { GameDetail } from "../../games/types/game.types";
 import { useRouteBuilder } from "../hooks/useRouteBuilder";
 import { SortableStageCard } from "./SortableStageCard";
-import { RouteBuilderActions } from "./RouteBuilderActions";
-import { analyzeRoute } from "../api/routeAnalysisApi";
-import { RouteAnalysisPanel } from "./RouteAnalysisPanel";
-import type { RouteAnalysisResponse } from "../types/routeAnalysis.types";
-import { useState } from "react";
 import { DragDropProvider } from "@dnd-kit/react";
 import { isSortable } from "@dnd-kit/react/sortable";
 import { PointerActivationConstraints, PointerSensor } from "@dnd-kit/dom";
+import { LiveRouteAnalysis } from "./LiveRouteAnalysis";
 
 interface RouteBuilderProps {
   game: GameDetail;
 }
 
 export function RouteBuilder({ game }: RouteBuilderProps) {
-  const { orderedStages, moveStage, onReset } = useRouteBuilder(game);
-  const [routeAnalysis, setRouteAnalysis] =
-    useState<RouteAnalysisResponse | null>(null);
-  const [routeAnalysisError, setRouteAnalysisError] = useState<string | null>(
-    null,
-  );
-  const [isAnalyzingRoute, setIsAnalyzingRoute] = useState(false);
-
-  async function handleAnalyzeRoute() {
-    setRouteAnalysisError(null);
-    setIsAnalyzingRoute(true);
-    try {
-      const analysis = await analyzeRoute({
-        gameCode: game.code,
-        stageOrder: orderedStages.map((stage) => stage.slug),
-        goal: "HUNDRED_PERCENT",
-      });
-
-      setRouteAnalysis(analysis);
-    } catch (analysisError) {
-      setRouteAnalysis(null);
-      setRouteAnalysisError(
-        analysisError instanceof Error
-          ? analysisError.message
-          : "Unable to analyze route.",
-      );
-    } finally {
-      setIsAnalyzingRoute(false);
-    }
-  }
+  const { routeState, orderedStages, moveStage, onReset } =
+    useRouteBuilder(game);
 
   return (
     <section className={styles.builderContainer}>
-      <RouteBuilderActions onReset={onReset} />
-      <button
-        type="button"
-        className={styles.analyzeButton}
-        onClick={() => void handleAnalyzeRoute()}
-        disabled={isAnalyzingRoute || orderedStages.length === 0}
-      >
-        {isAnalyzingRoute ? "Analyzing route..." : "Analyze Route"}
-      </button>
-      {routeAnalysisError ? (
-        <p role="alert" className={styles.analysisError}>
-          {routeAnalysisError}
-        </p>
-      ) : null}
 
       <div className={styles.layout}>
         <DragDropProvider
@@ -120,7 +74,11 @@ export function RouteBuilder({ game }: RouteBuilderProps) {
           </ul>
         </DragDropProvider>
 
-        {routeAnalysis ? <RouteAnalysisPanel analysis={routeAnalysis} /> : null}
+        <LiveRouteAnalysis
+          gameCode={routeState.gameCode}
+          stageOrder={routeState.stageOrder}
+          onReset={onReset}
+        />
       </div>
     </section>
   );

@@ -1,0 +1,146 @@
+.container {
+  position: sticky;
+  top: var(--space-8);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.statusBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.statusMessage {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.liveIndicator,
+.updatingIndicator,
+.errorIndicator {
+  display: block;
+  width: 0.625rem;
+  height: 0.625rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.liveIndicator {
+  background-color: var(--color-success);
+}
+
+.updatingIndicator {
+  background-color: var(--color-warning);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.errorIndicator {
+  background-color: var(--color-danger);
+}
+
+.updatingContent {
+  opacity: 0.55;
+  transition: opacity 160ms ease;
+}
+
+.statePanel {
+  padding: var(--space-8) var(--space-16);
+  border: 1px solid var(--button-secondary-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.statePanel p {
+  margin: var(--space-2) 0;
+}
+
+.errorMessage {
+  color: var(--color-danger) !important;
+}
+
+.skeletonTitle,
+.skeletonCard,
+.skeletonMessage {
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(
+      90deg,
+      var(--color-surface-subtle) 25%,
+      var(--color-border-subtle) 50%,
+      var(--color-surface-subtle) 75%
+    );
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.4s linear infinite;
+}
+
+.skeletonTitle {
+  width: 45%;
+  height: 2rem;
+  margin-top: var(--space-2);
+}
+
+.skeletonCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.skeletonCard {
+  height: 7rem;
+}
+
+.skeletonMessage {
+  width: 75%;
+  height: 4rem;
+  margin-top: var(--space-8);
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes skeletonLoading {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (width < 960px) {
+  .container {
+    position: static;
+  }
+
+  .skeletonCards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .updatingIndicator,
+  .skeletonTitle,
+  .skeletonCard,
+  .skeletonMessage {
+    animation: none;
+  }
+
+  .updatingContent {
+    transition: none;
+  }
+}

@@ -37,14 +37,17 @@ export function RouteBuilderPage() {
       <div className={styles.header}>
         <h4>MEGA MAN X</h4>
         <h2>{gameDetail.title} Route Builder</h2>
-        <p>Reorder the eight stages, then analyze the route.</p>
+        <p>
+          Reorder the eight stages to see how each decision affects difficulty,
+          backtracking, and estimated time.
+        </p>
       </div>
 
       <div>
         <h3>Stage order</h3>
         <p className="helperText">
-          Drag and drop the stages or use the arrow controls. This list is the
-          current route.
+          Drag and drop the stages or use the arrow controls. Live Route
+          Analysis updates automatically after every completed move.
         </p>
       </div>
       <RouteBuilder key={gameDetail.code} game={gameDetail} />

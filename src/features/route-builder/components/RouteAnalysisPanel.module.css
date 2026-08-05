@@ -1,7 +1,5 @@
 .panel {
   align-items: flex-start;
-  position: sticky;
-  top: var(--space-8);
   padding: var(--space-8) var(--space-16);
   border-radius: var(--radius-md);
   border: 1px solid var(--button-secondary-border);
