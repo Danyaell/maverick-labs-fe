@@ -19,13 +19,7 @@ export function SortableStageCard({
   onMoveDown,
 }: SortableStageCardProps) {
   const stageImageUrl = getGameAssetUrl(stage.imageAssetKey);
-  const {
-    ref,
-    handleRef,
-    isDragging,
-    isDropping,
-    isDropTarget,
-  } = useSortable({
+  const { ref, handleRef, isDragging, isDropping, isDropTarget } = useSortable({
     id: stage.slug,
     index,
   });
@@ -42,10 +36,7 @@ export function SortableStageCard({
   const position = index + 1;
 
   return (
-    <li
-      ref={ref}
-      data-stage-slug={stage.slug}
-    >
+    <li ref={ref} data-stage-slug={stage.slug}>
       <article
         className={cardClassName}
         data-testid={`stage-card-${stage.slug}`}
@@ -76,17 +67,17 @@ export function SortableStageCard({
           {String(position).padStart(2, "0")}
         </p>
 
-        <img
-          className={styles.stageImage}
-          src={stageImageUrl || undefined}
-          alt={`${stage.name} preview`}
-        />
+        <div className={styles.stageInfo}>
+          <img
+            className={styles.stageImage}
+            src={stageImageUrl || undefined}
+            alt={`${stage.name} preview`}
+          />
 
-        <div className={styles.content}>
-          <h3 className={styles.bossName}>{stage.boss.name}</h3>
-          <p className="helperText">
-            {stage.weaponReward?.name ?? ""}
-          </p>
+          <div className={styles.content}>
+            <h3 className={styles.bossName}>{stage.boss.name}</h3>
+            <p className={`helperText ${styles.weaponReward}`}>{stage.weaponReward?.name ?? ""}</p>
+          </div>
         </div>
 
         <div className={styles.controls}>

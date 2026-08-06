@@ -126,8 +126,19 @@
 }
 
 @media (width < 590px) {
+  .panel {
+    padding: var(--space-4) var(--space-4);
+  }
+
   .analysisSummary {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media (width < 340px) {
+  .routeAnalysisNavButton {
+    padding: var(--space-2) var(--space-1);
+    font-size: var(--font-size-sm);
   }
 }

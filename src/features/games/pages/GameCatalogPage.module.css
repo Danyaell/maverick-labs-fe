@@ -4,7 +4,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   text-align: left;
-  margin-left: 50px;
+  margin: 0 50px;
 }
 
 h1, p {
@@ -18,7 +18,7 @@ h1, p {
   gap: var(--space-8);
   list-style-type: none;
   padding: 0;
-  margin: 50px 50px 0 0;
+  margin: 50px 0;
 }
 
 @media (width < 768px) {
