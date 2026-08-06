@@ -135,3 +135,10 @@
     flex-direction: column;
   }
 }
+
+@media (width < 340px) {
+  .routeAnalysisNavButton {
+    padding: var(--space-2) var(--space-1);
+    font-size: var(--font-size-sm);
+  }
+}
