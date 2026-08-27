@@ -117,4 +117,31 @@ describe("RouteAnalysisComparison", () => {
       screen.getByRole("link", { name: /try your own mmx route/i }),
     ).toHaveAttribute("href", "/games/MMX/route-builder");
   });
+
+  test("explains the initial route limitations", () => {
+    renderComparison();
+
+    expect(
+      screen.getByText(
+        /shotgun ice and the leg upgrade are not yet available/i,
+      ),
+    ).toBeInTheDocument();
+  });
+
+  test("updates the explanation after selecting the adjustment", async () => {
+    const user = userEvent.setup();
+    renderComparison();
+
+    await user.click(
+      screen.getByRole("button", { name: /recommended adjustment/i }),
+    );
+
+    expect(
+      screen.getByText(/the sub tank still requires boomerang cutter/i),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByText(/are not yet available/i),
+    ).not.toBeInTheDocument();
+  });
 });

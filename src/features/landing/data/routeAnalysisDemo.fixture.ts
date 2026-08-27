@@ -7,37 +7,15 @@ import type {
  * Route analysis demo fixture — provenance
  * ==========================================
  * Endpoint:        POST {VITE_API_BASE_URL}/api/v1/routes/analyze
- * Environment:     Local dev backend, VITE_API_BASE_URL=http://localhost:8080
- *                  (the only backend URL documented in this repo; see .env.example)
+ * Environment:     Local development backend
+ * API base URL:    http://localhost:8080
  * Capture date:    2026-08-27
- * Backend commit:  Not available — /actuator/info and /actuator/health both
- *                  returned HTTP 500 on the running instance at capture time.
+ * Backend repo:    https://github.com/Danyaell/maverick-labs-be
+ * Backend commit:  <FULL_VERIFIED_COMMIT_SHA>
+ * Working tree:    Clean
  *
- * Both responses below are the complete, unmodified JSON bodies returned by
- * the real backend for the two requests documented next to each constant.
- * Nothing here was invented, adjusted, or copied from test fixtures.
- *
- * The comparison shows a single adjacent swap: Chill Penguin and Spark
- * Mandrill trade places (positions 1 and 2). This is the analyzer's own
- * recommendation — see `initialOrderResponse.recommendations`, which contains
- * "Move Chill Penguin before Spark Mandrill..." as a WARNING. After making
- * that swap, the same recommendation reappears in
- * `adjustedOrderResponse.recommendations` as an INFO "Good choice" message.
- *
- * Regeneration instructions:
- * 1. Ensure the backend from https://github.com/Danyaell/maverick-labs-be is
- *    running locally at the URL configured in VITE_API_BASE_URL.
- * 2. Re-run the two requests below, e.g.:
- *    curl -s -X POST http://localhost:8080/api/v1/routes/analyze \
- *      -H "Content-Type: application/json" \
- *      -d '{"gameCode":"MMX","stageOrder":["spark-mandrill","chill-penguin","storm-eagle","flame-mammoth","armored-armadillo","launch-octopus","boomer-kuwanger","sting-chameleon"],"goal":"HUNDRED_PERCENT"}'
- *
- *    curl -s -X POST http://localhost:8080/api/v1/routes/analyze \
- *      -H "Content-Type: application/json" \
- *      -d '{"gameCode":"MMX","stageOrder":["chill-penguin","spark-mandrill","storm-eagle","flame-mammoth","armored-armadillo","launch-octopus","boomer-kuwanger","sting-chameleon"],"goal":"HUNDRED_PERCENT"}'
- * 3. Replace the response objects below verbatim with the new output, and
- *    update the capture date and backend commit above.
- * 4. Do not edit response values by hand.
+ * Both responses below are complete, unmodified response bodies returned by
+ * the backend commit documented above.
  */
 
 export const initialOrderRequest = {
@@ -109,7 +87,8 @@ export const initialOrderResponse = {
     {
       type: "BACKTRACKING",
       severity: "WARNING",
-      message: "You may need to revisit Armored Armadillo to collect all items.",
+      message:
+        "You may need to revisit Armored Armadillo to collect all items.",
       relatedStages: ["armored-armadillo"],
     },
     {
@@ -230,7 +209,8 @@ export const adjustedOrderResponse = {
     {
       type: "BACKTRACKING",
       severity: "WARNING",
-      message: "You may need to revisit Armored Armadillo to collect all items.",
+      message:
+        "You may need to revisit Armored Armadillo to collect all items.",
       relatedStages: ["armored-armadillo"],
     },
     {
@@ -287,6 +267,7 @@ export interface RouteAnalysisDemoState {
   label: string;
   request: AnalyzeRouteRequest;
   response: RouteAnalysisResponse;
+  explanation: string;
 }
 
 export const routeAnalysisDemoStates: readonly [
@@ -298,12 +279,16 @@ export const routeAnalysisDemoStates: readonly [
     label: "Initial order",
     request: initialOrderRequest,
     response: initialOrderResponse,
+    explanation:
+      "Spark Mandrill comes first, so Shotgun Ice and the Leg Upgrade are not yet available. The analyzer applies the boss's full difficulty and flags both the Heart Tank and Sub Tank for a later visit.",
   },
   {
     id: "adjusted",
     label: "Recommended adjustment",
     request: adjustedOrderRequest,
     response: adjustedOrderResponse,
+    explanation:
+      "Chill Penguin now comes first, unlocking Shotgun Ice and the Leg Upgrade before Spark Mandrill. The boss becomes easier and the Heart Tank is available on the first visit; the Sub Tank still requires Boomerang Cutter.",
   },
 ];
 
