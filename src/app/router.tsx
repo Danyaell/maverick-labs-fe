@@ -1,6 +1,7 @@
-import { createBrowserRouter, Navigate } from 'react-router'
+import { createBrowserRouter, type RouteObject } from 'react-router'
 import App from './App'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { LandingPage } from '../features/landing/pages/LandingPage'
 import { GameCatalogPage } from '../features/games/pages/GameCatalogPage'
 import { GameDetailPage } from '../features/games/pages/GameDetailPage'
 import { RouteBuilderPage } from '../features/route-builder/pages/RouteBuilderPage'
@@ -16,7 +17,7 @@ const GAME_NAMES: Record<string, string> = {
   MMX8: "Mega Man X8",
 };
 
-export const router = createBrowserRouter([
+export const routeConfig: RouteObject[] = [
   {
     path: "/",
     element: <App />,
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/games" replace />,
+        element: <LandingPage />,
       },
       {
         path: "games",
@@ -72,4 +73,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+export const router = createBrowserRouter(routeConfig);
