@@ -52,7 +52,9 @@ describe("router", () => {
     renderAt("/");
 
     expect(
-      await screen.findByRole("heading", { name: "Maverick Labs" }),
+      await screen.findByRole("heading", {
+        name: "Plan smarter Mega Man X routes",
+      }),
     ).toBeInTheDocument();
   });
 

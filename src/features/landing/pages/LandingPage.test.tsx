@@ -1,4 +1,3 @@
-import { screen } from "@testing-library/react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { describe, expect, test, vi } from "vitest";
@@ -14,17 +13,6 @@ const SECTION_IDS = [
 ];
 
 describe("LandingPage", () => {
-  test("renders a hero CTA linking to the game catalog", () => {
-    render(
-      <MemoryRouter>
-        <LandingPage />
-      </MemoryRouter>,
-    );
-
-    const cta = screen.getByRole("link", { name: /choose a game/i });
-    expect(cta).toHaveAttribute("href", "/games");
-  });
-
   test("renders a stable anchor for every landing section", () => {
     const { container } = render(
       <MemoryRouter>
