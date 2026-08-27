@@ -41,7 +41,7 @@ export default function App() {
                 </NavLink>
                 <NavLink to="/#architecture" className="helperText">
                   {" "}
-                  Architecture
+                   Architecture
                 </NavLink>
                 <NavLink
                   to="https://github.com/Danyaell/maverick-labs-fe"
