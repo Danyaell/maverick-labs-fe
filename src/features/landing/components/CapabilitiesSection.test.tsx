@@ -15,7 +15,9 @@ describe("CapabilitiesSection", () => {
   test("renders exactly four list items in a semantic ordered list", () => {
     renderSection();
 
-    const list = screen.getByRole("list");
+    const list = screen.getByRole("list", {
+      name: /product capabilities/i,
+    });
     expect(list.tagName).toBe("OL");
     expect(within(list).getAllByRole("listitem")).toHaveLength(4);
   });

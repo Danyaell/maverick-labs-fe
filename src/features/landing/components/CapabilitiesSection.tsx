@@ -13,12 +13,16 @@ export function CapabilitiesSection() {
       <p className="eyebrow">Product journey</p>
       <h2 id="capabilities-heading">From catalog to route analysis</h2>
       <p>
-        Explore all eight main Mega Man X titles, then use the complete Mega
-        Man X experience to inspect stages, build a route, and analyze every
-        decision.
+        Explore all eight main Mega Man X titles, then use the complete Mega Man
+        X route-planning experience to inspect stages, build a route, and
+        analyze every decision.
       </p>
 
-      <ol className={styles.capabilityList}>
+      <ol
+        className={styles.capabilityList}
+        role="list"
+        aria-label="Product capabilities"
+      >
         {CAPABILITIES.map((capability) => (
           <li key={capability.id} className={styles.card}>
             <img
