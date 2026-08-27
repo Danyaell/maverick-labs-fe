@@ -11,9 +11,9 @@ export function LandingHero() {
       <div className={styles.copy}>
         <h1>Plan smarter Mega Man X routes</h1>
         <p>
-          Reorder Mega Man X stages and instantly see difficulty, weapon
-          weaknesses, collectibles, backtracking, estimated time, and
-          recommendations for that order.
+          Reorder the eight Mega Man X stages and see how boss weaknesses and
+          collectible requirements affect difficulty, backtracking, estimated
+          time, and recommendations.
         </p>
         <div className={styles.ctaRow}>
           <Link
@@ -40,7 +40,7 @@ export function LandingHero() {
           alt=""
           aria-hidden="true"
         />
-        <ol className={styles.routeOrder}>
+        <ol className={styles.routeOrder} aria-hidden="true">
           <li className={styles.routeStop}>
             <img className={styles.routeIcon} src={chillPenguinImage} alt="" />
             <span className={styles.routeStopNumber}>1</span>
