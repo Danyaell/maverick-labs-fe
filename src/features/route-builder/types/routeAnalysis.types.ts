@@ -20,6 +20,7 @@ export interface RouteWarning {
   type: RouteWarningType
   message: string
   stageSlug?: string | null
+  collectibleSlug?: string | null
 }
 
 export interface RouteBreakdown {

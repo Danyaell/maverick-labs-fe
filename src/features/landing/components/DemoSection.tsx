@@ -1,18 +1,15 @@
-import { Link } from "react-router";
 import styles from "./DemoSection.module.css";
+import { RouteAnalysisComparison } from "./RouteAnalysisComparison";
 
 export function DemoSection() {
   return (
     <section id="demo" className={styles.section}>
-      <h2>Live demo</h2>
+      <p className="eyebrow">Route analysis demo</p>
+      <h2>See how one stage-order change affects the route</h2>
       <p>
-        Pick a game from the catalog and open its Route Builder to reorder
-        stages and watch difficulty, backtracking, and estimated time update
-        as you go.
+        A curated Mega Man X comparison using captured analyzer responses.
       </p>
-      <Link className="button--primary" to="/games">
-        Explore games
-      </Link>
+      <RouteAnalysisComparison />
     </section>
   );
 }
