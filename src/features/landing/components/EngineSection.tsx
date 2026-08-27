@@ -5,9 +5,7 @@ export function EngineSection() {
     <section id="engine" className={styles.section}>
       <h2>Route analysis engine</h2>
       <p>
-        A route-analysis engine scores every stage ordering for difficulty
-        and backtracking, so you can see the trade-offs of a route before
-        committing to it.
+        The route-analysis engine evaluates a submitted stage order for difficulty, backtracking, estimated time, warnings, and recommendations.
       </p>
     </section>
   );
