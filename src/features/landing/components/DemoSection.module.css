@@ -1,9 +1,10 @@
 .section {
+  composes: page-container from global;
   scroll-margin-top: 6rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-4);
   text-align: left;
-  margin: var(--space-12) 50px;
+  margin-block: var(--space-12);
 }

@@ -1,5 +1,6 @@
 .section {
+  composes: page-container from global;
   scroll-margin-top: 6rem;
   text-align: left;
-  margin: var(--space-12) 50px;
+  margin-block: var(--space-12);
 }
