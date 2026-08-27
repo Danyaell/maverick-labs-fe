@@ -33,7 +33,11 @@ function findKeyRecommendation(
   );
 }
 
-function formatDelta(current: number, baseline: number, unit: string): string | null {
+function formatDelta(
+  current: number,
+  baseline: number,
+  unit: string,
+): string | null {
   const delta = current - baseline;
 
   if (delta === 0) {
@@ -49,8 +53,7 @@ export function RouteAnalysisComparison() {
   const liveRegionId = useId();
 
   const [initialState, adjustedState] = routeAnalysisDemoStates;
-  const selectedState =
-    selectedId === "initial" ? initialState : adjustedState;
+  const selectedState = selectedId === "initial" ? initialState : adjustedState;
   const baselineResponse = initialState.response;
 
   const movedStageSlugs = useMemo(
@@ -156,9 +159,7 @@ export function RouteAnalysisComparison() {
                 aria-hidden="true"
               />
               <span className={styles.stageName}>{stageName}</span>
-              {hasMoved ? (
-                <span className={styles.movedTag}>Moved</span>
-              ) : null}
+              {hasMoved ? <span className={styles.movedTag}>Moved</span> : null}
             </li>
           );
         })}
@@ -180,16 +181,16 @@ export function RouteAnalysisComparison() {
 
       {keyRecommendation ? (
         <p className={styles.callout}>
-          <strong>{keyRecommendation.severity === "INFO" ? "Good choice: " : "Recommendation: "}</strong>
+          <strong>
+            {keyRecommendation.severity === "INFO"
+              ? "Good choice: "
+              : "Recommendation: "}
+          </strong>
           {keyRecommendation.message}
         </p>
       ) : null}
 
-      <p className={styles.explanation}>
-        Swapping Chill Penguin and Spark Mandrill puts Shotgun Ice in your
-        arsenal before that fight. That single adjustment is why backtracking,
-        estimated time, and weakness reduction all improve above.
-      </p>
+      <p className={styles.explanation}>{selectedState.explanation}</p>
 
       <Link className="button button--primary" to="/games/MMX/route-builder">
         Try your own MMX route
