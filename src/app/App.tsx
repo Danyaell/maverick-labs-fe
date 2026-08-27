@@ -39,9 +39,9 @@ export default function App() {
                 <NavLink to="/games" className="helperText">
                   Game Catalog ·
                 </NavLink>
-                <NavLink to="/about" className="helperText">
+                <NavLink to="/#architecture" className="helperText">
                   {" "}
-                  About
+                  Architecture
                 </NavLink>
                 <NavLink
                   to="https://github.com/Danyaell/maverick-labs-fe"
