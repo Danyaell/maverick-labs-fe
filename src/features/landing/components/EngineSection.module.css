@@ -4,3 +4,115 @@
   text-align: left;
   margin-block: var(--space-12);
 }
+
+.stageList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  margin: var(--space-6) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stageItem {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.stageDetails {
+  padding: var(--space-3) var(--space-4);
+}
+
+.stageSummary {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  cursor: pointer;
+  list-style: none;
+}
+
+.stageSummary::-webkit-details-marker {
+  display: none;
+}
+
+.stageSummary::after {
+  content: "+";
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  font-weight: var(--font-weight-bold);
+}
+
+.stageDetails[open] .stageSummary::after {
+  content: "\2212";
+}
+
+.stageSummary:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+.stageNumber {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+}
+
+.stageTitle {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.stageSummaryText {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.stageDetailText {
+  margin: var(--space-3) 0 0;
+  padding-inline-start: calc(2rem + var(--space-3));
+  color: var(--color-text-secondary);
+}
+
+.example {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.caveat {
+  margin-top: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.repoLink {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.repoLink:hover {
+  color: var(--color-link-hover);
+}
+
+.repoLink:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+@media (max-width: 30rem) {
+  .stageDetailText {
+    padding-inline-start: 0;
+  }
+}
