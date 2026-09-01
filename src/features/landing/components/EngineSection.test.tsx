@@ -40,8 +40,10 @@ describe("EngineSection", () => {
     expect(firstSummary).not.toBeNull();
 
     await user.click(firstSummary!);
-
     expect(details[0]).toHaveAttribute("open");
+
+    await user.click(firstSummary!);
+    expect(details[0]).not.toHaveAttribute("open");
   });
 
   test("all five stage controls are reachable via Tab, in order", async () => {
@@ -92,5 +94,28 @@ describe("EngineSection", () => {
     );
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  test("explains the analyzer domain rules accurately", () => {
+    const { container } = render(<EngineSection />);
+    const details = Array.from(container.querySelectorAll("details"));
+
+    expect(details[1]).toHaveTextContent(
+      /requires a hundred_percent route to include every game stage exactly once/i,
+    );
+
+    expect(details[2]).toHaveTextContent(
+      /weapon reward becomes available only after that stage is cleared/i,
+    );
+    expect(details[2]).toHaveTextContent(
+      /required weapon was acquired before reaching that boss/i,
+    );
+
+    expect(details[3]).toHaveTextContent(/backtracking pressure/i);
+    expect(details[3]).toHaveTextContent(/a revisit may be needed/i);
+
+    expect(details[4]).toHaveTextContent(
+      /ordered by configured type and severity priorities/i,
+    );
   });
 });

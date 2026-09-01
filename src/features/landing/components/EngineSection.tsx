@@ -15,37 +15,38 @@ const ENGINE_STAGES: readonly EngineStage[] = [
   {
     id: "request",
     title: "Route request",
-    summary: "You submit a stage order and a goal.",
+    summary: "You submit a game, stage order, and analysis goal.",
     detail:
-      "The request carries a game code, the eight-stage order you chose, and a goal such as HUNDRED_PERCENT.",
+      "The request contains a game code, an ordered list of stage slugs, and the HUNDRED_PERCENT goal.",
   },
   {
     id: "validation",
     title: "Validation & data loading",
-    summary: "The backend checks the request and loads game data.",
+    summary: "The backend resolves the game data and verifies the route.",
     detail:
-      "The stage order must contain exactly eight valid, unique stage slugs for the requested game before the stage, boss, weapon, and collectible data for that game is loaded.",
+      "The backend loads the game's stage, boss, and collectible-requirement data, rejects unknown or duplicate stage slugs, and requires a HUNDRED_PERCENT route to include every game stage exactly once. It then loads the weapon rewards used by the simulation.",
   },
   {
     id: "simulation",
     title: "Progression simulation",
-    summary: "The engine plays through your order stage by stage.",
+    summary: "The engine processes the route stage by stage.",
     detail:
-      "Each stage's weapon reward becomes available only after that stage is cleared, and a boss's weakness reduction is only applied if you already acquired the required weapon by the time you reach that boss.",
+      "A stage's weapon reward becomes available only after that stage is cleared. A boss weakness reduces difficulty only when its required weapon was acquired before reaching that boss.",
   },
   {
     id: "scores",
     title: "Scores & warnings",
-    summary: "The simulation produces scores and flags risk.",
+    summary: "The simulation turns progression into model outputs.",
     detail:
-      "Difficulty, backtracking, estimated time, and a route-efficiency breakdown are calculated from the simulation. Warnings are raised when a collectible's requirement, such as a weapon or upgrade, isn't available yet, since that forces a return trip later.",
+      "The response includes difficulty score and label, backtracking score, modeled estimated minutes, warnings, and a breakdown of base difficulty, combat difficulty, weakness reduction, route efficiency, and time penalty. An unmet collectible requirement adds backtracking pressure and warns that a revisit may be needed.",
   },
   {
     id: "recommendations",
     title: "Prioritized recommendations",
-    summary: "Rule-based suggestions surface the highest-impact changes.",
+    summary:
+      "Rule-based suggestions turn route problems into ordered guidance.",
     detail:
-      "Boss-order, backtracking, and route-efficiency recommendations are generated from the analyzed route and ranked so the most impactful change is easy to find.",
+      "Boss-order, backtracking, and route-efficiency recommendations are generated from the analyzed route, deduplicated, ordered by configured type and severity priorities, and capped before being returned.",
   },
 ] as const;
 
@@ -54,20 +55,18 @@ export function EngineSection() {
     <section id="engine" className={styles.section}>
       <h2>How the route-analysis engine works</h2>
       <p>
-        Every submitted route moves through the same five stages before you
-        see a result. Expand a stage for the technical detail behind it.
+        Every submitted route moves through the same five stages before you see
+        a result. Expand a stage for the technical detail behind it.
       </p>
 
       <ol className={styles.stageList}>
         {ENGINE_STAGES.map((stage, index) => (
           <li key={stage.id} className={styles.stageItem}>
             <details className={styles.stageDetails}>
-              <summary className={styles.stageSummary} tabIndex={0}>
+              <summary className={styles.stageSummary}>
                 <span className={styles.stageNumber}>{index + 1}</span>
                 <span className={styles.stageTitle}>{stage.title}</span>
-                <span className={styles.stageSummaryText}>
-                  {stage.summary}
-                </span>
+                <span className={styles.stageSummaryText}>{stage.summary}</span>
               </summary>
               <p className={styles.stageDetailText}>{stage.detail}</p>
             </details>
@@ -77,18 +76,23 @@ export function EngineSection() {
 
       <p className={styles.example}>
         <strong>In practice: </strong>
-        In the captured comparison above, moving Chill Penguin before Spark
-        Mandrill made Shotgun Ice available before that fight. The real
-        analyzer response showed backtracking drop from{" "}
+        In the captured MMX comparison, moving Chill Penguin before Spark
+        Mandrill makes Shotgun Ice and the Leg Upgrade available first. Shotgun
+        Ice lowers combat difficulty from{" "}
+        {initialOrderResponse.breakdown.combatDifficulty} to{" "}
+        {adjustedOrderResponse.breakdown.combatDifficulty}. The Leg Upgrade
+        makes Spark Mandrill&apos;s Heart Tank available on the first visit,
+        lowering modeled backtracking from{" "}
         {initialOrderResponse.backtrackingScore} to{" "}
-        {adjustedOrderResponse.backtrackingScore} and estimated time drop
-        from {initialOrderResponse.estimatedMinutes} to{" "}
+        {adjustedOrderResponse.backtrackingScore}. The Sub Tank still requires
+        Boomerang Cutter. The model&apos;s estimated time changes from{" "}
+        {initialOrderResponse.estimatedMinutes} to{" "}
         {adjustedOrderResponse.estimatedMinutes} minutes.
       </p>
 
       <p className={styles.caveat}>
-        Estimated time is a model output from the simulation, not a
-        speedrun prediction or a guaranteed clear time.
+        Estimated time is a model output from the simulation, not a speedrun
+        prediction or a guaranteed clear time.
       </p>
 
       <a

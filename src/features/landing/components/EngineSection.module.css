@@ -26,10 +26,11 @@
 }
 
 .stageSummary {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
   cursor: pointer;
   list-style: none;
 }
@@ -40,7 +41,8 @@
 
 .stageSummary::after {
   content: "+";
-  margin-left: auto;
+  grid-column: 3;
+  grid-row: 1 / span 2;
   font-weight: var(--font-weight-bold);
 }
 
@@ -54,22 +56,31 @@
 }
 
 .stageNumber {
+  grid-column: 1;
+  grid-row: 1 / span 2;
   font-family: var(--font-family-display);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-secondary);
 }
 
 .stageTitle {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
   font-weight: var(--font-weight-semibold);
 }
 
 .stageSummaryText {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
 
 .stageDetailText {
   margin: var(--space-3) 0 0;
+  padding-inline-start: calc(2rem + var(--space-3));
   color: var(--color-text-secondary);
 }
 
@@ -98,4 +109,10 @@
 .repoLink:focus-visible {
   outline: 3px solid var(--color-focus-ring);
   outline-offset: 3px;
+}
+
+@media (max-width: 30rem) {
+  .stageDetailText {
+    padding-inline-start: 0;
+  }
 }
