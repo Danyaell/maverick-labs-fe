@@ -11,8 +11,6 @@ import type {
  * API base URL:    http://localhost:8080
  * Capture date:    2026-08-27
  * Backend repo:    https://github.com/Danyaell/maverick-labs-be
- * Backend commit:  <FULL_VERIFIED_COMMIT_SHA>
- * Working tree:    Clean
  *
  * Both responses below are complete, unmodified response bodies returned by
  * the backend commit documented above.
