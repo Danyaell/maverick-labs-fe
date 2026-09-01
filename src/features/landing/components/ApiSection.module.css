@@ -4,3 +4,96 @@
   text-align: left;
   margin-block: var(--space-12);
 }
+
+.operationList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  margin: var(--space-6) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.operation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.method {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wide);
+  padding: var(--space-1) var(--space-2) 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.methodGet {
+  border-color: var(--color-info-border);
+  color: var(--color-info-text);
+}
+
+.methodPost {
+  border-color: var(--color-success-border);
+  color: var(--color-success-text);
+}
+
+.path {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--font-size-sm);
+}
+
+.purpose {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.exampleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-6);
+  width: 100%;
+  margin-bottom: var(--space-6);
+}
+
+.codeFigure {
+  margin: 0;
+}
+
+.codeFigure figcaption {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.codeBlock {
+  margin: 0;
+  padding: var(--space-3);
+  overflow-x: auto;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-relaxed);
+}
+
+.codeBlock:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
