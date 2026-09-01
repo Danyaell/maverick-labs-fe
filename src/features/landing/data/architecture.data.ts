@@ -9,7 +9,7 @@ export const RUNTIME_FLOW: readonly RuntimeFlowNode[] = [
   {
     id: "browser",
     label: "Browser",
-    detail: "Runs the rendered UI and holds the visitor's session.",
+    detail: "Renders the interface and initiates requests through the React client.",
   },
   {
     id: "client",
@@ -100,7 +100,7 @@ export const DELIVERY_AND_HOSTING: readonly ArchitectureConcept[] = [
   {
     id: "railway",
     title: "Railway",
-    description: "Hosts the Spring Boot API and its production data services.",
+    description: "Hosts the Spring Boot API and production MySQL service.",
   },
 ] as const;
 
