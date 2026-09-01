@@ -63,7 +63,7 @@ export function EngineSection() {
         {ENGINE_STAGES.map((stage, index) => (
           <li key={stage.id} className={styles.stageItem}>
             <details className={styles.stageDetails}>
-              <summary className={styles.stageSummary}>
+              <summary className={styles.stageSummary} tabIndex={0}>
                 <span className={styles.stageNumber}>{index + 1}</span>
                 <span className={styles.stageTitle}>{stage.title}</span>
                 <span className={styles.stageSummaryText}>{stage.summary}</span>
