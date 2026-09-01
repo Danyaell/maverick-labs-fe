@@ -15,3 +15,5 @@ const resolvedApiDocsUrl =
 export const API_DOCS_URL: string = resolvedApiDocsUrl.replace(/\/$/, '')
 
 export const BACKEND_REPOSITORY_URL = 'https://github.com/Danyaell/maverick-labs-be'
+
+export const FRONTEND_REPOSITORY_URL = 'https://github.com/Danyaell/maverick-labs-fe'

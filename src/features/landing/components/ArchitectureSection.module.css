@@ -4,3 +4,118 @@
   text-align: left;
   margin-block: var(--space-12);
 }
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  margin: var(--space-4) 0 var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+@media (width >= 640px) {
+  .flow {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.flowNode {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.flowNode:not(:last-child)::after {
+  content: "\2193";
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+}
+
+@media (width >= 640px) {
+  .flowNode:not(:last-child)::after {
+    content: "\2192";
+    position: absolute;
+    top: 50%;
+    right: calc(-1 * var(--space-4) - 2px);
+    transform: translateY(-50%);
+    margin-top: 0;
+  }
+}
+
+.flowLabel {
+  display: block;
+  font-weight: var(--font-weight-semibold);
+}
+
+.flowDetail {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.conceptList {
+  margin: var(--space-4) 0 var(--space-6);
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.conceptList li {
+  color: var(--color-text-secondary);
+}
+
+.conceptList strong {
+  color: var(--color-text-primary);
+}
+
+.stackGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-6);
+  width: 100%;
+  margin: var(--space-4) 0 var(--space-8);
+}
+
+.stackGroup {
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.stackGroup h4 {
+  margin: 0 0 var(--space-2);
+}
+
+.stackGroup ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.stackGroup li {
+  min-width: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
