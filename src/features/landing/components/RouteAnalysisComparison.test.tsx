@@ -143,5 +143,9 @@ describe("RouteAnalysisComparison", () => {
     expect(
       screen.queryByText(/are not yet available/i),
     ).not.toBeInTheDocument();
+
+    expect(
+      screen.getByText(/recommended adjustment selected/i),
+    ).toHaveAttribute("aria-live", "polite");
   });
 });

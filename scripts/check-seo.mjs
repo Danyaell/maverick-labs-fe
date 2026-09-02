@@ -91,11 +91,6 @@ assert.equal(
   "Maverick Labs: Plan smarter Mega Man X routes",
 );
 
-assert.equal(
-  socialImage.subarray(0, 8).toString("hex"),
-  "89504e470d0a1a0a0a".slice(0, 16),
-);
-
 const pngSignature = "89504e470d0a1a0a";
 
 assert.equal(

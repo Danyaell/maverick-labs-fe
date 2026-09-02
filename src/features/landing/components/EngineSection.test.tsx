@@ -59,6 +59,16 @@ describe("EngineSection", () => {
     }
   });
 
+  test("summary is reachable and responds to Enter", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<EngineSection />);
+    const summary = container.querySelector("summary")!;
+
+    summary.focus();
+    await user.keyboard("{Enter}");
+    expect(summary).toHaveFocus();
+  });
+
   test("connects a concrete MMX stage-order decision to real calculated outcomes", () => {
     render(<EngineSection />);
 

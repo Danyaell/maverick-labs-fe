@@ -3,14 +3,32 @@ import { MemoryRouter } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import { LandingPage } from "./LandingPage";
 
-const SECTION_IDS = [
-  "capabilities",
-  "demo",
-  "engine",
-  "api",
-  "architecture",
-  "roadmap",
-];
+const LANDING_SECTIONS = [
+  {
+    id: "capabilities",
+    name: "From catalog to route analysis",
+  },
+  {
+    id: "demo",
+    name: "See how one stage-order change affects the route",
+  },
+  {
+    id: "engine",
+    name: "How the route-analysis engine works",
+  },
+  {
+    id: "api",
+    name: "Three operations power everything on screen",
+  },
+  {
+    id: "architecture",
+    name: "Architecture & stack",
+  },
+  {
+    id: "roadmap",
+    name: "Available today and planned next",
+  },
+] as const;
 
 describe("LandingPage", () => {
   test("renders a stable anchor for every landing section", () => {
@@ -20,7 +38,7 @@ describe("LandingPage", () => {
       </MemoryRouter>,
     );
 
-    for (const id of SECTION_IDS) {
+    for (const { id } of LANDING_SECTIONS) {
       expect(container.querySelector(`#${id}`)).not.toBeNull();
     }
   });

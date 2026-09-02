@@ -52,8 +52,8 @@ const ENGINE_STAGES: readonly EngineStage[] = [
 
 export function EngineSection() {
   return (
-    <section id="engine" className={styles.section}>
-      <h2>How the route-analysis engine works</h2>
+    <section id="engine" className={styles.section} aria-labelledby="engine-heading">
+      <h2 id="engine-heading" tabIndex={-1}>How the route-analysis engine works</h2>
       <p>
         Every submitted route moves through the same five stages before you see
         a result. Expand a stage for the technical detail behind it.

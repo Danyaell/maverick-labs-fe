@@ -10,7 +10,7 @@ export function RoadmapSection() {
       aria-labelledby="roadmap-heading"
     >
       <p className="eyebrow">Current coverage</p>
-      <h2 id="roadmap-heading">Available today and planned next</h2>
+      <h2 id="roadmap-heading" tabIndex={-1}>Available today and planned next</h2>
 
       <p>{PRODUCT_COVERAGE.summary}</p>
 

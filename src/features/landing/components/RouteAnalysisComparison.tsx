@@ -157,6 +157,10 @@ export function RouteAnalysisComparison() {
                 src={getGameAssetUrl(`mmx.boss.${slug}`)}
                 alt=""
                 aria-hidden="true"
+                width={40}
+                height={40}
+                loading="lazy"
+                decoding="async"
               />
               <span className={styles.stageName}>{stageName}</span>
               {hasMoved ? <span className={styles.movedTag}>Moved</span> : null}

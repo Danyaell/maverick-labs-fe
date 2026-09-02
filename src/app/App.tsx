@@ -13,11 +13,13 @@ export default function App() {
     <div className={styles.app}>
       <header className={styles.header}>
         <div>
-          <nav className={styles.nav}>
+          <nav className={styles.nav} aria-label="Primary navigation">
             <NavLink to="/" className={styles.logo}>
               <img
                 className={styles.logoImage}
                 src={logoAsset[Object.keys(logoAsset)[0]]}
+                alt=""
+                aria-hidden="true"
               />
               <p className={styles.logoText}>MAVERICK LABS</p>
             </NavLink>
@@ -41,17 +43,17 @@ export default function App() {
                 </NavLink>
                 <NavLink to="/#architecture" className="helperText">
                   {" "}
-                   Architecture
+                  Architecture
                 </NavLink>
-                <NavLink
-                  to="https://github.com/Danyaell/maverick-labs-fe"
+                <a
+                  href="https://github.com/Danyaell/maverick-labs-fe"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="helperText"
                 >
                   {" "}
                   · GitHub
-                </NavLink>
+                </a>
               </div>
             </div>
             <p className="helperText">Plan. Analyze. Conquer.</p>
