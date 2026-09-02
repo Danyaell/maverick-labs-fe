@@ -3,8 +3,8 @@ export type CapabilityId = "catalog" | "inspect" | "build" | "analyze";
 export type CapabilityAssetKey =
   | "mmx.title.logo"
   | "mmx.boss.chill-penguin"
-  | "mmx.stage.stage-select"
-  | "mmx.weapon.shotgun-ice";
+  | "mmx.weapon.shotgun-ice"
+  | "mmx.collectible.heart-tank";
 
 export interface Capability {
   readonly id: CapabilityId;
@@ -34,7 +34,7 @@ export const CAPABILITIES = [
     title: "Inspect stages, Mavericks, weapons, and collectibles",
     description:
       "Explore Mega Man X's eight Maverick stages, boss weaknesses, weapon rewards, and collectible requirements.",
-    iconAssetKey: "mmx.boss.chill-penguin",
+    iconAssetKey: "mmx.collectible.heart-tank",
     link: {
       to: "/games/MMX",
       label: "Explore Mega Man X",
@@ -45,7 +45,7 @@ export const CAPABILITIES = [
     title: "Build an eight-stage route",
     description:
       "Reorder Mega Man X's eight stages with drag and drop or dedicated arrow controls, with keyboard and touch support.",
-    iconAssetKey: "mmx.stage.stage-select",
+    iconAssetKey: "mmx.boss.chill-penguin",
     link: {
       to: "/games/MMX/route-builder",
       label: "Open Route Builder",

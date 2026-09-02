@@ -1,15 +1,15 @@
 import { Link } from "react-router";
 import styles from "./LandingHero.module.css";
-import stageSelectImage from "../../../assets/games/mmx/stage/stage-select.png";
-import chillPenguinImage from "../../../assets/games/mmx/boss/chill-penguin.png";
-import stormEagleImage from "../../../assets/games/mmx/boss/storm-eagle.png";
-import flameMammothImage from "../../../assets/games/mmx/boss/flame-mammoth.png";
+import megaManImage from "../../../assets/mega-man/mega-man-complete.png";
 
 export function LandingHero() {
   return (
     <section className={styles.hero} aria-labelledby="landing-heading">
       <div className={styles.copy}>
-        <h1 id="landing-heading" tabIndex={-1}>Plan smarter Mega Man X routes</h1>
+        <span>Plan smarter Mega Man X routes</span>
+        <h1 className={styles.heading} id="landing-heading" tabIndex={-1}>
+          MAVERICK LABS
+        </h1>
         <p>
           Reorder the eight Mega Man X stages and see how boss weaknesses and
           collectible requirements affect difficulty, backtracking, estimated
@@ -34,29 +34,12 @@ export function LandingHero() {
       <figure className={styles.visual}>
         <img
           className={styles.frame}
-          src={stageSelectImage}
+          src={megaManImage}
           width={256}
           height={224}
           alt=""
           aria-hidden="true"
         />
-        <ol className={styles.routeOrder} aria-hidden="true">
-          <li className={styles.routeStop}>
-            <img className={styles.routeIcon} src={chillPenguinImage} alt="" />
-            <span className={styles.routeStopNumber}>1</span>
-          </li>
-          <li className={styles.routeStop}>
-            <img className={styles.routeIcon} src={stormEagleImage} alt="" />
-            <span className={styles.routeStopNumber}>2</span>
-          </li>
-          <li className={styles.routeStop}>
-            <img className={styles.routeIcon} src={flameMammothImage} alt="" />
-            <span className={styles.routeStopNumber}>3</span>
-          </li>
-        </ol>
-        <figcaption className={styles.caption}>
-          Sample route: Chill Penguin &rarr; Storm Eagle &rarr; Flame Mammoth
-        </figcaption>
       </figure>
     </section>
   );

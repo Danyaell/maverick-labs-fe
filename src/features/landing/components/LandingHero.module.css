@@ -1,11 +1,12 @@
 .hero {
   composes: page-container from global;
+  min-height: 82vh;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-8);
   text-align: left;
-  margin-block: 0 var(--space-12);
+  padding-bottom: var(--space-12);
 }
 
 .copy {
@@ -15,6 +16,16 @@
   gap: var(--space-4);
   flex: 1 1 320px;
   min-width: 0;
+}
+
+.heading {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-brand-cyan);
+  margin: 0;
 }
 
 .ctaRow {
@@ -50,9 +61,6 @@
   max-width: 256px;
   height: auto;
   image-rendering: pixelated;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border-subtle);
-  box-shadow: 0 12px 24px var(--color-shadow);
 }
 
 .routeOrder {

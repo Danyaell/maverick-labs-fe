@@ -7,6 +7,7 @@ import { EngineSection } from "../components/EngineSection";
 import { ApiSection } from "../components/ApiSection";
 import { ArchitectureSection } from "../components/ArchitectureSection";
 import { RoadmapSection } from "../components/RoadmapSection";
+import { ScrollReveal } from "../components/ScrollReveal";
 
 export function LandingPage() {
   const { hash } = useLocation();
@@ -16,22 +17,46 @@ export function LandingPage() {
       return;
     }
 
-    const section = document.getElementById(hash.slice(1));
-    const heading = section?.querySelector<HTMLElement>("h2");
+    const target = document.getElementById(hash.slice(1));
 
-    section?.scrollIntoView();
-    heading?.focus({ preventScroll: true });
+    const prefersReducedMotion =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+
+    target?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
   }, [hash]);
 
   return (
     <article>
-      <LandingHero />
-      <CapabilitiesSection />
-      <DemoSection />
-      <EngineSection />
-      <ApiSection />
-      <ArchitectureSection />
-      <RoadmapSection />
+      <ScrollReveal>
+        <LandingHero />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <CapabilitiesSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <DemoSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <EngineSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <ApiSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <ArchitectureSection />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <RoadmapSection />
+      </ScrollReveal>
     </article>
   );
 }

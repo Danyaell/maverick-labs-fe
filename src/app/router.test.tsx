@@ -62,7 +62,7 @@ describe("router", () => {
 
     expect(
       await screen.findByRole("heading", {
-        name: "Plan smarter Mega Man X routes",
+        name: "MAVERICK LABS",
       }),
     ).toBeInTheDocument();
   });
@@ -106,7 +106,7 @@ describe("router", () => {
 
     expect(
       await screen.findByRole("heading", {
-        name: "Plan smarter Mega Man X routes",
+        name: "MAVERICK LABS",
       }),
     ).toBeInTheDocument();
 

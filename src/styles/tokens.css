@@ -37,7 +37,8 @@
   /* BRAND & ACCENTS */
 
   --color-brand-blue: #0b63ce;
-  --color-brand-cyan: #52d7ff;
+  --color-brand-cyan: #06bbfe;
+  --color-brand-purple: #5757fb;
   --color-brand-gold: #ffc857;
 
   --color-on-blue: #ffffff;
@@ -173,6 +174,8 @@
   --font-size-xl: 1.5rem;     /* 24px */
   --font-size-2xl: 2rem;      /* 32px */
   --font-size-3xl: 2.5rem;    /* 40px */
+  --font-size-4xl: 3rem;      /* 48px */
+  --font-size-5xl: 4rem;   /* 60px */
 
   /* Font weights */
   --font-weight-light: 100;

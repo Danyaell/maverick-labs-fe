@@ -3,6 +3,7 @@ import {
   adjustedOrderResponse,
   initialOrderResponse,
 } from "../data/routeAnalysisDemo.fixture";
+import { LandingSection } from "./LandingSection";
 
 interface EngineStage {
   readonly id: string;
@@ -52,8 +53,15 @@ const ENGINE_STAGES: readonly EngineStage[] = [
 
 export function EngineSection() {
   return (
-    <section id="engine" className={styles.section} aria-labelledby="engine-heading">
-      <h2 id="engine-heading" tabIndex={-1}>How the route-analysis engine works</h2>
+    <LandingSection
+      id="engine"
+      labelledBy="engine-heading"
+      tone="default"
+    >
+      <p className={`${styles.subtitle} eyebrow`}>Engine</p>
+      <h2 className={styles.heading} id="engine-heading" tabIndex={-1}>
+        How the route-analysis works
+      </h2>
       <p>
         Every submitted route moves through the same five stages before you see
         a result. Expand a stage for the technical detail behind it.
@@ -101,8 +109,10 @@ export function EngineSection() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        View the backend engine source
+        <span>View the backend engine source</span>
+        <span> ↗</span>
+        <span className="visually-hidden">— opens in a new tab</span>
       </a>
-    </section>
+    </LandingSection>
   );
 }

@@ -1,8 +1,22 @@
 .section {
   composes: page-container from global;
   scroll-margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: left;
-  margin-block: var(--space-12);
+  padding: var(--space-12) 0;
+}
+
+.subtitle {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-cyan);
+  text-transform: uppercase;
+}
+
+.heading {
+  margin-bottom: var(--space-4);
+  font-weight: var(--font-weight-bold);
 }
 
 .operationList {
