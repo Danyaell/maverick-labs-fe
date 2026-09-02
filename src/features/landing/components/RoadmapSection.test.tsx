@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import { RoadmapSection } from "./RoadmapSection";
-import { GITHUB_PROJECT_URL } from "../../../shared/config/env";
+import { GITHUB_KANBAN_URL } from "../../../shared/config/env";
 
 describe("RoadmapSection", () => {
   test("communicates the current coverage boundary", () => {
@@ -34,10 +34,10 @@ describe("RoadmapSection", () => {
     render(<RoadmapSection />);
 
     const link = screen.getByRole("link", {
-      name: /view current progress on github/i,
+      name: /what's being developed/i,
     });
 
-    expect(link).toHaveAttribute("href", GITHUB_PROJECT_URL);
+    expect(link).toHaveAttribute("href", GITHUB_KANBAN_URL);
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });

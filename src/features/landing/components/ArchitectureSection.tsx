@@ -10,15 +10,22 @@ import {
   BACKEND_REPOSITORY_URL,
   FRONTEND_REPOSITORY_URL,
 } from "../../../shared/config/env";
+import { LandingSection } from "./LandingSection";
 
 export function ArchitectureSection() {
   return (
-    <section id="architecture" className={styles.section} aria-labelledby="architecture-heading">
-      <h2 id="architecture-heading" tabIndex={-1}>Architecture &amp; stack</h2>
+    <LandingSection
+      id="architecture"
+      labelledBy="architecture-heading"
+      tone="deep"
+    >
+      <h2 className={styles.heading} id="architecture-heading" tabIndex={-1}>
+        Architecture &amp; stack
+      </h2>
       <p>
         A React client talks to a Spring Boot API backed by MySQL. Schema,
-        testing, and delivery concerns are handled separately from that
-        runtime path.
+        testing, and delivery concerns are handled separately from that runtime
+        path.
       </p>
 
       <h3>Runtime request flow</h3>
@@ -79,7 +86,9 @@ export function ArchitectureSection() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          View frontend repository (opens in a new tab)
+          <span>View frontend repository</span>
+          <span> ↗</span>
+          <span className="visually-hidden">— opens in a new tab</span>
         </a>
         <a
           className="button button--secondary"
@@ -87,9 +96,11 @@ export function ArchitectureSection() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          View backend repository (opens in a new tab)
+          <span>View backend repository</span>
+          <span> ↗</span>
+          <span className="visually-hidden">— opens in a new tab</span>
         </a>
       </div>
-    </section>
+    </LandingSection>
   );
 }

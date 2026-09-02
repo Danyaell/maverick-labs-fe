@@ -25,3 +25,5 @@ export const FRONTEND_REPOSITORY_URL =
 
 export const GITHUB_PROJECT_URL =
   "https://github.com/users/Danyaell/projects/2";
+
+export const GITHUB_KANBAN_URL = "https://github.com/users/Danyaell/projects/2/views/1";

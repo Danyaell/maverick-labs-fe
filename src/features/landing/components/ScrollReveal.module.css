@@ -1,0 +1,24 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 450ms ease-out,
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.bg-surface-raised {
+  background-color: var(--color-surface-raised);
+}

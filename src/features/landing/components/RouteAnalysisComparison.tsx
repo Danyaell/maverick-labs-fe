@@ -154,11 +154,9 @@ export function RouteAnalysisComparison() {
               <span className={styles.stageNumber}>{index + 1}</span>
               <img
                 className={styles.stageIcon}
-                src={getGameAssetUrl(`mmx.boss.${slug}`)}
+                src={getGameAssetUrl(`mmx.stage.${slug}`)}
                 alt=""
                 aria-hidden="true"
-                width={40}
-                height={40}
                 loading="lazy"
                 decoding="async"
               />

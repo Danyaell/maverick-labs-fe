@@ -4,15 +4,22 @@ import {
   apiExampleRequest,
   apiExampleResponseExcerpt,
 } from "../data/apiShowcase.fixture";
-import { API_DOCS_URL, BACKEND_REPOSITORY_URL } from "../../../shared/config/env";
+import {
+  API_DOCS_URL,
+  BACKEND_REPOSITORY_URL,
+} from "../../../shared/config/env";
+import { LandingSection } from "./LandingSection";
 
 export function ApiSection() {
   return (
-    <section id="api" className={styles.section} aria-labelledby="api-heading">
-      <h2 id="api-heading" tabIndex={-1}>Three operations power everything on screen</h2>
+    <LandingSection id="api" labelledBy="api-heading" tone="raised">
+      <p className={`${styles.subtitle} eyebrow`}>API</p>
+      <h2 className={styles.heading} id="api-heading" tabIndex={-1}>
+        Three operations power everything on screen
+      </h2>
       <p>
-        The catalog, game detail, and Route Builder are all backed by a
-        small, typed REST API. Here is the full public surface.
+        The catalog, game detail, and Route Builder are all backed by a small,
+        typed REST API. Here is the full public surface.
       </p>
 
       <ol className={styles.operationList}>
@@ -23,7 +30,9 @@ export function ApiSection() {
           >
             <span
               className={`${styles.method} ${
-                operation.method === "GET" ? styles.methodGet : styles.methodPost
+                operation.method === "GET"
+                  ? styles.methodGet
+                  : styles.methodPost
               }`}
             >
               {operation.method}
@@ -70,7 +79,9 @@ export function ApiSection() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Open Swagger UI (opens in a new tab)
+          <span>Open Swagger UI</span>
+          <span> ↗</span>
+          <span className="visually-hidden">— opens in a new tab</span>
         </a>
         <a
           className="button button--secondary"
@@ -78,9 +89,11 @@ export function ApiSection() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          View backend repository (opens in a new tab)
+          <span>View backend repository</span>
+          <span> ↗</span>
+          <span className="visually-hidden">— opens in a new tab</span>
         </a>
       </div>
-    </section>
+    </LandingSection>
   );
 }

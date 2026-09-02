@@ -2,16 +2,17 @@ import { Link } from "react-router";
 import styles from "./CapabilitiesSection.module.css";
 import { CAPABILITIES } from "../data/capabilities.data";
 import { getGameAssetUrl } from "../../../utils/assets";
+import { LandingSection } from "./LandingSection";
 
 export function CapabilitiesSection() {
   return (
-    <section
+    <LandingSection
       id="capabilities"
-      className={styles.section}
-      aria-labelledby="capabilities-heading"
+      labelledBy="capabilities-heading"
+      tone="raised"
     >
-      <p className="eyebrow">Product journey</p>
-      <h2 id="capabilities-heading" tabIndex={-1}>
+      <p className={`${styles.subtitle} eyebrow`}>Product journey</p>
+      <h2 className={styles.heading} id="capabilities-heading" tabIndex={-1}>
         From catalog to route analysis
       </h2>
       <p>
@@ -42,6 +43,6 @@ export function CapabilitiesSection() {
           </li>
         ))}
       </ol>
-    </section>
+    </LandingSection>
   );
 }

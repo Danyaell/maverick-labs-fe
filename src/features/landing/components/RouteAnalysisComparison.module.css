@@ -18,7 +18,8 @@
 
 .controlButtonSelected {
   font-weight: var(--font-weight-bold);
-  border-color: var(--color-brand-gold);
+  background-color: var(--button-secondary-bg-active) !important;
+  border-color: var(--color-brand-gold) !important;
 }
 
 .visuallyHidden {
@@ -42,9 +43,15 @@
   padding: 0;
 }
 
-@media (width <= 480px) {
+@media (width <= 660px) {
   .stageOrder {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 345px) {
+  .stageOrder {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
 
@@ -55,7 +62,7 @@
   gap: var(--space-1);
   padding: var(--space-2);
   text-align: center;
-  background-color: var(--color-surface);
+  background-color: var(--color-surface-active);
   border: 2px solid var(--color-border-subtle);
   border-radius: var(--radius-sm);
 }
@@ -70,8 +77,8 @@
 }
 
 .stageIcon {
-  width: 40px;
-  height: 40px;
+  width: auto;
+  height: 140px;
   object-fit: contain;
   image-rendering: pixelated;
 }

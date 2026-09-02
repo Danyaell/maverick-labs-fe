@@ -1,16 +1,15 @@
 import styles from "./RoadmapSection.module.css";
 import { PRODUCT_COVERAGE, ROADMAP_PHASES } from "../data/roadmap.data";
-import { GITHUB_PROJECT_URL } from "../../../shared/config/env";
+import { GITHUB_KANBAN_URL } from "../../../shared/config/env";
+import { LandingSection } from "./LandingSection";
 
 export function RoadmapSection() {
   return (
-    <section
-      id="roadmap"
-      className={styles.section}
-      aria-labelledby="roadmap-heading"
-    >
-      <p className="eyebrow">Current coverage</p>
-      <h2 id="roadmap-heading" tabIndex={-1}>Available today and planned next</h2>
+    <LandingSection id="roadmap" labelledBy="roadmap-heading" tone="accent">
+      <p className={`${styles.subtitle} eyebrow`}>Current coverage</p>
+      <h2 className={styles.heading} id="roadmap-heading" tabIndex={-1}>
+        Available today and planned next
+      </h2>
 
       <p>{PRODUCT_COVERAGE.summary}</p>
 
@@ -56,12 +55,14 @@ export function RoadmapSection() {
 
       <a
         className="button button--secondary"
-        href={GITHUB_PROJECT_URL}
+        href={GITHUB_KANBAN_URL}
         target="_blank"
         rel="noopener noreferrer"
       >
-        View current progress on GitHub (opens in a new tab)
+        <span>What's being developed?</span>
+        <span> ↗</span>
+        <span className="visually-hidden">— opens in a new tab</span>
       </a>
-    </section>
+    </LandingSection>
   );
 }
