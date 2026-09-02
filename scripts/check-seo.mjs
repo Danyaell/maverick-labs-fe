@@ -10,7 +10,7 @@ const distDirectory = resolve(rootDirectory, "dist");
 const html = readFileSync(resolve(distDirectory, "index.html"), "utf8");
 const document = new JSDOM(html).window.document;
 
-const productionUrl = "https://maverick-labs-fe.vercel.app/";
+const productionUrl = "https://mavericklabs.vercel.app/";
 const socialImageUrl = `${productionUrl}images/maverick-labs-social-preview.png`;
 
 function getMetaContent(selector) {
