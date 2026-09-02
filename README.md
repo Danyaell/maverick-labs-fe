@@ -4,7 +4,7 @@
 
 > Plan smarter Mega Man X routes and see how boss weaknesses, collectible requirements, stage order, and progression rules affect difficulty, backtracking, estimated time, warnings, and recommendations.
 
-[Live application](https://maverick-labs-fe.vercel.app) · [Swagger UI](https://maverick-labs-be-production.up.railway.app/swagger-ui.html) · [Backend repository](https://github.com/Danyaell/maverick-labs-be) · [Project roadmap](https://github.com/users/Danyaell/projects/2)
+[Live application](https://mavericklabs.vercel.app/) · [Swagger UI](https://maverick-labs-be-production.up.railway.app/swagger-ui.html) · [Backend repository](https://github.com/Danyaell/maverick-labs-be) · [Project roadmap](https://github.com/users/Danyaell/projects/2)
 
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=07111f)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
@@ -496,7 +496,7 @@ tsconfig*.json                        # Strict TypeScript project configs
 
 ### Production services
 
-- Frontend: [maverick-labs-fe.vercel.app](https://maverick-labs-fe.vercel.app)
+- Frontend: [mavericklabs.vercel.app](https://mavericklabs.vercel.app/)
 - API documentation: [Swagger UI](https://maverick-labs-be-production.up.railway.app/swagger-ui.html)
 - OpenAPI contract: [OpenAPI JSON](https://maverick-labs-be-production.up.railway.app/v3/api-docs)
 
