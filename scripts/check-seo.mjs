@@ -96,6 +96,11 @@ assert.equal(
   "89504e470d0a1a0a0a".slice(0, 16),
 );
 
-assert.equal(socialImage.subarray(0, 8).toString("hex"), pngSignature);
+const pngSignature = "89504e470d0a1a0a";
+
+assert.equal(
+  socialImage.subarray(0, 8).toString("hex"),
+  pngSignature,
+);
 
 console.log("SEO metadata and social assets verified.");
