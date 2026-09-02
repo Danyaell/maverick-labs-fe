@@ -62,4 +62,40 @@ for (const icon of ["favicon.svg", "favicon.ico", "apple-touch-icon.png"]) {
   );
 }
 
+const socialTitle = "Plan smarter Mega Man X routes | Maverick Labs";
+
+const description =
+  "Plan Mega Man X stage routes. See how boss weaknesses, collectibles, and stage order affect difficulty, backtracking, estimated time, and recommendations.";
+
+assert.equal(getMetaContent('meta[name="description"]'), description);
+
+assert.equal(getMetaContent('meta[property="og:title"]'), socialTitle);
+
+assert.equal(getMetaContent('meta[property="og:description"]'), description);
+
+assert.equal(getMetaContent('meta[property="og:image:width"]'), "1200");
+
+assert.equal(getMetaContent('meta[property="og:image:height"]'), "630");
+
+assert.equal(
+  getMetaContent('meta[property="og:image:alt"]'),
+  "Maverick Labs: Plan smarter Mega Man X routes",
+);
+
+assert.equal(getMetaContent('meta[name="twitter:title"]'), socialTitle);
+
+assert.equal(getMetaContent('meta[name="twitter:description"]'), description);
+
+assert.equal(
+  getMetaContent('meta[name="twitter:image:alt"]'),
+  "Maverick Labs: Plan smarter Mega Man X routes",
+);
+
+assert.equal(
+  socialImage.subarray(0, 8).toString("hex"),
+  "89504e470d0a1a0a0a".slice(0, 16),
+);
+
+assert.equal(socialImage.subarray(0, 8).toString("hex"), pngSignature);
+
 console.log("SEO metadata and social assets verified.");
