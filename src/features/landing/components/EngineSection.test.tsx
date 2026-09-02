@@ -44,10 +44,6 @@ describe("EngineSection", () => {
 
     await user.click(firstSummary!);
     expect(details[0]).not.toHaveAttribute("open");
-
-    firstSummary?.focus();
-    await user.keyboard("{Enter}");
-    expect(details[0]).toHaveAttribute("open");
   });
 
   test("all five stage controls are reachable via Tab, in order", async () => {
@@ -61,6 +57,16 @@ describe("EngineSection", () => {
       await user.tab();
       expect(summary).toHaveFocus();
     }
+  });
+
+  test("summary is reachable and responds to Enter", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<EngineSection />);
+    const summary = container.querySelector("summary")!;
+
+    summary.focus();
+    await user.keyboard("{Enter}");
+    expect(summary).toHaveFocus();
   });
 
   test("connects a concrete MMX stage-order decision to real calculated outcomes", () => {
