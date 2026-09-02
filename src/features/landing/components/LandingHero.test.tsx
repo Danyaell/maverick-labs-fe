@@ -15,6 +15,13 @@ describe("LandingHero", () => {
   test("renders a single clear headline", () => {
     renderHero();
 
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Plan smarter Mega Man X routes",
+      }),
+    ).toBeInTheDocument();
+
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   });
 

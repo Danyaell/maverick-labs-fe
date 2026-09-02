@@ -11,7 +11,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "check:seo": "node scripts/check-seo.mjs"
   },
   "dependencies": {
     "@dnd-kit/dom": "^0.5.0",

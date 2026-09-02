@@ -49,3 +49,6 @@ jobs:
 
       - name: Build application
         run: npm run build
+
+      - name: Verify SEO build output
+        run: npm run check:seo

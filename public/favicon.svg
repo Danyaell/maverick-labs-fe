@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Maverick Labs">
+  <defs>
+    <linearGradient id="bg" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b1d31"/>
+      <stop offset="1" stop-color="#07111f"/>
+    </linearGradient>
+    <linearGradient id="route-m" x1="13" y1="17" x2="45" y2="35" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67efff"/>
+      <stop offset="1" stop-color="#20b7ff"/>
+    </linearGradient>
+    <linearGradient id="route-l" x1="45" y1="17" x2="53" y2="47" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#20b7ff"/>
+      <stop offset="1" stop-color="#7867ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="url(#bg)" stroke="#183551" stroke-width="2"/>
+
+  <path
+    d="M13 48V17L29 35L45 17"
+    fill="none"
+    stroke="url(#route-m)"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M45 17V47H53"
+    fill="none"
+    stroke="url(#route-l)"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <g fill="#07111f" stroke="#dffaff" stroke-width="2.2">
+    <circle cx="13" cy="48" r="3.4"/>
+    <circle cx="29" cy="35" r="3"/>
+    <circle cx="45" cy="17" r="3"/>
+    <circle cx="53" cy="47" r="3.4"/>
+  </g>
+</svg>
