@@ -44,6 +44,10 @@ describe("EngineSection", () => {
 
     await user.click(firstSummary!);
     expect(details[0]).not.toHaveAttribute("open");
+
+    firstSummary?.focus();
+    await user.keyboard("{Enter}");
+    expect(details[0]).toHaveAttribute("open");
   });
 
   test("all five stage controls are reachable via Tab, in order", async () => {

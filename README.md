@@ -549,8 +549,6 @@ The roadmap communicates direction rather than committed dates or percentages. C
 
 ### Next
 
-- Complete landing-page SEO and social-sharing metadata.
-- Run the final landing-page accessibility, responsive, and release-quality validation.
 - Group related recommendations and add an explicit **Show all** interaction.
 - Improve score-contribution, breakdown, and recommendation explanations.
 - Add detailed stages, bosses, weapons, collectibles, and requirements for additional games as backend modeling becomes available.

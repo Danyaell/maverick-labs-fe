@@ -8,8 +8,8 @@ import { API_DOCS_URL, BACKEND_REPOSITORY_URL } from "../../../shared/config/env
 
 export function ApiSection() {
   return (
-    <section id="api" className={styles.section}>
-      <h2>Three operations power everything on screen</h2>
+    <section id="api" className={styles.section} aria-labelledby="api-heading">
+      <h2 id="api-heading" tabIndex={-1}>Three operations power everything on screen</h2>
       <p>
         The catalog, game detail, and Route Builder are all backed by a
         small, typed REST API. Here is the full public surface.

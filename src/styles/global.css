@@ -8,7 +8,7 @@
   flex-direction: column;
   box-sizing: border-box;
   background-color: var(--color-bg-app);
-  background-image: url('../../public/images/bg-pattern.png');
+  background-image: url("../../public/images/bg-pattern.png");
   background-repeat: repeat;
   background-size: 768px 768px;
   image-rendering: pixelated;
@@ -36,11 +36,7 @@ h2,
 }
 
 h1 {
-  font-size: clamp(
-    var(--font-size-2xl),
-    3vw,
-    var(--font-size-3xl)
-  );
+  font-size: clamp(var(--font-size-2xl), 3vw, var(--font-size-3xl));
 
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-tight);
@@ -145,6 +141,7 @@ button {
 }
 
 .button--secondary {
+  display: inline-block;
   background-color: var(--button-secondary-bg);
   border-color: var(--button-secondary-border);
   color: var(--button-secondary-text);
@@ -165,9 +162,15 @@ button {
   cursor: not-allowed;
 }
 
-.button:focus-visible,
-.input:focus-visible,
-.stage-option:focus-visible {
+:where(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex]:not([tabindex="-1"])
+):focus-visible {
   outline: 3px solid var(--color-focus-ring);
   outline-offset: 3px;
 }

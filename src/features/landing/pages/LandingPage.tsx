@@ -16,8 +16,11 @@ export function LandingPage() {
       return;
     }
 
-    // cross-route hash links need a manual scroll since this is client-side routing
-    document.getElementById(hash.slice(1))?.scrollIntoView();
+    const section = document.getElementById(hash.slice(1));
+    const heading = section?.querySelector<HTMLElement>("h2");
+
+    section?.scrollIntoView();
+    heading?.focus({ preventScroll: true });
   }, [hash]);
 
   return (

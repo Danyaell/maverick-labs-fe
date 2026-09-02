@@ -11,7 +11,9 @@ export function CapabilitiesSection() {
       aria-labelledby="capabilities-heading"
     >
       <p className="eyebrow">Product journey</p>
-      <h2 id="capabilities-heading">From catalog to route analysis</h2>
+      <h2 id="capabilities-heading" tabIndex={-1}>
+        From catalog to route analysis
+      </h2>
       <p>
         Explore all eight main Mega Man X titles, then use the complete Mega Man
         X route-planning experience to inspect stages, build a route, and
@@ -29,6 +31,8 @@ export function CapabilitiesSection() {
               className={styles.icon}
               src={getGameAssetUrl(capability.iconAssetKey)}
               alt=""
+              loading="lazy"
+              decoding="async"
             />
             <h3>{capability.title}</h3>
             <p>{capability.description}</p>

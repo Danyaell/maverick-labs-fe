@@ -1,10 +1,10 @@
-import { createBrowserRouter, type RouteObject } from 'react-router'
-import App from './App'
-import { NotFoundPage } from './pages/NotFoundPage'
-import { LandingPage } from '../features/landing/pages/LandingPage'
-import { GameCatalogPage } from '../features/games/pages/GameCatalogPage'
-import { GameDetailPage } from '../features/games/pages/GameDetailPage'
-import { RouteBuilderPage } from '../features/route-builder/pages/RouteBuilderPage'
+import { createBrowserRouter, type RouteObject } from "react-router";
+import App from "./App";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { LandingPage } from "../features/landing/pages/LandingPage";
+import { GameCatalogPage } from "../features/games/pages/GameCatalogPage";
+import { GameDetailPage } from "../features/games/pages/GameDetailPage";
+import { RouteBuilderPage } from "../features/route-builder/pages/RouteBuilderPage";
 
 const GAME_NAMES: Record<string, string> = {
   MMX: "Mega Man X",
@@ -20,6 +20,12 @@ const GAME_NAMES: Record<string, string> = {
 export const routeConfig: RouteObject[] = [
   {
     path: "/",
+    handle: {
+      breadcrumb: () => ({
+        label: "Home",
+        to: "/",
+      }),
+    },
     element: <App />,
     errorElement: <NotFoundPage />,
     children: [

@@ -7,9 +7,9 @@ import flameMammothImage from "../../../assets/games/mmx/boss/flame-mammoth.png"
 
 export function LandingHero() {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} aria-labelledby="landing-heading">
       <div className={styles.copy}>
-        <h1>Plan smarter Mega Man X routes</h1>
+        <h1 id="landing-heading" tabIndex={-1}>Plan smarter Mega Man X routes</h1>
         <p>
           Reorder the eight Mega Man X stages and see how boss weaknesses and
           collectible requirements affect difficulty, backtracking, estimated

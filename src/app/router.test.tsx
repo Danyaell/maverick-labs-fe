@@ -7,11 +7,17 @@ import {
   createGameDetail,
   createRouteAnalysis,
 } from "../test/fixtures/routeBuilderFixtures";
-import type { fetchGameDetail, fetchGames } from "../features/games/api/gameApi";
+import type {
+  fetchGameDetail,
+  fetchGames,
+} from "../features/games/api/gameApi";
 import type { analyzeRoute } from "../features/route-builder/api/routeAnalysisApi";
 
 const { mockFetchGames, mockFetchGameDetail } = vi.hoisted(() => ({
-  mockFetchGames: vi.fn<Parameters<typeof fetchGames>, ReturnType<typeof fetchGames>>(),
+  mockFetchGames: vi.fn<
+    Parameters<typeof fetchGames>,
+    ReturnType<typeof fetchGames>
+  >(),
   mockFetchGameDetail: vi.fn<
     Parameters<typeof fetchGameDetail>,
     ReturnType<typeof fetchGameDetail>
@@ -19,7 +25,10 @@ const { mockFetchGames, mockFetchGameDetail } = vi.hoisted(() => ({
 }));
 
 const { mockAnalyzeRoute } = vi.hoisted(() => ({
-  mockAnalyzeRoute: vi.fn<Parameters<typeof analyzeRoute>, ReturnType<typeof analyzeRoute>>(),
+  mockAnalyzeRoute: vi.fn<
+    Parameters<typeof analyzeRoute>,
+    ReturnType<typeof analyzeRoute>
+  >(),
 }));
 
 vi.mock("../features/games/api/gameApi", () => ({
@@ -86,5 +95,29 @@ describe("router", () => {
     expect(
       await screen.findByRole("heading", { name: "404" }),
     ).toBeInTheDocument();
+  });
+
+  test("keeps the landing useful when the backend is unavailable", async () => {
+    mockFetchGames.mockRejectedValue(new Error("Backend unavailable"));
+    mockFetchGameDetail.mockRejectedValue(new Error("Backend unavailable"));
+    mockAnalyzeRoute.mockRejectedValue(new Error("Backend unavailable"));
+
+    renderAt("/");
+
+    expect(
+      await screen.findByRole("heading", {
+        name: "Plan smarter Mega Man X routes",
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("heading", {
+        name: /see how one stage-order change/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(mockFetchGames).not.toHaveBeenCalled();
+    expect(mockFetchGameDetail).not.toHaveBeenCalled();
+    expect(mockAnalyzeRoute).not.toHaveBeenCalled();
   });
 });

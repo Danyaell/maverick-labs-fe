@@ -13,8 +13,8 @@ import {
 
 export function ArchitectureSection() {
   return (
-    <section id="architecture" className={styles.section}>
-      <h2>Architecture &amp; stack</h2>
+    <section id="architecture" className={styles.section} aria-labelledby="architecture-heading">
+      <h2 id="architecture-heading" tabIndex={-1}>Architecture &amp; stack</h2>
       <p>
         A React client talks to a Spring Boot API backed by MySQL. Schema,
         testing, and delivery concerns are handled separately from that
